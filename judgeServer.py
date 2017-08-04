@@ -9,40 +9,45 @@ class Player:
     pass
 
 class Score:
-    def __init__(self, player_r, player_b):
-        self.player_r = player_r
-        self.player_b = player_b
+    def __init__(self, player_r='NoPlayer', player_b='NoPlayer'):
+        self.player = {"r":player_r, "b":player_b}
         self.point = {"r":0, "b":0}
     pass
 
 class WarState:
+    def __init__(self):
+        self.score = Score()
+        self.targets = []
     def __init__(self, score, targets):
         self.score = score
         self.targets = targets
 
 class Target:
-    def __init__(self, pos, id):
-        self.pos = pos
+    def __init__(self, name, id, passcode):
+        self.name =name
         self.id = id
+        self.passcode = passcode
         self.player = "None"
         self.json = {
-                        "pos":self.pos,
+                        "name":self.name,
                         "id": self.id,
                         "player": self.player,
                     }
 
 class Submit:
-    def __init__(self, player, id):
+    def __init__(self, player, passcode):
         self.player = player
-        self.id = id
+        self.passcode =passcode
 
 class Referee:
-    def __init__(self, state):
+    def __init__(self):
+        self.war_state = State()
+    def __init__(self, state=0):
         self.war_state = state
 
     def judgeTargetId(self, submit):
         for target in self.war_state.targets:
-            if submit.id == target.id:
+            if submit.passcode == target.passcode:
                 updateWarState(target, submit.player)
                 return target
         return False
@@ -59,20 +64,41 @@ class Referee:
         self.war_state.json = json
         return json
 
+    def registPlayer(self, name):
+        if self.state.score.player['r'] == "NoPlayer":
+            self.state.score.player['r'] = name
+            ret = "r : " + name
+        elif self.state.score.player['b'] == "NoPlayer":
+            self.state.score.player['b'] = name
+            ret = "b : " + name
+        else:
+            ret = "##Errer 2 player already registed"
+        return ret
+
+    def registTarget(self, target):
+        self.war_state.targets.append(target)
+        return target.name
+
 # init
-p1 = Player("taro")
-p2 = Player("satoru")
-score = Score(p1, p2)
-t1 = Target('head',0)
-t2 = Target('wall_1',1)
-t3 = Target('wall_2',2)
-targets = [t1,t2,t3]
-state = WarState(score, targets)
-referee = Referee(state)
+#p1 = Player("taro")
+#p2 = Player("satoru")
+#score = Score()
+#t1 = Target('head',0)
+#t2 = Target('wall_1',1)
+#t3 = Target('wall_2',2)
+#targets = []
+#state = WarState(score, targets)
+referee = Referee()
 
 @app.route('/')
 def index():
     return "Hello, Welcome to ONIGIRI WAR!"
+
+@app.route('/warState/players', methods=['POST'])
+def addPlayer():
+    submit = Submit(request.data.player, request.data.id)
+    referee.judgeTargetId(submit)
+    return jsonify({"resule":True})
 
 @app.route('/warState', methods=['POST'])
 def aimTarget():
