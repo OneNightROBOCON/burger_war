@@ -5,9 +5,10 @@
 |---|----|---|
 |/warState|ALL|--|
 |/warState/targets|-|abmin|
-|/warState/players|-|player|
+|/warState/players|-|admin|
 |/warState/state|-|admin|
 |/submits|-|player|
+|/reset|-|admin|
 
 ## json format
 now sample only... sorry
@@ -16,32 +17,36 @@ now sample only... sorry
 send
 No Message
 
-get
 ```
+get
 {
-    "state":"running"
-    "score":{
-        "r":{
-            "player":"UMETARO",
-            "point":10
-        },
-        "b":{
-            "player":"SHAKEKO",
-            "point":15
-        }
-    },
-    "targets":[
-        {
-            "id":0,
-            "name":"r_back",
-            "player":"None"
-        },
-        {
-            "id":1,
-            "name":"field_center",
-            "player":"UMETARO"
-        },
-    ]
+  "players": {
+    "b": "jiro", 
+    "r": "ishiro"
+  }, 
+  "ready": {
+    "b": true, 
+    "r": true
+  }, 
+  "scores": {
+    "b": 0, 
+    "r": 2
+  }, 
+  "state": "end", 
+  "targets": [
+    {
+      "name": "one", 
+      "player": "ishiro"
+    }, 
+    {
+      "name": "two", 
+      "player": "ishiro"
+    }, 
+    {
+      "name": "three", 
+      "player": "NoPlayer"
+    }
+  ]
 }
 ```
 
@@ -51,16 +56,17 @@ get
 send
 ```
 {
-    "player":"UMETARO",
-    "passcode":"0123456789",
-    "target_id":"f2a9"
+    "player":"ishiro",
+    "side":"r",
+    "id":"ffff"
 }
 ```
 
 get
 ```
 {
-    "return":"success"
+  "name": "three", 
+  "player": "ishiro"
 }
 ```
 
@@ -70,20 +76,15 @@ get
 send
 ```
 {
-    "player":"admin",
-    "passcode":"0123456789",
-    "target":{
-        "id":0,
-        "name":"r_back",
-        "player":"None"
-    },
+    "name":"three",
+    "id":"ffff",
 }
 ```
 
 get
 ```
 {
-    "return":"success"
+    "name":"three"
 }
 ```
 
@@ -93,16 +94,14 @@ get
 send
 ```
 {
-    "plyer":"UMETARO",
-    "passcode":"0123456789"
+    "name":"ishiro",
 }
 ```
 
 get
 ```
 {
-    "return":"success"
-    "player":"UMETARO"
+    "name":"ishiro"
     "side":"r"
 }
 ```

@@ -1,36 +1,16 @@
 from flask import Flask, request, jsonify
 app = Flask(__name__)
 
-
-class Player:
-    def __init__(self, name, id=0):
-        self.name = name
-        self.id = id
-    pass
-
-class Score:
-    def __init__(self, player='NoPlayer'):
-        self.player = player
-        self.point = 0
-    pass
-
-
-    def makeJson(self):
-        json = {
-            "player":self.player,
-            "point":self.point
-        }
-        return json
-
 class Target:
-    def __init__(self, name, id):
+    def __init__(self, name, id , point=1):
         self.id = id
         self.name =name
-        self.player = "None"
+        self.player = "NoPlayer"
+        self.point = point
     def makeJson(self):
         json = {
             "name":self.name,
-            "id": self.id,
+            #"id": self.id,
             "player": self.player,
         }
         return json
@@ -38,79 +18,121 @@ class Target:
 class WarState:
     def __init__(self):
         self.state = "end"
-        self.score = {"r":Score(),"b":Score()}
-        self.targets = [Target("foo","ffff"), Target("bar", "0123")]
+        self.players = {"r":"NoPlayer", "b":"NoPlayer"}
+        self.scores = {"r":0, "b":0}
+        self.ready = {"r":False, "b":False}
+        self.targets = []
 
     def makeJson(self):
         json = {
             "state":self.state,
-            "score":{
-                "r":self.score["r"].makeJson(),
-                "b":self.score["b"].makeJson(),
-            },
+            "players":self.players,
+            "ready":self.ready,
+            "scores":self.scores,
             "targets":[t.makeJson() for t in self.targets],
         }
         return json
-
-
-class Submit:
-    def __init__(self, player, passcode,target_id):
-        self.player = player
-        self.passcode =passcode
-        self.target_id = target_id
 
 class Referee:
     def __init__(self):
         self.war_state = WarState()
 
-    def judgeTargetId(self, submit):
+    def judgeTargetId(self, data):
+        player_name = data["name"]
+        player_side = data["side"]
+        target_id = data["id"]
+
+        # set ready if id = 0000
+        if target_id == "0000":
+            self.war_state.ready[player_side] = True
+            return {"name":player_name}
+
         for target in self.war_state.targets:
-            if submit.passcode == target.passcode:
-                updateWarState(target, submit.player)
-                return target
+            if target_id == target.id:
+                self.updateWarState(target, player_name, player_side)
+                return target.makeJson()
         return False
 
-    def updateWarState(self, target, player):
-        target.player = player
+    def checkBothPlayerReady(self):
+        if self.war_state.ready["r"] and self.war_state.ready["b"]:
+            self.war_state.state = "running"
+        return
+
+    def updateWarState(self, target, player_name, player_side):
+        if not target.player == "NoPlayer":
+            return 1
+        else:
+            target.player = player_name
+            self.war_state.scores[player_side] += target.point
         return 0
 
-    def registPlayer(self, name):
-        if self.state.score.player['r'] == "NoPlayer":
-            self.state.score.player['r'] = name
-            ret = "r : " + name
-        elif self.state.score.player['b'] == "NoPlayer":
-            self.state.score.player['b'] = name
-            ret = "b : " + name
+    def registPlayer(self, data):
+        name = data["name"]
+        if self.war_state.players['r'] == "NoPlayer":
+            self.war_state.players['r'] = name
+            ret = {"side":"r", "name":name}
+        elif self.war_state.players['b'] == "NoPlayer":
+            self.war_state.players['b'] = name
+            ret = {"side":"b", "name":name}
         else:
             ret = "##Errer 2 player already registed"
         return ret
 
     def registTarget(self, data):
+        target = Target(data["name"], data["id"])
         self.war_state.targets.append(target)
         return target.name
+
+    def setState(self, data):
+        state = data["state"]
+        if state == "end":
+            self.war_state.state = state
+        elif state == "running":
+            if self.checkBothPlayerReady():
+                self.war_state.state = state
+        elif state == stop:
+            self.war_state.state = state
+        else:
+            pass
+        return state
 
 referee = Referee()
 
 @app.route('/')
 def index():
-    return "Hello, Welcome to ONIGIRI WAR!"
+    msg = "Hello, Welcome to ONIGIRI WAR!"
+    return msg
 
-@app.route('/warState/players', methods=['POST'])
-def addPlayer():
-    submit = Submit(request.data.player, request.data.id)
-    referee.judgeTargetId(submit)
-    return jsonify({"resule":True})
-
-@app.route('/warState/targets', methods=['POST'])
-def registTarget():
-    #submit = Submit(request.data.player,request.data.passcode request.data.id)
-    referee.registTarget(request.data)
-    return jsonify({"testversion":"sorry yet"})
+@app.route('/submits', methods=['POST'])
+def judgeTargetId():
+    ret = referee.judgeTargetId(request.json)
+    return jsonify(ret)
 
 @app.route('/warState', methods=['GET'])
 def getState():
     state_json = referee.war_state.makeJson()
     return jsonify(state_json)
+
+@app.route('/warState/players', methods=['POST'])
+def registPlayer():
+    ret = referee.registPlayer(request.json)
+    return jsonify(ret)
+
+@app.route('/warState/targets', methods=['POST'])
+def registTarget():
+    name  = referee.registTarget(request.json)
+    return jsonify({"name":name})
+
+@app.route('/warState/state', methods=['POST'])
+def setState():
+    state = referee.setState(request.json)
+    return jsonify({"state":state})
+
+@app.route('/reset', methods=['GET'])
+def reset():
+    global referee
+    referee = Referee()
+    return jsonify("reset")
 
 @app.route('/test', methods=['GET'])
 def getTest():
@@ -121,7 +143,10 @@ def getTest():
 
 @app.route('/test', methods=['POST'])
 def postTest():
-    ret = request.data
+    ret = request.json
+    print(ret)
     return jsonify(ret)
+
 if __name__ == '__main__':
     app.run(debug=True)
+
