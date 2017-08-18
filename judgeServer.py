@@ -90,7 +90,7 @@ class Referee:
         elif state == "running":
             if self.checkBothPlayerReady():
                 self.war_state.state = state
-        elif state == stop:
+        elif state == "stop":
             self.war_state.state = state
         else:
             pass
