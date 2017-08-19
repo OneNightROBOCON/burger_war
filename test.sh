@@ -8,9 +8,9 @@ curl localhost:5000/warState
 
 # regist targets 
 echo "=================REGIST targets======================"
-curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"one", "id":"1111"}' localhost:5000/warState/targets
-curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"two", "id":"2222"}' localhost:5000/warState/targets
-curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"three", "id":"3333"}' localhost:5000/warState/targets
+curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"one", "id":"1111", "point":3}' localhost:5000/warState/targets
+curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"two", "id":"2222", "point":3}' localhost:5000/warState/targets
+curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"three", "id":"3333", "point":3}' localhost:5000/warState/targets
 
 # regist players
 echo "=================REGIST players======================"

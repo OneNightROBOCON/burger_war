@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from flask import Flask, request, jsonify
 app = Flask(__name__)
 
@@ -37,10 +38,7 @@ class Referee:
     def __init__(self):
         self.war_state = WarState()
 
-    def judgeTargetId(self, data):
-        player_name = data["name"]
-        player_side = data["side"]
-        target_id = data["id"]
+    def judgeTargetId(self, player_name, player_side, target_id):
 
         # set ready if id = 0000
         if target_id == "0000":
@@ -66,8 +64,7 @@ class Referee:
             self.war_state.scores[player_side] += target.point
         return 0
 
-    def registPlayer(self, data):
-        name = data["name"]
+    def registPlayer(self, name):
         if self.war_state.players['r'] == "NoPlayer":
             self.war_state.players['r'] = name
             ret = {"side":"r", "name":name}
@@ -78,13 +75,12 @@ class Referee:
             ret = "##Errer 2 player already registed"
         return ret
 
-    def registTarget(self, data):
-        target = Target(data["name"], data["id"])
+    def registTarget(self, name, target_id, point):
+        target = Target(name, target_id, point)
         self.war_state.targets.append(target)
         return target.name
 
-    def setState(self, data):
-        state = data["state"]
+    def setState(self, state):
         if state == "end":
             self.war_state.state = state
         elif state == "running":
@@ -96,6 +92,7 @@ class Referee:
             pass
         return state
 
+# global object referee
 referee = Referee()
 
 @app.route('/')
@@ -105,7 +102,11 @@ def index():
 
 @app.route('/submits', methods=['POST'])
 def judgeTargetId():
-    ret = referee.judgeTargetId(request.json)
+    body = request.json
+    player_name = body["name"]
+    player_side = body["side"]
+    target_id = body["id"]
+    ret = referee.judgeTargetId(player_name, player_side, target_id)
     return jsonify(ret)
 
 @app.route('/warState', methods=['GET'])
@@ -115,18 +116,26 @@ def getState():
 
 @app.route('/warState/players', methods=['POST'])
 def registPlayer():
-    ret = referee.registPlayer(request.json)
+    body = request.json
+    name = body["name"]
+    ret = referee.registPlayer(name)
     return jsonify(ret)
 
 @app.route('/warState/targets', methods=['POST'])
 def registTarget():
-    name  = referee.registTarget(request.json)
-    return jsonify({"name":name})
+    body = request.json
+    name = body["name"]
+    target_id = body["id"]
+    point = body["point"]
+    ret  = referee.registTarget(name, target_id, point)
+    return jsonify({"name":ret})
 
 @app.route('/warState/state', methods=['POST'])
 def setState():
-    state = referee.setState(request.json)
-    return jsonify({"state":state})
+    body = request.json
+    state = body["state"]
+    ret = referee.setState(state)
+    return jsonify({"state":ret})
 
 @app.route('/reset', methods=['GET'])
 def reset():
@@ -144,7 +153,6 @@ def getTest():
 @app.route('/test', methods=['POST'])
 def postTest():
     ret = request.json
-    print(ret)
     return jsonify(ret)
 
 if __name__ == '__main__':
