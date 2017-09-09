@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import zbar
-#import cv2
+import cv2
 
 
 class QrReader():
@@ -9,17 +9,17 @@ class QrReader():
         # configure the reader
         self.scanner.parse_config('enable')
 
-    def readQr(im):
+    def readQr(self, im):
         '''
         read Qr code return [{"val":qrval, "pos":[x1,y1,x2,y2]}....]
         input cv2 im object BGR
         '''
         # convert BGR to GRAY
         gray_im = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
-        width,height = gray_im.shape[:2]
+        height, width = gray_im.shape[:2]
         # wrap image data
         image = zbar.Image(width, height, 'Y800', gray_im.tostring())
         # scan the image for barcodes
-        scanner.scan(image)
-        results = [{"val":sybol.data, "pos":sympol.location} for symbol in image]
+        self.scanner.scan(image)
+        results = [{"val":symbol.data, "pos":symbol.location} for symbol in image]
         return results
