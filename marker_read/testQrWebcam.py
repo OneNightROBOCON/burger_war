@@ -24,7 +24,8 @@ if __name__=="__main__":
             continue
         # read QR code
         qrs = reader.readQr(im)
-        print(qrs)
+        if qrs:
+            print(qrs)
         for qr in qrs:
             # do something useful with 
             pts = np.array(qr["pos"], np.int32)
