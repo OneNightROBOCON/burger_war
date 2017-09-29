@@ -1,5 +1,10 @@
 # Judge
-
+以下でサーバーの確認
+```
+python judgeServer.py
+python visualize_window.py
+bash test.sh
+```
 ## API user
 |URI|GET|POST|
 |---|----|---|
