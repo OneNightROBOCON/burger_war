@@ -2,7 +2,7 @@
 以下でサーバーの確認
 ```
 python judgeServer.py
-python visualize_window.py
+python visualizeWindow.py
 bash test.sh
 ```
 ## API user
