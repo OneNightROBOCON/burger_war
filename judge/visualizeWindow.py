@@ -41,8 +41,8 @@ def visualizeState(state_json,w_name):
     cv2.putText(display, "Players", (w_width*2/5, w_height*1/7), font, font_size, text_color)
     cv2.putText(display, " Score ", (w_width*2/5, w_height*2/7), font, font_size, text_color)
     for player, position in ("b", 0), ("r", w_width*12/20):
-	cv2.putText(display, state["players"][player].center(10, ' '), (position-len(state["players"][player])*0,  w_height*1/7),font, font_size+2, p_color[player])
-    	cv2.putText(display, str(state["scores"][player]).center(10, ' '), (position,  w_height*2/7), font, font_size+2, p_color[player])
+        cv2.putText(display, state["players"][player].center(10, ' '), (position-len(state["players"][player])*0,  w_height*1/7),font, font_size+2, p_color[player])
+        cv2.putText(display, str(state["scores"][player]).center(10, ' '), (position,  w_height*2/7), font, font_size+2, p_color[player])
     cv2.imshow(w_name,display)
     cv2.waitKey(3)
     
