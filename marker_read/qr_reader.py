@@ -51,8 +51,8 @@ class QrReader(object):
         im_msg = self.bridge.cv2_to_imgmsg(im, "bgr8")
         self.qr_img_pub.publish(im_msg)
 
-        cv2.imshow("Capture", im)
-        cv2.waitKey(33)
+        #cv2.imshow("Capture", im)
+        #cv2.waitKey(33)
 
 if __name__=="__main__":
     rospy.init_node("qr_reader")
