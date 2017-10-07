@@ -1,0 +1,14 @@
+<launch>
+
+  <!-- camera -->
+  <node pkg="uvc_camera" type="uvc_camera_node" name="uvc_camera_node"/>
+
+  <!-- qr reader -->
+  <node pkg="onigiri_war" type="qrReader.py" name="qr_reader"/>
+
+  <!-- send to judge server -->
+  <node pkg="onigiri_war" type="sendQrToJudge.py" name="send_qr_to_judge"/>
+
+  <!-- robot controller -->
+
+</launch>
