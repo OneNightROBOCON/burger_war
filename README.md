@@ -63,7 +63,24 @@ git clone https://github.com/OneNightROBOCON/onigiri_war
 
 ```
 cd ~/catkin_ws
-catkin_make
+catkin_makesudo apt-get install libzbar-dev  
+
+```
+
+### 6. 依存ライブラリのインストール
+- requests : HTTP lib
+- zbar : QR code reader lib
+
+
+requests
+```
+sudo pip install requests
+```
+
+zbar
+```
+sudo apt-get install libzbar-dev  
+sudo pip install zbar
 ```
 
 ### 6. サンプルの実行
