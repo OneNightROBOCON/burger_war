@@ -16,16 +16,16 @@ class QrReader(object):
         self.bridge = CvBridge()
 
         # camera subscriver
-        self.image_sub = rospy.Subscriber('/image_raw', Image, self.imageCallback)
+        self.image_sub = rospy.Subscriber('/image_raw', Image, self.imageCallback, queue_size=1)
 
         # qr reader lib
         self.reader = libqr.QrReader()
 
         # publish qr_val
-        self.qr_val_pub = rospy.Publisher('qr_val', String, queue_size=10)
+        self.qr_val_pub = rospy.Publisher('qr_val', String, queue_size=1)
 
         # publish marked qr area image
-        self.qr_img_pub = rospy.Publisher('qr_image', Image, queue_size=10)
+        self.qr_img_pub = rospy.Publisher('qr_image', Image, queue_size=1)
 
     # comvert image topic to opencv object and show
     def imageCallback(self, data):
@@ -33,6 +33,8 @@ class QrReader(object):
             im = self.bridge.imgmsg_to_cv2(data, "bgr8")
         except CvBridgeError as e:
             print(e)
+
+        #im = self.crop(im)
 
         # read QR code
         qrs = self.reader.readQr(im)
@@ -53,6 +55,14 @@ class QrReader(object):
 
         #cv2.imshow("Capture", im)
         #cv2.waitKey(33)
+    def crop(self, im):
+        sh = im.shape
+        w = int(sh[1]/2)
+        h = int(sh[0]/2)
+        x = int(sh[1]/4)
+        y = int(sh[0]/4)
+        croped_im =  im[y:y+h, x:x+w]
+        return croped_im
 
 if __name__=="__main__":
     rospy.init_node("qr_reader")
