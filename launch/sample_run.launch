@@ -11,5 +11,6 @@
 
   <!-- robot controller -->
   <include file="$(find navi_param)/rulo_navi.launch" />
+  <node pkg="onigiri_war" type="opt_run.py" name="opt_run" output="screen"/>
 
 </launch>
