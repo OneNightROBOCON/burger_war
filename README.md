@@ -171,6 +171,33 @@ onigiri_war/
 ```
 ↑ディレクトリと特に重要なファイルのみ説明しています。
 
+## その他
+### カメラの露光時間の設定
+QRコード認識の時に画像ぶれにより認識精度が落ちないように設定が必要
+
+#### Webカメラの場合
+ターミナルを開いて以下を実行
+```
+v4l2-ctl -c exposure_auto=1
+v4l2-ctl -c exposure_absolute=20
+```
+
+exposure_auto=1で露光の調整をマニュアルに変更し、exposure_absolute=20で露光時間を設定
+
+#### RealSenseの場合
+~/realsense/realsense_camera/launch/includes/nodelet_rgbd_launch.xmlを開き、以下の該当箇所を探す。
+```
+<node pkg="nodelet" type="nodelet" name="driver"
+        args="load realsense_camera/$(arg camera_type)Nodelet $(arg manager)">
+```
+        
+この直下に以下の内容を記載。
+```
+<param name="color_enable_auto_exposure" value="0"/>
+<param name="color_exposure" value="39"/>
+```
+
+
 ## 動作環境
 - OS  : Ubuntu 14.04
 - ROS : indigo
