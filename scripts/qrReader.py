@@ -16,7 +16,7 @@ class QrReader(object):
         self.bridge = CvBridge()
 
         # camera subscriver
-        self.image_sub = rospy.Subscriber('/image_raw', Image, self.imageCallback, queue_size=1)
+        self.image_sub = rospy.Subscriber('/camera/rgb/image_raw', Image, self.imageCallback, queue_size=1)
 
         # qr reader lib
         self.reader = libqr.QrReader()
