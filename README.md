@@ -202,7 +202,8 @@ exposure_auto=1で露光の調整をマニュアルに変更し、exposure_absol
 <param name="color_enable_auto_exposure" value="0"/>
 <param name="color_exposure" value="39"/>
 ```
-
+#### 注意点
+環境の明るさにより画像が暗くなりすぎるので、環境により適宜調整が必要
 
 ## 動作環境
 - OS  : Ubuntu 14.04
