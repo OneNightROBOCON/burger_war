@@ -14,6 +14,7 @@ class OnigiriRun(object):
 
     def __init__(self):
 	self.goal_count = 0
+	self.movebase_status = 0
 	#ROS publisher
 	self.goal_point_pub = rospy.Publisher('/move_base_simple/goal', PoseStamped, queue_size=1)
 	#ROS subscriber
@@ -35,6 +36,7 @@ class OnigiriRun(object):
 	print self.point
 
     def GoalStatusArrayCallback(self, data):
+	print self.movebase_status
 	status_id = 0;
 	#uint8 PENDING         = 0  
 	#uint8 ACTIVE          = 1 
@@ -52,9 +54,14 @@ class OnigiriRun(object):
     		status_id = goalStatus.status
 		print status_id
 	#moving
-	if status_id == 1:
+	if self.movebase_status == 1:
+		if status_id == 3 or status_id == 0:
+			self.movebase_status = 2
+		elif status_id == 4:
+			self.movebase_status = 4
 		return
-	elif status_id == 3 or status_id == 0 :
+	#stop or goal
+	elif self.movebase_status == 0 or self.movebase_status == 2:
 		self.pose = PoseStamped()
        		self.pose.pose.position.x = self.point[self.goal_count][0]
         	self.pose.pose.position.y = self.point[self.goal_count][1]
@@ -71,9 +78,18 @@ class OnigiriRun(object):
 			self.goal_count = 0
 		else:
 			self.goal_count += 1
-		print self.pose
+		self.movebase_status = 3
 		return
-	elif status_id == 4:
+	elif self.movebase_status == 3:
+		if status_id == 0:
+			self.movebase_status = 0
+		elif status_id == 3:
+			return
+		else:
+			self.movebase_status = 1
+			return
+	elif self.movebase_status == 4:
+		self.movebase_status = 0
 		return
 		
 
