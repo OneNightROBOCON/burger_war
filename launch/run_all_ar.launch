@@ -1,0 +1,20 @@
+<launch>
+
+  <!-- camera -->
+  <!-- <node pkg="uvc_camera" type="uvc_camera_node" name="uvc_camera_node"/> -->
+  <node pkg="uvc_camera" type="uvc_camera_node" name="uvc_camera_node">
+  <param name="width" value="160" />
+  <param name="height" value="120" />
+  <param name="fps" value="30" />
+  </node>
+
+  <!-- qr reader -->
+  <node pkg="onigiri_war" type="arReader.py" name="qr_reader" output="screen"/>
+
+  <!-- send to judge server -->
+  <node pkg="onigiri_war" type="sendQrToJudge.py" name="send_qr_to_judge" output="screen"/>
+
+  <!-- robot controller -->
+  <!--<include file="$(find navi_param)/rulo_navi.launch" /> -->
+
+</launch>
