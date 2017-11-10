@@ -205,6 +205,14 @@ exposure_auto=1で露光の調整をマニュアルに変更し、exposure_absol
 #### 注意点
 環境の明るさにより画像が暗くなりすぎるので、環境により適宜調整が必要
 
+### AR認識ライブラリarucoの導入
+以下を実行
+```
+pip install --upgrade pip
+pip install opencv-python
+pip install opencv-contrib-python
+```
+
 ## 動作環境
 - OS  : Ubuntu 14.04
 - ROS : indigo
