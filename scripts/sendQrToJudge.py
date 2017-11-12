@@ -58,15 +58,13 @@ class QrVal(object):
 
     def qrValCallback(self, data):
         qr_val = data.data
-        print(qr_val)
         qr_val = self.lengthTo4(qr_val)
-        print(qr_val)
         if qr_val in self.historys:
             return
         try:
             res = self.sendToJudge(qr_val)
         except:
-            print("Requests Error Please Check URL " + self.judge_url)
+            print("Try Send " + qr_val + " but, Requests Error Please Check URL " + self.judge_url)
         else:
             print("Send " + qr_val + " To " + self.judge_url)
             self.historys.append(qr_val)
