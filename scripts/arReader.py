@@ -50,7 +50,7 @@ class QrReader(object):
         aruco.drawDetectedMarkers(im,corners,ids)
         if ids is not None:
             for i in ids:
-                self.qr_val_pub.publish(str(i))
+                self.qr_val_pub.publish(str(i[0]))
         
         im_msg = self.bridge.cv2_to_imgmsg(im, "bgr8")
         self.qr_img_pub.publish(im_msg)
