@@ -24,6 +24,7 @@ class QrVal(object):
                             headers={'Content-Type': 'application/json'}
                             )
         return res
+
     def sendInitCode(self):
         try:
             res = self.sendToJudge(self.init_code)
@@ -32,8 +33,32 @@ class QrVal(object):
         else:
             print("Send " + self.init_code +  "as init code To " + self.judge_url)
 
+    def lengthTo4(self, string):
+        '''
+        cut or padding string length to 4
+        if length is more than 4
+          use last 4 char
+        if length is less than 4
+          padding "0"
+        ex) "0123456789" -> "6789"
+            "0123" -> "0123" (no change)
+            "12" -> "0012"
+        '''
+        len = len(string)
+        if len == 4:
+            return string
+        if len > 4:
+            return string[-4:]
+        elif len < 4:
+            return ("0000"+string)[-4:]
+        else:
+            print("what happen??")
+            print(string)
+            return False
+
     def qrValCallback(self, data):
         qr_val = data.data
+        qr_val = self.lengthTo4(qr_val)
         if qr_val in self.historys:
             return
         try:
