@@ -44,12 +44,12 @@ class QrVal(object):
             "0123" -> "0123" (no change)
             "12" -> "0012"
         '''
-        len = len(string)
-        if len == 4:
+        length = len(string)
+        if length == 4:
             return string
-        if len > 4:
+        elif length > 4:
             return string[-4:]
-        elif len < 4:
+        elif length < 4:
             return ("0000"+string)[-4:]
         else:
             print("what happen??")
@@ -58,7 +58,9 @@ class QrVal(object):
 
     def qrValCallback(self, data):
         qr_val = data.data
+        print(qr_val)
         qr_val = self.lengthTo4(qr_val)
+        print(qr_val)
         if qr_val in self.historys:
             return
         try:
