@@ -63,7 +63,24 @@ git clone https://github.com/OneNightROBOCON/onigiri_war
 
 ```
 cd ~/catkin_ws
-catkin_make
+catkin_makesudo apt-get install libzbar-dev  
+
+```
+
+### 6. 依存ライブラリのインストール
+- requests : HTTP lib
+- zbar : QR code reader lib
+
+
+requests
+```
+sudo pip install requests
+```
+
+zbar
+```
+sudo apt-get install libzbar-dev  
+sudo pip install zbar
 ```
 
 ### 6. サンプルの実行
@@ -81,19 +98,19 @@ roslaunch onigiri_war run_all.launch
 
 ロボットを自律移動させ１対１で打ち合うゲームです。
 
-主砲の代わりに正面のカメラで的のQRコードを読み取ります。
+主砲の代わりに正面のカメラで的のQRコードを読み取ります。　←　QRじゃないかも
 
 QRコードを読み取ったIDを審判サーバーに提出すると、その的を撃ち落としたということになります。
 
 ### ターゲット
 
-ターゲットは直径１０ｃｍの円形です。
+ターゲットは直径１０ｃｍの円形です。　????
 
 中心にQRコードが印刷されています。
 
-機体に取り付けるターゲットと、フィールどに設置されたターゲットがあり、機体のターゲットは赤、フィールドのターゲットは青色をしています。
+機体に取り付けるターゲットと、フィールどに設置されたターゲットがあり、機体のターゲットは緑、フィールドのターゲットは青色をしています。
 
-**機体のターゲット**は下の画像のように左右１枚ずつ、背後１枚の計**３枚**。**フィールドのターゲット**は点対称に**６枚**設置します。
+**機体のターゲット**は下の画像のように左右１枚ずつ、背後１枚の計**3枚**。**フィールドのターゲット**は点対称に**12枚**設置します。
 
 **ターゲット画像準備中**
 ![demo](onigiri_war_target.gif)
@@ -104,12 +121,18 @@ QRコードを読み取ったIDを審判サーバーに提出すると、その�
 
 配点
 - 背後    ： 勝利確定
-- 左右    ： ３ポイント
+- 左右    ： 5ポイント
 - フィールド ：１ポイント
 
 ＊＊制限時間３分間＊＊以内に１本勝ちまたは終了時にポイントが多い方の勝利となります。両者同点の場合は、最終ポイントを獲得した時刻の早い方の勝利となります。両者ポイント無しの場合はじゃんけんで勝敗を決めます。
 
-通常のキャンディは赤色で、とると1ポイント加算されます。スペシャルキャンディは黄色で、とると5ポイント加算されます。
+10回間違えたら死亡
+
+ドクターストップあり(審判が判断)
+
+リトライは?
+開始15秒はやり直しの権利あり。(各チーム1回のみ)(インターバル1分間)
+
 
 ### フィールド
 フィールドは**3.5m**四方の壁で囲われた空間です。お弁当箱をモチーフにしています。
@@ -153,6 +176,44 @@ onigiri_war/
 |-README.md : これ
 ```
 ↑ディレクトリと特に重要なファイルのみ説明しています。
+
+
+=======
+## その他
+### カメラの露光時間の設定
+QRコード認識の時に画像ぶれにより認識精度が落ちないように設定が必要
+
+#### Webカメラの場合
+ターミナルを開いて以下を実行
+```
+v4l2-ctl -c exposure_auto=1
+v4l2-ctl -c exposure_absolute=20
+```
+
+exposure_auto=1で露光の調整をマニュアルに変更し、exposure_absolute=20で露光時間を設定
+
+#### RealSenseの場合
+~/realsense/realsense_camera/launch/includes/nodelet_rgbd_launch.xmlを開き、以下の該当箇所を探す。
+```
+<node pkg="nodelet" type="nodelet" name="driver"
+        args="load realsense_camera/$(arg camera_type)Nodelet $(arg manager)">
+```
+        
+この直下に以下の内容を記載。
+```
+<param name="color_enable_auto_exposure" value="0"/>
+<param name="color_exposure" value="39"/>
+```
+#### 注意点
+環境の明るさにより画像が暗くなりすぎるので、環境により適宜調整が必要
+
+### AR認識ライブラリarucoの導入
+以下を実行
+```
+sudo pip install --upgrade pip
+sudo pip install opencv-python
+sudo pip install opencv-contrib-python
+```
 
 ## 動作環境
 - OS  : Ubuntu 14.04

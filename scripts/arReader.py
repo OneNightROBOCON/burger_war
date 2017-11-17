@@ -8,6 +8,9 @@ from cv_bridge import CvBridge, CvBridgeError
 import cv2
 import numpy as np
 
+#20171024
+import zbar
+import time
 
 class QrReader(object):
 
@@ -16,10 +19,12 @@ class QrReader(object):
         self.bridge = CvBridge()
 
         # camera subscriver
-        self.image_sub = rospy.Subscriber('/camera/rgb/image_raw', Image, self.imageCallback, queue_size=1)
-
+        #self.image_sub = rospy.Subscriber('/image_raw', Image, self.imageCallback, queue_size=1)
+        self.image_sub = rospy.Subscriber('/image_raw', Image, self.imageCallback, queue_size=1)
         # qr reader lib
         self.reader = libqr.QrReader()
+
+        
 
         # publish qr_val
         self.qr_val_pub = rospy.Publisher('qr_val', String, queue_size=1)
@@ -36,8 +41,31 @@ class QrReader(object):
 
         #im = self.crop(im)
 
-        # read QR code
+        # read AR code
+        #Start
+        #Add by T.Okada 20171108
+        aruco = cv2.aruco
+        dictionary = aruco.getPredefinedDictionary(aruco.DICT_7X7_50)
+        corners, ids, rejectedImgPoints = aruco.detectMarkers(im, dictionary)
+        aruco.drawDetectedMarkers(im,corners,ids)
+        if ids is not None:
+            for i in ids:
+                self.qr_val_pub.publish(str(i[0]))
+        
+        im_msg = self.bridge.cv2_to_imgmsg(im, "bgr8")
+        self.qr_img_pub.publish(im_msg)
+        #End
+
+        #cv2.imshow("Capture", im)
+        #cv2.waitKey(33)
+        #im_msg = self.bridge.cv2_to_imgmsg(im, "bgr8")
+        #self.qr_img_pub.publish(im_msg)
+        #start = time.time()
+        """
         qrs = self.reader.readQr(im)
+
+        #elapsed_time = time.time() - start
+        #print ("elapsed_time:{0}".format(elapsed_time) + "[sec]")
         if qrs:
             print(qrs)
         for qr in qrs:
@@ -45,14 +73,13 @@ class QrReader(object):
             pts = np.array(qr["pos"], np.int32)
             pts = pts.reshape((-1,1,2))
             cv2.polylines(im,[pts],True,(255,0,0) , 10)
-
             # pub qr_val
             str = qr["val"]
             self.qr_val_pub.publish(str)
-
+        
         im_msg = self.bridge.cv2_to_imgmsg(im, "bgr8")
         self.qr_img_pub.publish(im_msg)
-
+        """
         #cv2.imshow("Capture", im)
         #cv2.waitKey(33)
     def crop(self, im):
