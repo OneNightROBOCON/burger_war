@@ -73,10 +73,11 @@ class QrVal(object):
 if __name__ == "__main__":
     rospy.init_node("send_qr_to_judge")
 
-    # TODO setting from launch file
-    JUDGE_URL = 'http://127.0.0.1:5000/submits'
-    PLAYER_NAME= 'jiro'
-    SIDE = 'r'
+    # set param from launch param
+    JUDGE_URL = rospy.get_param('~judge_url', 'http://127.0.0.1:5000/submits')
+    PLAYER_NAME = rospy.get_param('~player_name', 'NoName')
+    SIDE = rospy.get_param('~side', 'r')
+
     INIT_CODE = '0000'
 
     qr = QrVal(JUDGE_URL, SIDE, PLAYER_NAME, INIT_CODE)
