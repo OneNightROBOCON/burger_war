@@ -12,7 +12,11 @@
   <node pkg="onigiri_war" type="arReader.py" name="ar_reader" output="screen"/>
 
 <!-- send target ID to judge server -->
-  <node pkg="onigiri_war" type="sendQrToJudge.py" name="send_qr_to_judge" output="screen"/>
+  <node pkg="onigiri_war" type="sendQrToJudge.py" name="send_qr_to_judge" output="screen">
+    <param name="judge_url" value="http://127.0.0.1:5000/submits" />
+    <param name="player_name" value="roborobo" />
+    <param name="side" value="r" />
+  </node>
 
 <!-- robot controller -->
   <!-- wall run -->
