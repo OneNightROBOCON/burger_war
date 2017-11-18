@@ -6,19 +6,19 @@ import requests
 import json
 
 
-class QrVal(object):
+class TargetId(object):
 
     def __init__(self, judge_url, side, player_name, init_code='0000'):
-        # qr val subscriver
-        self.qr_val_sub = rospy.Subscriber('/qr_val', String, self.qrValCallback)
+        # target ID  val subscriver
+        self.target_id_sub = rospy.Subscriber('/target_id', String, self.targetIdCallback)
         self.judge_url = judge_url
         self.historys = []
         self.side = side
         self.player_name = player_name
         self.init_code = init_code
 
-    def sendToJudge(self, qr_val):
-        data = {"name": self.player_name, "side": self.side, "id": qr_val}
+    def sendToJudge(self, target_id):
+        data = {"name": self.player_name, "side": self.side, "id": target_id}
         res = requests.post(self.judge_url,
                             json.dumps(data),
                             headers={'Content-Type': 'application/json'}
@@ -31,7 +31,7 @@ class QrVal(object):
         except:
             print("Requests Error Please Check URL " + self.judge_url)
         else:
-            print("Send " + self.init_code +  "as init code To " + self.judge_url)
+            print("Send " + self.init_code + "as init code To " + self.judge_url)
 
     def lengthTo4(self, string):
         '''
@@ -56,22 +56,22 @@ class QrVal(object):
             print(string)
             return False
 
-    def qrValCallback(self, data):
-        qr_val = data.data
-        qr_val = self.lengthTo4(qr_val)
-        if qr_val in self.historys:
+    def targetIdCallback(self, data):
+        target_id = data.data
+        target_id = self.lengthTo4(target_id)
+        if target_id in self.historys:
             return
         try:
-            res = self.sendToJudge(qr_val)
+            res = self.sendToJudge(target_id)
         except:
-            print("Try Send " + qr_val + " but, Requests Error Please Check URL " + self.judge_url)
+            print("Try Send " + target_id + " but, Requests Error Please Check URL " + self.judge_url)
         else:
-            print("Send " + qr_val + " To " + self.judge_url)
-            self.historys.append(qr_val)
+            print("Send " + target_id + " To " + self.judge_url)
+            self.historys.append(target_id)
 
 
 if __name__ == "__main__":
-    rospy.init_node("send_qr_to_judge")
+    rospy.init_node("send_id_to_judge")
 
     # set param from launch param
     JUDGE_URL = rospy.get_param('~judge_url', 'http://127.0.0.1:5000/submits')
@@ -80,6 +80,6 @@ if __name__ == "__main__":
 
     INIT_CODE = '0000'
 
-    qr = QrVal(JUDGE_URL, SIDE, PLAYER_NAME, INIT_CODE)
-    qr.sendInitCode()
+    target_id = TargetId(JUDGE_URL, SIDE, PLAYER_NAME, INIT_CODE)
+    target_id.sendInitCode()
     rospy.spin()
