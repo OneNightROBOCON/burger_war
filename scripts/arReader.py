@@ -5,7 +5,6 @@ from sensor_msgs.msg import Image
 from std_msgs.msg import String
 from cv_bridge import CvBridge, CvBridgeError
 import cv2
-import numpy as np
 
 
 class QrReader(object):
@@ -15,7 +14,6 @@ class QrReader(object):
         self.bridge = CvBridge()
 
         # camera subscriver
-        #self.image_sub = rospy.Subscriber('/image_raw', Image, self.imageCallback, queue_size=1)
         self.image_sub = rospy.Subscriber('/image_raw', Image, self.imageCallback, queue_size=1)
 
         # publish qr_val
@@ -31,13 +29,11 @@ class QrReader(object):
         except CvBridgeError as e:
             print(e)
 
-        #im = self.crop(im)
-
         # read AR code
         aruco = cv2.aruco
         dictionary = aruco.getPredefinedDictionary(aruco.DICT_7X7_50)
         corners, ids, rejectedImgPoints = aruco.detectMarkers(im, dictionary)
-        aruco.drawDetectedMarkers(im,corners,ids)
+        aruco.drawDetectedMarkers(im, corners, ids)
         if ids is not None:
             for i in ids:
                 self.qr_val_pub.publish(str(i[0]))
@@ -45,7 +41,8 @@ class QrReader(object):
         im_msg = self.bridge.cv2_to_imgmsg(im, "bgr8")
         self.qr_img_pub.publish(im_msg)
 
-if __name__=="__main__":
-    rospy.init_node("qr_reader")
+
+if __name__ == "__main__":
+    rospy.init_node("ar_reader")
     qr = QrReader()
     rospy.spin()
