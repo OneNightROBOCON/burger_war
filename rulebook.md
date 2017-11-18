@@ -14,7 +14,7 @@
 ロボットは完全自律とし、スタート後は手動でのいかなる操作も禁止します。
 
 ## フィールド
-**ターゲット配置**
+**フィールド図面**
 ![demo](onigiri_war_target.gif)
 
 **3.5m**四方の壁で囲われたフィールド内で競技を行う。
@@ -59,7 +59,7 @@
 ![demo](onigiri_war_target.gif)
 
 **ターゲット配置**
-![demo](onigiri_war_target.gif)
+![target_place](doc/image/onigiri_judge.jpg)
 
 ターゲットは直径12ｃｍの円形、中心にARマーカーを印刷している。
 

@@ -80,7 +80,7 @@ catkin_make
 ### 7. サンプルの実行
 サンプルの実行します。うまく行けばインストール終了です。
 
-```[Qiita](http://qiita.com)
+```
 roslaunch onigiri_war run_all.launch
 ```
 
