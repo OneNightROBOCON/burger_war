@@ -9,12 +9,14 @@ OneNightROBOCON競技「onigiri war」プロジェクト
 
 
 ## 目次
-- インストール
 - ルール
+- インストール
 - ファイル構成
 - その他
 - 動作環境
 
+## ルール
+大会のルールは[rulebook.md](rulebook.md)を参照
 
 ## インストール
 
@@ -78,12 +80,10 @@ catkin_make
 ### 7. サンプルの実行
 サンプルの実行します。うまく行けばインストール終了です。
 
-```
+```[Qiita](http://qiita.com)
 roslaunch onigiri_war run_all.launch
 ```
 
-## ルール
-大会のルールは`rulebook.md`を参照
 
 ## ファイル構成
 各ディレクトリの役割と、特に参加者に重要なファイルについての説明
