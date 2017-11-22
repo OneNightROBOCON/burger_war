@@ -16,7 +16,8 @@ FIND_PACKAGE(OpenCV REQUIRED)
 INCLUDE(FindPkgConfig)
 
 SET(ROS_BUILD_TYPE Release)
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11 -march=core-avx-i -O2")
+#SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11 -march=core-avx-i -O2")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11 -O2")
 catkin_package()
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
