@@ -68,6 +68,18 @@ requests
 sudo pip install requests
 ```
 
+aruco (ARマーカー読み取りライブラリ）
+
+opencv必要なのでrosをinstallしてからインストールしてください。
+```
+cd Downloads/aruco-2.0.14
+mkdir build
+cd build
+cmake ..
+make
+sudo make install 
+```
+
 ### 6. make
 
 ```
@@ -75,7 +87,10 @@ cd ~/catkin_ws
 catkin_make
 
 ```
-
+うまく行かない場合、下記を試してみてください
+```
+catkin_make --pkg ros_aruco -DARUCO_PATH=/usr/local  
+```
 
 ### 7. サンプルの実行
 サンプルの実行します。うまく行けばインストール終了です。
