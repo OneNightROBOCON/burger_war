@@ -14,8 +14,6 @@
 ロボットは完全自律とし、スタート後は手動でのいかなる操作も禁止します。
 
 ## フィールド
-**フィールド図面**
-![demo](onigiri_war_target.gif)
 
 **3.5m**四方の壁で囲われたフィールド内で競技を行う。
 競技フィールド（以下、お弁当箱）は、お弁当箱をモチーフにしている。
@@ -56,7 +54,7 @@
 ## ターゲット
 
 **ターゲット画像**
-![demo](onigiri_war_target.gif)
+![target](doc/image/arMarker.jpg)
 
 **ターゲット配置**
 ![target_place](doc/image/onigiri_judge.jpg)
