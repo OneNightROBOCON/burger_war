@@ -68,9 +68,13 @@ requests
 sudo pip install requests
 ```
 
-aruco (ARマーカー読み取りライブラリ）
+- aruco (ARマーカー読み取りライブラリ）
 
 opencv必要なのでrosをinstallしてからインストールしてください。
+
+以下のURLからaruco-2.0.19.zipをダウンロード　※バージョンは都度変更する可能性あり
+
+https://sourceforge.net/projects/aruco/files/2.0.19/
 ```
 cd Downloads/aruco-2.0.14
 mkdir build
@@ -80,6 +84,16 @@ make
 sudo make install 
 ```
 
+####　5.1　PC上でシミュレーションする場合
+LetsBotコミュニティのOneNightROBOCONグループで共有されている
+`rulo_sim_package.tar.gz`
+を支持に従い`src`以下に展開
+
+ロボットモデルをコピー
+```
+cp -a ~/catkin_ws/src/ros_simulator/models ~/.gazebo/
+```
+
 ### 6. make
 
 ```
@@ -87,7 +101,8 @@ cd ~/catkin_ws
 catkin_make
 
 ```
-うまく行かない場合、下記を試してみてください
+
+arucoのmakeがうまく行かない場合、下記を試してみてください
 ```
 catkin_make --pkg ros_aruco -DARUCO_PATH=/usr/local  
 ```
@@ -95,27 +110,53 @@ catkin_make --pkg ros_aruco -DARUCO_PATH=/usr/local  
 ### 7. サンプルの実行
 サンプルの実行します。うまく行けばインストール終了です。
 
+実機の場合
 ```
-roslaunch onigiri_war run_all.launch
+roslaunch onigiri_war setup.launch
+roslaunch onigiri_war action.launch
 ```
 
+PCでGazeboでシミュレーションする場合
+```
+roslaunch onigiri_war setup_sim.launch
+roslaunch onigiri_war action.launch
+```
+
+PCにUSBカメラをつないでマーカー読み取りのみ実験する場合
+```
+roslaunch onigiri_war run_with_usbcam.launch
+```
+
+PCにRealSenceをつないでマーカー読み取りのみ実験する場合
+```
+roslaunch onigiri_war run_with_realsense.launch
+```
 
 ## ファイル構成
 各ディレクトリの役割と、特に参加者に重要なファイルについての説明
 
 下記のようなフォルダ構成になっています。  
-sample では `run_all.launch` ですべてのノードが立ち上がるようになっています。
-走行制御はランダム走行する`randomBot.py`が実装されています。
+sample では 
+- 実機で動かす場合 `setup.launch` 
+- PC上のシミュレータで動かす場合 `setup.launch` 
+でセンサなどが立ち上がりロボットを動かす準備ができるようになっています。
+
+`action.launch`でロボットに移動する指令をします。
+
+走行制御はかべぎわ走行する`opt_run.py`が実装されています。
 
 ```
 onigiri_war/
 |-launch/        : launchファイルの置き場
-| |-run_all.launch  ロボットを起動するlaunchファイル
+| |-setup.launch  ロボットを起動するlaunchファイル
+| |-setup_sim.launch  Gazeboシミュレータ上でロボットを起動するlaunchファイル
+| |-action.launch  ロボットを動かすlaunchファイル
+| |-run_with_usbcam.launch  ロボットを動かすlaunchファイル
 |
 |- scripts/      : pythonファイルの置き場
-| |-sendQrToJudge.py : Judgeサーバーに読み取ったターゲットIDを提出するノード。
-| |-dummyQrReader.py : ターゲットID読み取りノードとしてふるまうダミー（テスト用）。
-| |-randomBot.py   : ランダム走行するサンプルプログラム
+| |-sendIdToJudge.py : Judgeサーバーに読み取ったターゲットIDを提出するノード。
+| |-dummyArReader.py : ターゲットID読み取りノードとしてふるまうダミー（テスト用）。
+| |-opt_run.py   : かべぎわ走行するサンプルプログラム
 |
 |- doc/      : ドキュメントファイルの置き場
 | |-rulebook.md : 競技のルールブック
