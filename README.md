@@ -76,7 +76,7 @@ opencv必要なのでrosをinstallしてからインストールしてくださ�
 
 https://sourceforge.net/projects/aruco/files/2.0.19/
 ```
-cd Downloads/aruco-2.0.14
+cd Downloads/aruco-2.0.19
 mkdir build
 cd build
 cmake ..
