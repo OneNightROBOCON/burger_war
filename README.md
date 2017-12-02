@@ -4,13 +4,11 @@ OneNightROBOCON競技「onigiri war」プロジェクト
 ロボットで戦車対戦をするようなゲームです。
 大砲で撃つ代わりに、カメラでターゲットのARマーカーを読み取ります。
 
-**画像準備中**
-![demo](onigiri_war.gif)
-
 
 ## 目次
 - ルール
 - インストール
+- 審判サーバー
 - ファイル構成
 - その他
 - 動作環境
@@ -68,17 +66,38 @@ requests
 sudo pip install requests
 ```
 
-aruco (ARマーカー読み取りライブラリ）
+- aruco (ARマーカー読み取りライブラリ）
 
 opencv必要なのでrosをinstallしてからインストールしてください。
+
+以下のURLからaruco-2.0.19.zipをダウンロード　※バージョンは都度変更する可能性あり
+
+https://sourceforge.net/projects/aruco/files/2.0.19/
 ```
-cd Downloads/aruco-2.0.14
+cd Downloads/aruco-2.0.19
 mkdir build
 cd build
 cmake ..
 make
 sudo make install 
 ```
+
+#### 5.1　PC上でシミュレーションする場合
+LetsBotコミュニティのOneNightROBOCONグループで共有されている
+`rulo_sim_package.tar.gz`
+を支持に従い`src`以下に展開
+
+ロボットモデルをコピー
+```
+cp -a ~/catkin_ws/src/ros_simulator/models ~/.gazebo/
+```
+
+**シミュレータの注意点**
+- フィールドにARマーカーを配置が未実装です.
+Gazeboに明るい方協力歓迎します。
+- 赤外線距離センサトピックと超音波センサトピックは実機と形式が違います。
+実機は左右のセンサを別トピックでpublishしていますが、
+シミュレーションではleft,rightのタグをつけて１つのトピックでpublishしています。
 
 ### 6. make
 
@@ -87,7 +106,8 @@ cd ~/catkin_ws
 catkin_make
 
 ```
-うまく行かない場合、下記を試してみてください
+
+arucoのmakeがうまく行かない場合、下記を試してみてください
 ```
 catkin_make --pkg ros_aruco -DARUCO_PATH=/usr/local  
 ```
@@ -95,34 +115,70 @@ catkin_make --pkg ros_aruco -DARUCO_PATH=/usr/local  
 ### 7. サンプルの実行
 サンプルの実行します。うまく行けばインストール終了です。
 
+sample では
+- 実機で動かす場合 `setup.launch` 
+- PC上のシミュレータで動かす場合 `setup.launch` 
+でセンサなどが立ち上がりロボットを動かす準備ができるようになっています。
+
+`action.launch`でロボットに移動を指令するノードが立ち上がります。
+
+走行制御はランダム走行する`randomRulo.py`が実装されています。
+
+#### 実機の場合
 ```
-roslaunch onigiri_war run_all.launch
+roslaunch onigiri_war setup.launch
+roslaunch onigiri_war action.launch
 ```
 
+#### PCでGazeboでシミュレーションする場合
+```
+roslaunch onigiri_war setup_sim.launch
+roslaunch onigiri_war action.launch
+```
+
+#### PCにUSBカメラをつないでマーカー読み取りのみ実験する場合
+```
+roslaunch onigiri_war run_with_usbcam.launch
+```
+
+#### PCにRealSenceをつないでマーカー読み取りのみ実験する場合
+```
+roslaunch onigiri_war run_with_realsense.launch
+```
+## 審判サーバー
+審判サーバーは下記のリポジトリで公開しています。
+https://github.com/OneNightROBOCON/onigiri_war_judge
 
 ## ファイル構成
 各ディレクトリの役割と、特に参加者に重要なファイルについての説明
 
 下記のようなフォルダ構成になっています。  
-sample では `run_all.launch` ですべてのノードが立ち上がるようになっています。
-走行制御はランダム走行する`randomBot.py`が実装されています。
+
 
 ```
 onigiri_war/
-|-launch/        : launchファイルの置き場
-| |-run_all.launch  ロボットを起動するlaunchファイル
+|-ros_aruco/ : ARマーカーの
 |
-|- scripts/      : pythonファイルの置き場
-| |-sendQrToJudge.py : Judgeサーバーに読み取ったターゲットIDを提出するノード。
-| |-dummyQrReader.py : ターゲットID読み取りノードとしてふるまうダミー（テスト用）。
-| |-randomBot.py   : ランダム走行するサンプルプログラム
-|
-|- doc/      : ドキュメントファイルの置き場
-| |-rulebook.md : 競技のルールブック
-|
-|- src/          : cppファイルの置き場
-|
-|-README.md : これ
+|-onigiri_war/
+  |-launch/        : launchファイルの置き場
+  | |-setup.launch  初期化、センサの起動などするlaunchファイル
+  | |-setup_sim.launch  Gazeboシミュレータ上でロボットを起動、初期化するlaunchファイル
+  | |-action.launch  ロボットを動かすlaunchファイル cmd_vel
+  | |-run_with_usbcam.launch  ロボットを動かすlaunchファイル
+  |
+  |- scripts/      : pythonファイルの置き場
+  | |-sendIdToJudge.py : Judgeサーバーに読み取ったターゲットIDを提出するノード。
+  | |-dummyArReader.py : ターゲットID読み取りノードとしてふるまうダミー（テスト用）。
+  | |-randomRulo.py : ランダム走行するサンプルプログラム
+  | |-abstractRulo.py : ロボットの抽象クラス
+  | |-opt_run.py   : かべぎわ走行するサンプルプログラム
+  |
+  |- doc/      : ドキュメントファイルの置き場
+  | |-rulebook.md : 競技のルールブック
+  |
+  |- world/ : シミュレータ環境置き場
+  |-rulebook.md : ルールブック
+  |-README.md : これ
 ```
 ↑ディレクトリと特に重要なファイルのみ説明しています。
 
