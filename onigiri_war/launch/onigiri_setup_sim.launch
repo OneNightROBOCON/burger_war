@@ -1,0 +1,57 @@
+<launch>
+    <!-- reamp topic name to real onigiri bot -->
+    <remap from="/cmd_vel" to="/Rulo/cmd_vel"/>
+    <remap from="/Rulo/bumper" to="/mobile_base/event/bumper" /> 
+    <remap from="/Rulo/camera/camera_info" to="/camera/rgb/camera_info"/>
+    <remap from="/Rulo/camera/image_raw" to="/camera/rgb/image_raw"/>
+    <remap from="/Rulo/camera/image_raw/compressed" to="/camera/rgb/image_raw/compressed"/>
+    <remap from="/Rulo/camera/image_raw/compressed/parameter_descriptions" to="/camera/rgb/image_raw/compressed/parameter_descriptions"/>
+    <remap from="/Rulo/camera/image_raw/compressed/parameter_updates" to="/camera/rgb/image_raw/compressed/parameter_updates"/>
+    <remap from="/Rulo/camera/image_raw/compressedDepth" to="/camera/rgb/image_raw/compressedDepth"/>
+    <remap from="/Rulo/camera/image_raw/compressedDepth/parameter_descriptions" to="/camera/rgb/image_raw/compressedDepth/parameter_descriptions"/>
+    <remap from="/Rulo/camera/image_raw/compressedDepth/parameter_updates" to="/camera/rgb/image_raw/compressedDepth/parameter_updates"/>
+    <remap from="/Rulo/camera/image_raw/theora" to="/camera/rgb/image_raw/theora"/>
+    <remap from="/Rulo/camera/image_raw/theora/parameter_descriptions" to="/camera/rgb/image_raw/theora/parameter_descriptions"/>
+    <!--
+    <remap from="/Rulo/optical_ranging_sensor" to=""/>
+    <remap from="/Rulo/ultrasonic_sensor" to=""/>
+    -->
+
+<!-- make world -->
+  <!--  <arg name="world_file"  default="$(env TURTLEBOT_GAZEBO_WORLD_FILE)"/> -->
+  <arg name="world_file"  default="$(find onigiri_war)/world/field_v0.world"/>
+  <arg name="gui" default="true"/>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="use_sim_time" value="true"/>
+    <arg name="debug" value="false"/>
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="world_name" value="$(arg world_file)"/>
+  </include>
+
+
+  <!-- spawn the robot -->
+
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find rulo_simulation)/Rulo/Rulo.urdf -urdf -x 0 -y -0.4856 -z 0.249897 -Y 1.5950 -model Rulo">
+  </node>
+
+  <node pkg="tf" type="static_transform_publisher" name="laser_base_transformation1" args="0.275 0 0 0 0 0 /base_link /laser_link 50"/>
+
+  <node pkg="tf" type="static_transform_publisher" name="laser_base_transformation3" args="0.0 0 0 0 0 0 /base_link /base_footprint 10"/>
+
+<!-- ar reader -->
+  <node pkg="ros_aruco" type="ros_aruco" name="ros_aruco" output="screen">
+    <remap from="image_raw" to="/camera/rgb/image_raw"/>
+    <param name="camera_param_path" value="$(find ros_aruco)/data/ost.yaml" type="str"/>
+    <param name="debug_view" value="true" type="bool"/>
+  </node>
+
+
+<!-- send target ID to judge server -->
+  <node pkg="onigiri_war" type="sendIdToJudge.py" name="send_id_to_judge" output="screen">
+    <param name="judge_url" value="http://127.0.0.1:5000/submits" />
+    <param name="player_name" value="roborobo" />
+    <param name="side" value="r" />
+  </node>
+
+</launch>

@@ -1,0 +1,10 @@
+<launch>
+<!-- robot controller -->
+  <!-- rulo slam package -->
+  <!--
+  <include file="$(find navi_param)/rulo_navi.launch" />
+  -->
+  <!-- wall run -->
+  <node pkg="onigiri_war" type="randomRulo.py" name="randomRulo" output="screen"/>
+</launch>
+
