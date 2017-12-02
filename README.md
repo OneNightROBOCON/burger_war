@@ -82,7 +82,7 @@ make
 sudo make install 
 ```
 
-####　5.1　PC上でシミュレーションする場合
+#### 5.1　PC上でシミュレーションする場合
 LetsBotコミュニティのOneNightROBOCONグループで共有されている
 `rulo_sim_package.tar.gz`
 を支持に従い`src`以下に展開
