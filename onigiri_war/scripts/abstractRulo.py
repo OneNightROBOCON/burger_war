@@ -4,8 +4,8 @@ import rospy
 from abc import ABCMeta, abstractmethod
 from geometry_msgs.msg import Twist
 from rulo_msgs.msg import Bumper
-from gazebo_msgs.msg import ModelStates 
 from sensor_msgs.msg import Image
+from std_msgs.msg import String
 from cv_bridge import CvBridge, CvBridgeError
 import cv2
 
@@ -27,7 +27,7 @@ class AbstractRulo(object):
 
         # velocity publisher
         self.vel_pub = rospy.Publisher('/Rulo/cmd_vel', Twist,queue_size=1)
-
+	self.mode_pub = rospy.Publisher('/mobile_base/command/mode', String,queue_size=1)
         # bumper subscrivre
         self.bumper_sub = rospy.Subscriber('/mobile_base/event/bumper', Bumper, self.bumperCallback)
 
