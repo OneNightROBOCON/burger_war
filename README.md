@@ -126,13 +126,13 @@ sample では
 
 #### 実機の場合
 ```
-roslaunch onigiri_war setup.launch
+roslaunch onigiri_war onigiri_setup.launch
 roslaunch onigiri_war action.launch
 ```
 
 #### PCでGazeboでシミュレーションする場合
 ```
-roslaunch onigiri_war setup_sim.launch
+roslaunch onigiri_war onigiri_setup_sim.launch
 roslaunch onigiri_war action.launch
 ```
 
