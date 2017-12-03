@@ -1,4 +1,7 @@
 <launch>
+<!-- set manual -->
+<node pkg="rostopic" type="rostopic" name="manual_set" args="pub /mobile_base/command/mode std_msgs/String 'manual'" output="screen"/>
+
 <!-- camera -->
   <!-- realsense -->
   <include file="$(find realsense_camera)/launch/r200_nodelet_rgbd.launch" />
@@ -18,7 +21,7 @@
   <node pkg="ros_aruco" type="ros_aruco" name="ros_aruco" output="screen">
     <remap from="image_raw" to="/camera/rgb/image_raw"/>
     <param name="camera_param_path" value="$(find ros_aruco)/data/ost.yaml" type="str"/>
-    <param name="debug_view" value="true" type="bool"/>
+    <param name="debug_view" value="false" type="bool"/>
   </node>
 
 <!-- send target ID to judge server -->

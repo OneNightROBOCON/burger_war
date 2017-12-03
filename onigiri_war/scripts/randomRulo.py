@@ -27,26 +27,25 @@ class RandomBot(AbstractRulo):
             if self.left_bumper or self.right_bumper:
                 update_time = time.time()
                 rospy.loginfo('bumper hit!!')
-                x = 0
-                th = 3
-                control_speed = -1
-                control_turn = 0
-            
+                str_mode = "manual"
+		self.mode_pub.publish(str_mode)
+		x = 0
+                th = 1
+
             elif time.time() - update_time > UPDATE_FREQUENCY:
                 update_time = time.time()
-                
                 value = random.randint(1,1000)
                 if value < 500:
-                    x = 1
+                    x = 0.2
                     th = 0
 
                 elif value < 750:
                     x = 0
-                    th = 3
+                    th = 1
 
                 elif value < 1000:
                     x = 0
-                    th = -3
+                    th = -1
                 else:
                     x = 0
                     th = 0
