@@ -157,7 +157,7 @@ https://github.com/OneNightROBOCON/onigiri_war_judge
 
 ```
 onigiri_war/
-|-ros_aruco/ : ARマーカーの
+|-ros_aruco/ : ARマーカーの読み取りパッケージ
 |
 |-onigiri_war/
   |-launch/        : launchファイルの置き場
