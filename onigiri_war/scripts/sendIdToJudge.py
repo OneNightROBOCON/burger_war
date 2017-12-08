@@ -4,6 +4,7 @@ import rospy
 from std_msgs.msg import String
 import requests
 import json
+from time import sleep
 
 
 class TargetId(object):
@@ -30,8 +31,11 @@ class TargetId(object):
             res = self.sendToJudge(self.init_code)
         except:
             print("Requests Error Please Check URL " + self.judge_url)
+            return False
         else:
-            print("Send " + self.init_code + "as init code To " + self.judge_url)
+            print("Send " + self.init_code + " as init code To " + self.judge_url)
+            print(res)
+            return res
 
     def lengthTo4(self, string):
         '''
@@ -62,12 +66,15 @@ class TargetId(object):
         if target_id in self.historys:
             return
         try:
-            res = self.sendToJudge(target_id)
+            resp_raw = self.sendToJudge(target_id)
         except:
             print("Try Send " + target_id + " but, Requests Error Please Check URL " + self.judge_url)
         else:
+            resp = json.loads(resp_raw.text)
             print("Send " + target_id + " To " + self.judge_url)
-            self.historys.append(target_id)
+            print(resp)
+            if resp["error"] == "no error" or resp["error"] == "ERR not mutch id":
+                self.historys.append(target_id)
 
 
 if __name__ == "__main__":
@@ -81,5 +88,6 @@ if __name__ == "__main__":
     INIT_CODE = '0000'
 
     target_id = TargetId(JUDGE_URL, SIDE, PLAYER_NAME, INIT_CODE)
-    target_id.sendInitCode()
+    while target_id.sendInitCode() == False:
+        sleep(1)
     rospy.spin()
