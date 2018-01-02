@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name="center_box">
+    <static>true</static>
+    <link name="link">
+      <collision name="collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.5 0.5 0.6</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry> <box> <size>0.5 0.5 0.6</size> </box> </geometry>
+        <material><script><name>Gazebo/Gray</name></script></material>
+      </visual>
+    </link>
+  </model>
+</sdf>
