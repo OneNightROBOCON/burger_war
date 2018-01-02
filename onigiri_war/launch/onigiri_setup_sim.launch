@@ -19,7 +19,7 @@
 
 <!-- make world -->
   <!--  <arg name="world_file"  default="$(env TURTLEBOT_GAZEBO_WORLD_FILE)"/> -->
-  <arg name="world_file"  default="$(find onigiri_war)/world/field_v0.world"/>
+  <arg name="world_file"  default="$(find onigiri_war)/world/onigiri_field.world"/>
   <arg name="gui" default="true"/>
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">

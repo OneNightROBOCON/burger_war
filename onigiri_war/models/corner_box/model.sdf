@@ -5,12 +5,12 @@
     <link name="link">
       <collision name="collision">
         <pose>0 0 0 0 0 0</pose>
-        <geometry><box><size>0.3 0.2 0.6</size></box></geometry>
+        <geometry><box><size>0.3 0.2 0.4</size></box></geometry>
       </collision>
       <visual name="visual">
         <pose>0 0 0 0 0 0</pose>
-        <geometry><box><size>0.3 0.2 0.6</size></box></geometry>
-        <material><script><name>Gazebo/Gray</name></script></material>
+        <geometry><box><size>0.3 0.2 0.4</size></box></geometry>
+        <material><script><name>Gazebo/White</name></script></material>
       </visual>
     </link>
   </model>
