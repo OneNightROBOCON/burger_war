@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<sdf version="1.5">
+  <model name="plate">
+    <static>true</static>
+    <link name="link">
+      <collision name="collision">
+        <pose>0 0 0 1.571 0 0</pose>
+        <geometry>
+            <cylinder>
+              <radius>0.06</radius>
+              <length>0.001</length>
+            </cylinder>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <pose>0 0 0 1.571 0 0</pose>
+        <geometry>
+            <cylinder>
+              <radius>0.06</radius>
+              <length>0.001</length>
+            </cylinder>
+        </geometry>
+        <material><script><name>Gazebo/Blue</name></script></material>
+      </visual>
+    </link>
+  </model>
+</sdf>
+

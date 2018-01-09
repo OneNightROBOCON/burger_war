@@ -17,12 +17,17 @@
   <pose>0 0 0.2 0 0 0</pose>
   <uri>model://center_box</uri>
 </include>
+<include>
+  <name>plate_@(tag_count)</name>
+  <pose>0 -0.2505 0.15 0 0 0</pose>
+  <uri>model://plate</uri>
+</include>
 <model name="box_@(box_count)_tag_@(tag_count)">
   <static>true</static>
-  <pose>0 -0.25 0.15 0 0 0</pose>
+  <pose>0 -0.251 0.15 0 0 0</pose>
   <link name="link">
     <visual name="visual">
-      <geometry><box><size>0.12 0.01 0.12</size></box></geometry>
+      <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
       <material>
         <script>
           <uri>model://corner_box/tags</uri>
@@ -33,12 +38,17 @@
   </link>
 </model>
 @{tag_count += 1}
+<include>
+  <name>plate_@(tag_count)</name>
+  <pose>0 0.2505 0.15 0 0 0</pose>
+  <uri>model://plate</uri>
+</include>
 <model name="box_@(box_count)_tag_@(tag_count)">
   <static>true</static>
-  <pose>0 0.25 0.15 0 0 0</pose>
+  <pose>0 0.251 0.15 0 0 0</pose>
   <link name="link">
     <visual name="visual">
-      <geometry><box><size>0.12 0.01 0.12</size></box></geometry>
+      <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
       <material>
         <script>
           <uri>model://corner_box/tags</uri>
@@ -49,12 +59,17 @@
   </link>
 </model>
 @{tag_count += 1}
+<include>
+  <name>plate_@(tag_count)</name>
+  <pose>-0.2505 0 0.15 0 0 1.571</pose>
+  <uri>model://plate</uri>
+</include>
 <model name="box_@(box_count)_tag_@(tag_count)">
   <static>true</static>
-  <pose>-0.25 0 0.15 0 0 1.571</pose>
+  <pose>-0.251 0 0.15 0 0 1.571</pose>
   <link name="link">
     <visual name="visual">
-      <geometry><box><size>0.12 0.01 0.12</size></box></geometry>
+      <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
       <material>
         <script>
           <uri>model://corner_box/tags</uri>
@@ -65,12 +80,17 @@
   </link>
 </model>
 @{tag_count += 1}
+<include>
+  <name>plate_@(tag_count)</name>
+  <pose>0.2505 0 0.15 0 0 1.571</pose>
+  <uri>model://plate</uri>
+</include>
 <model name="box_@(box_count)_tag_@(tag_count)">
   <static>true</static>
-  <pose>0.25 0 0.15 0 0 1.571</pose>
+  <pose>0.251 0 0.15 0 0 1.571</pose>
   <link name="link">
     <visual name="visual">
-      <geometry><box><size>0.12 0.01 0.12</size></box></geometry>
+      <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
       <material>
         <script>
           <uri>model://corner_box/tags</uri>
@@ -92,12 +112,17 @@
   <pose>@(x) @(y) 0.2 0 0 0</pose>
   <uri>model://corner_box</uri>
 </include>
+<include>
+  <name>plate_@(tag_count)</name>
+  <pose>@(x) @(y-0.105) 0.15 0 0 0</pose>
+  <uri>model://plate</uri>
+</include>
 <model name="box_@(box_count)_tag_@(tag_count)">
   <static>true</static>
-  <pose>@(x) @(y-0.1) 0.15 0 0 0</pose>
+  <pose>@(x) @(y-0.11) 0.15 0 0 0</pose>
   <link name="link">
     <visual name="visual">
-      <geometry><box><size>0.12 0.01 0.12</size></box></geometry>
+      <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
       <material>
         <script>
           <uri>model://corner_box/tags</uri>
@@ -108,12 +133,17 @@
   </link>
 </model>
 @{tag_count += 1}
+<include>
+  <name>plate_@(tag_count)</name>
+  <pose>@(x) @(y+0.105) 0.15 0 0 0</pose>
+  <uri>model://plate</uri>
+</include>
 <model name="box_@(box_count)_tag_@(tag_count)">
   <static>true</static>
-  <pose>@(x) @(y+0.1) 0.15 0 0 0</pose>
+  <pose>@(x) @(y+0.11) 0.15 0 0 0</pose>
   <link name="link">
     <visual name="visual">
-      <geometry><box><size>0.12 0.01 0.12</size></box></geometry>
+      <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
       <material>
         <script>
           <uri>model://corner_box/tags</uri>
