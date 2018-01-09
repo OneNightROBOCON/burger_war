@@ -135,6 +135,9 @@ roslaunch onigiri_war action.launch
 roslaunch onigiri_war onigiri_setup_sim.launch
 roslaunch onigiri_war action.launch
 ```
+![screenshot at 2018-01-09 23 52 12](https://user-images.githubusercontent.com/17049327/34726839-7ed4694e-f598-11e7-8e8e-2e0311b099d2.png)
+
+このようなフィールドが現れます
 
 #### PCにUSBカメラをつないでマーカー読み取りのみ実験する場合
 ```
