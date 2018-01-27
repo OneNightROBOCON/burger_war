@@ -92,9 +92,14 @@ LetsBotコミュニティのOneNightROBOCONグループで共有されている
 cp -a ~/catkin_ws/src/ros_simulator/models ~/.gazebo/
 ```
 
+このリポジトリのフィールド用のGAZEBOモデルにPATHを通す
+```
+export GAZEBO_MODEL_PATH=$HOME/catkin_ws/src/onigiri_war/onigiri_war/models/
+```
+毎回実行するのは面倒なので
+`~/.bashrc`に書いておくと便利です｡
+
 **シミュレータの注意点**
-- フィールドにARマーカーを配置が未実装です.
-Gazeboに明るい方協力歓迎します。
 - 赤外線距離センサトピックと超音波センサトピックは実機と形式が違います。
 実機は左右のセンサを別トピックでpublishしていますが、
 シミュレーションではleft,rightのタグをつけて１つのトピックでpublishしています。
