@@ -89,5 +89,5 @@ if __name__ == "__main__":
 
     target_id = TargetId(JUDGE_URL, SIDE, PLAYER_NAME, INIT_CODE)
     while not rospy.is_shutdown() and target_id.sendInitCode() == False:
-        sleep(1)
+        sleep(3)
     rospy.spin()
