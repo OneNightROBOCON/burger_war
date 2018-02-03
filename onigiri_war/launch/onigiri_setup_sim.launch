@@ -1,6 +1,5 @@
 <launch>
-    <!-- reamp topic name to real onigiri bot -->
-    <remap from="/cmd_vel" to="/Rulo/cmd_vel"/>
+    <!-- reamp topic name -->
     <remap from="/Rulo/bumper" to="/mobile_base/event/bumper" /> 
     <remap from="/Rulo/camera/camera_info" to="/camera/rgb/camera_info"/>
     <remap from="/Rulo/camera/image_raw" to="/camera/rgb/image_raw"/>
@@ -18,7 +17,6 @@
     -->
 
 <!-- make world -->
-  <!--  <arg name="world_file"  default="$(env TURTLEBOT_GAZEBO_WORLD_FILE)"/> -->
   <arg name="world_file"  default="$(find onigiri_war)/world/onigiri_field.world"/>
   <arg name="gui" default="true"/>
 
@@ -31,7 +29,6 @@
 
 
   <!-- spawn the robot -->
-
   <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find rulo_simulation)/Rulo/Rulo.urdf -urdf -x 0 -y -0.4856 -z 0.249897 -Y 1.5950 -model Rulo">
   </node>
 

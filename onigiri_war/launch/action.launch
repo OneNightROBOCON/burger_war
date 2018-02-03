@@ -4,7 +4,7 @@
   <!--
   <include file="$(find navi_param)/rulo_navi.launch" />
   -->
-  <!-- wall run -->
-  <node pkg="onigiri_war" type="randomRulo.py" name="randomRulo" output="screen"/>
+  <!-- random run -->
+  <node pkg="onigiri_war" type="randomRun.py" name="randomRun" output="screen"/>
 </launch>
 

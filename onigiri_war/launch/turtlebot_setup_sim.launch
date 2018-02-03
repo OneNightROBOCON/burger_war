@@ -1,4 +1,3 @@
-
 <launch>
 <!-- make world -->
   <arg name="world_file"  default="$(find onigiri_war)/world/onigiri_field.world"/>
@@ -35,8 +34,10 @@
         -unpause -urdf -param robot_description -model mobile_base"
   />
 
+  <node pkg="nodelet" type="nodelet" name="mobile_base_nodelet_manager" args="manager">
+    <remap from="cmd_vel_mux/input/teleop" to="/cmd_vel"/>
+  </node>
   <!-- Velocity muxer -->
-  <node pkg="nodelet" type="nodelet" name="mobile_base_nodelet_manager" args="manager"/>
   <node pkg="nodelet" type="nodelet" name="cmd_vel_mux"
         args="load yocs_cmd_vel_mux/CmdVelMuxNodelet mobile_base_nodelet_manager">
     <param name="yaml_cfg_file" value="$(find turtlebot_bringup)/param/mux.yaml"/>
