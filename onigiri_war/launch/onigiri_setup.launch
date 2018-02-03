@@ -1,6 +1,9 @@
 <launch>
+<!-- reamp topic name -->
+  <remap from="/Rulo/cmd_vel" to="/cmd_vel"/>
+
 <!-- set manual -->
-<node pkg="rostopic" type="rostopic" name="manual_set" args="pub /mobile_base/command/mode std_msgs/String 'manual'" output="screen"/>
+  <node pkg="rostopic" type="rostopic" name="manual_set" args="pub /mobile_base/command/mode std_msgs/String 'manual'" output="screen"/>
 
 <!-- camera -->
   <!-- realsense -->

@@ -2,6 +2,9 @@
 *.swp
 *.pyc
 
+onigiri_war_judge/log/*
+!.gitkeep
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
