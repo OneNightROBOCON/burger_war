@@ -10,7 +10,7 @@
 <include><uri>model://sun</uri></include>
 <include><uri>model://ground_plane</uri></include>
 @{box_count = 0}
-@{tag_count = 0}
+@{tag_count = 1}
 <!-- Centor BOX -->
 <include>
   <name>box_@(box_count)</name>
@@ -30,8 +30,7 @@
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
       <material>
         <script>
-          <uri>model://corner_box/tags</uri>
-          <name>@(str(tag_count).zfill(4))</name>
+          <uri>model://tags</uri> <name>@(str(tag_count).zfill(4))</name>
         </script>
       </material>
     </visual>
@@ -51,7 +50,7 @@
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
       <material>
         <script>
-          <uri>model://corner_box/tags</uri>
+          <uri>model://tags</uri>
           <name>@(str(tag_count).zfill(4))</name>
         </script>
       </material>
@@ -72,7 +71,7 @@
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
       <material>
         <script>
-          <uri>model://corner_box/tags</uri>
+          <uri>model://tags</uri>
           <name>@(str(tag_count).zfill(4))</name>
         </script>
       </material>
@@ -93,7 +92,7 @@
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
       <material>
         <script>
-          <uri>model://corner_box/tags</uri>
+          <uri>model://tags</uri>
           <name>@(str(tag_count).zfill(4))</name>
         </script>
       </material>
@@ -125,7 +124,7 @@
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
       <material>
         <script>
-          <uri>model://corner_box/tags</uri>
+          <uri>model://tags</uri>
           <name>@(str(tag_count).zfill(4))</name>
         </script>
       </material>
@@ -146,7 +145,7 @@
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
       <material>
         <script>
-          <uri>model://corner_box/tags</uri>
+          <uri>model://tags</uri>
           <name>@(str(tag_count).zfill(4))</name>
         </script>
       </material>
