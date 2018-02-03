@@ -88,6 +88,6 @@ if __name__ == "__main__":
     INIT_CODE = '0000'
 
     target_id = TargetId(JUDGE_URL, SIDE, PLAYER_NAME, INIT_CODE)
-    while target_id.sendInitCode() == False:
+    while not rospy.is_shutdown() and target_id.sendInitCode() == False:
         sleep(1)
     rospy.spin()

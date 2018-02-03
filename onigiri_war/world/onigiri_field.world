@@ -30,8 +30,7 @@
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
       <material>
         <script>
-          <uri>model://corner_box/tags</uri>
-          <name>0000</name>
+          <uri>model://tags</uri> <name>0000</name>
         </script>
       </material>
     </visual>
@@ -51,7 +50,7 @@
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
       <material>
         <script>
-          <uri>model://corner_box/tags</uri>
+          <uri>model://tags</uri>
           <name>0001</name>
         </script>
       </material>
@@ -72,7 +71,7 @@
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
       <material>
         <script>
-          <uri>model://corner_box/tags</uri>
+          <uri>model://tags</uri>
           <name>0002</name>
         </script>
       </material>
@@ -93,7 +92,7 @@
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
       <material>
         <script>
-          <uri>model://corner_box/tags</uri>
+          <uri>model://tags</uri>
           <name>0003</name>
         </script>
       </material>
@@ -125,7 +124,7 @@
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
       <material>
         <script>
-          <uri>model://corner_box/tags</uri>
+          <uri>model://tags</uri>
           <name>0004</name>
         </script>
       </material>
@@ -146,7 +145,7 @@
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
       <material>
         <script>
-          <uri>model://corner_box/tags</uri>
+          <uri>model://tags</uri>
           <name>0005</name>
         </script>
       </material>
@@ -174,7 +173,7 @@
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
       <material>
         <script>
-          <uri>model://corner_box/tags</uri>
+          <uri>model://tags</uri>
           <name>0006</name>
         </script>
       </material>
@@ -195,7 +194,7 @@
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
       <material>
         <script>
-          <uri>model://corner_box/tags</uri>
+          <uri>model://tags</uri>
           <name>0007</name>
         </script>
       </material>
@@ -225,7 +224,7 @@
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
       <material>
         <script>
-          <uri>model://corner_box/tags</uri>
+          <uri>model://tags</uri>
           <name>0008</name>
         </script>
       </material>
@@ -246,7 +245,7 @@
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
       <material>
         <script>
-          <uri>model://corner_box/tags</uri>
+          <uri>model://tags</uri>
           <name>0009</name>
         </script>
       </material>
@@ -274,7 +273,7 @@
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
       <material>
         <script>
-          <uri>model://corner_box/tags</uri>
+          <uri>model://tags</uri>
           <name>0010</name>
         </script>
       </material>
@@ -295,7 +294,7 @@
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
       <material>
         <script>
-          <uri>model://corner_box/tags</uri>
+          <uri>model://tags</uri>
           <name>0011</name>
         </script>
       </material>
