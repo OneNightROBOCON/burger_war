@@ -10,7 +10,7 @@
 <include><uri>model://sun</uri></include>
 <include><uri>model://ground_plane</uri></include>
 @{box_count = 0}
-@{tag_count = 0}
+@{tag_count = 1}
 <!-- Centor BOX -->
 <include>
   <name>box_@(box_count)</name>

@@ -18,11 +18,11 @@
   <uri>model://center_box</uri>
 </include>
 <include>
-  <name>plate_0</name>
+  <name>plate_1</name>
   <pose>0 -0.2505 0.15 0 0 0</pose>
   <uri>model://plate</uri>
 </include>
-<model name="box_0_tag_0">
+<model name="box_0_tag_1">
   <static>true</static>
   <pose>0 -0.251 0.15 0 0 0</pose>
   <link name="link">
@@ -30,28 +30,7 @@
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
       <material>
         <script>
-          <uri>model://tags</uri> <name>0000</name>
-        </script>
-      </material>
-    </visual>
-  </link>
-</model>
-
-<include>
-  <name>plate_1</name>
-  <pose>0 0.2505 0.15 0 0 0</pose>
-  <uri>model://plate</uri>
-</include>
-<model name="box_0_tag_1">
-  <static>true</static>
-  <pose>0 0.251 0.15 0 0 0</pose>
-  <link name="link">
-    <visual name="visual">
-      <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
-      <material>
-        <script>
-          <uri>model://tags</uri>
-          <name>0001</name>
+          <uri>model://tags</uri> <name>0001</name>
         </script>
       </material>
     </visual>
@@ -60,12 +39,12 @@
 
 <include>
   <name>plate_2</name>
-  <pose>-0.2505 0 0.15 0 0 1.571</pose>
+  <pose>0 0.2505 0.15 0 0 0</pose>
   <uri>model://plate</uri>
 </include>
 <model name="box_0_tag_2">
   <static>true</static>
-  <pose>-0.251 0 0.15 0 0 1.571</pose>
+  <pose>0 0.251 0.15 0 0 0</pose>
   <link name="link">
     <visual name="visual">
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
@@ -81,10 +60,31 @@
 
 <include>
   <name>plate_3</name>
-  <pose>0.2505 0 0.15 0 0 1.571</pose>
+  <pose>-0.2505 0 0.15 0 0 1.571</pose>
   <uri>model://plate</uri>
 </include>
 <model name="box_0_tag_3">
+  <static>true</static>
+  <pose>-0.251 0 0.15 0 0 1.571</pose>
+  <link name="link">
+    <visual name="visual">
+      <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
+      <material>
+        <script>
+          <uri>model://tags</uri>
+          <name>0003</name>
+        </script>
+      </material>
+    </visual>
+  </link>
+</model>
+
+<include>
+  <name>plate_4</name>
+  <pose>0.2505 0 0.15 0 0 1.571</pose>
+  <uri>model://plate</uri>
+</include>
+<model name="box_0_tag_4">
   <static>true</static>
   <pose>0.251 0 0.15 0 0 1.571</pose>
   <link name="link">
@@ -93,7 +93,7 @@
       <material>
         <script>
           <uri>model://tags</uri>
-          <name>0003</name>
+          <name>0004</name>
         </script>
       </material>
     </visual>
@@ -112,11 +112,11 @@
   <uri>model://corner_box</uri>
 </include>
 <include>
-  <name>plate_4</name>
+  <name>plate_5</name>
   <pose>-0.74 -0.845 0.15 0 0 0</pose>
   <uri>model://plate</uri>
 </include>
-<model name="box_1_tag_4">
+<model name="box_1_tag_5">
   <static>true</static>
   <pose>-0.74 -0.85 0.15 0 0 0</pose>
   <link name="link">
@@ -125,7 +125,7 @@
       <material>
         <script>
           <uri>model://tags</uri>
-          <name>0004</name>
+          <name>0005</name>
         </script>
       </material>
     </visual>
@@ -133,11 +133,11 @@
 </model>
 
 <include>
-  <name>plate_5</name>
+  <name>plate_6</name>
   <pose>-0.74 -0.635 0.15 0 0 0</pose>
   <uri>model://plate</uri>
 </include>
-<model name="box_1_tag_5">
+<model name="box_1_tag_6">
   <static>true</static>
   <pose>-0.74 -0.63 0.15 0 0 0</pose>
   <link name="link">
@@ -146,7 +146,7 @@
       <material>
         <script>
           <uri>model://tags</uri>
-          <name>0005</name>
+          <name>0006</name>
         </script>
       </material>
     </visual>
@@ -161,11 +161,11 @@
   <uri>model://corner_box</uri>
 </include>
 <include>
-  <name>plate_6</name>
+  <name>plate_7</name>
   <pose>-0.74 0.635 0.15 0 0 0</pose>
   <uri>model://plate</uri>
 </include>
-<model name="box_2_tag_6">
+<model name="box_2_tag_7">
   <static>true</static>
   <pose>-0.74 0.63 0.15 0 0 0</pose>
   <link name="link">
@@ -174,7 +174,7 @@
       <material>
         <script>
           <uri>model://tags</uri>
-          <name>0006</name>
+          <name>0007</name>
         </script>
       </material>
     </visual>
@@ -182,11 +182,11 @@
 </model>
 
 <include>
-  <name>plate_7</name>
+  <name>plate_8</name>
   <pose>-0.74 0.845 0.15 0 0 0</pose>
   <uri>model://plate</uri>
 </include>
-<model name="box_2_tag_7">
+<model name="box_2_tag_8">
   <static>true</static>
   <pose>-0.74 0.85 0.15 0 0 0</pose>
   <link name="link">
@@ -195,7 +195,7 @@
       <material>
         <script>
           <uri>model://tags</uri>
-          <name>0007</name>
+          <name>0008</name>
         </script>
       </material>
     </visual>
@@ -212,11 +212,11 @@
   <uri>model://corner_box</uri>
 </include>
 <include>
-  <name>plate_8</name>
+  <name>plate_9</name>
   <pose>0.74 -0.845 0.15 0 0 0</pose>
   <uri>model://plate</uri>
 </include>
-<model name="box_3_tag_8">
+<model name="box_3_tag_9">
   <static>true</static>
   <pose>0.74 -0.85 0.15 0 0 0</pose>
   <link name="link">
@@ -225,7 +225,7 @@
       <material>
         <script>
           <uri>model://tags</uri>
-          <name>0008</name>
+          <name>0009</name>
         </script>
       </material>
     </visual>
@@ -233,11 +233,11 @@
 </model>
 
 <include>
-  <name>plate_9</name>
+  <name>plate_10</name>
   <pose>0.74 -0.635 0.15 0 0 0</pose>
   <uri>model://plate</uri>
 </include>
-<model name="box_3_tag_9">
+<model name="box_3_tag_10">
   <static>true</static>
   <pose>0.74 -0.63 0.15 0 0 0</pose>
   <link name="link">
@@ -246,7 +246,7 @@
       <material>
         <script>
           <uri>model://tags</uri>
-          <name>0009</name>
+          <name>0010</name>
         </script>
       </material>
     </visual>
@@ -261,11 +261,11 @@
   <uri>model://corner_box</uri>
 </include>
 <include>
-  <name>plate_10</name>
+  <name>plate_11</name>
   <pose>0.74 0.635 0.15 0 0 0</pose>
   <uri>model://plate</uri>
 </include>
-<model name="box_4_tag_10">
+<model name="box_4_tag_11">
   <static>true</static>
   <pose>0.74 0.63 0.15 0 0 0</pose>
   <link name="link">
@@ -274,7 +274,7 @@
       <material>
         <script>
           <uri>model://tags</uri>
-          <name>0010</name>
+          <name>0011</name>
         </script>
       </material>
     </visual>
@@ -282,11 +282,11 @@
 </model>
 
 <include>
-  <name>plate_11</name>
+  <name>plate_12</name>
   <pose>0.74 0.845 0.15 0 0 0</pose>
   <uri>model://plate</uri>
 </include>
-<model name="box_4_tag_11">
+<model name="box_4_tag_12">
   <static>true</static>
   <pose>0.74 0.85 0.15 0 0 0</pose>
   <link name="link">
@@ -295,7 +295,7 @@
       <material>
         <script>
           <uri>model://tags</uri>
-          <name>0011</name>
+          <name>0012</name>
         </script>
       </material>
     </visual>
