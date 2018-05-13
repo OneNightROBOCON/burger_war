@@ -15,7 +15,7 @@ class RandomBot():
         # bot name 
         self.name = bot_name
         # velocity publisher
-        self.vel_pub = rospy.Publisher('/cmd_vel', Twist,queue_size=1)
+        self.vel_pub = rospy.Publisher('cmd_vel', Twist,queue_size=1)
 
     def calcTwist(self):
         value = random.randint(1,1000)

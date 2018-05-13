@@ -46,6 +46,9 @@
         <param name="player_name" value="blue_bot" />
         <param name="side" value="b" />
       </node>
+
+      <!-- random run -->
+      <node pkg="onigiri_war" type="randomRun.py" name="randomRun" output="screen"/>
   </group>
 
 <!-- blue side robot -->
@@ -58,7 +61,7 @@
       <node pkg="ros_aruco" type="ros_aruco" name="ros_aruco" output="screen">
         <remap from="image_raw" to="/camera/image_raw"/>
         <param name="camera_param_path" value="$(find ros_aruco)/data/ost.yaml" type="str"/>
-        <param name="debug_view" value="true" type="bool"/>
+        <param name="debug_view" value="false" type="bool"/>
       </node>
 
       <!-- send target ID to judge server -->
@@ -67,7 +70,11 @@
         <param name="player_name" value="red_bot" />
         <param name="side" value="r" />
       </node>
+
+      <!-- random run -->
+      <node pkg="onigiri_war" type="randomRun.py" name="randomRun" output="screen"/>
   </group>
+
 
 </launch>
 
