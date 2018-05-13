@@ -11,5 +11,5 @@ gnome-terminal -e "python onigiri_war_judge/visualizeWindow.py"
 bash onigiri_war_judge/test_scripts/init_single_play.sh onigiri_war_judge/marker_set/sim.csv localhost:5000 foo bar
 
 # robot
-roslaunch onigiri_war turtlebot_setup_sim.launch
+roslaunch onigiri_war onigiri_setup_sim.launch
 

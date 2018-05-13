@@ -1,21 +1,6 @@
 <?xml version="1.0"?>
 
 <launch>
-    <!-- reamp topic name -->
-  <!--
-    <remap from="/Rulo/bumper" to="/mobile_base/event/bumper" /> 
-    <remap from="/Rulo/camera/camera_info" to="/camera/rgb/camera_info"/>
-    <remap from="/Rulo/camera/image_raw" to="/camera/rgb/image_raw"/>
-    <remap from="/Rulo/camera/image_raw/compressed" to="/camera/rgb/image_raw/compressed"/>
-    <remap from="/Rulo/camera/image_raw/compressed/parameter_descriptions" to="/camera/rgb/image_raw/compressed/parameter_descriptions"/>
-    <remap from="/Rulo/camera/image_raw/compressed/parameter_updates" to="/camera/rgb/image_raw/compressed/parameter_updates"/>
-    <remap from="/Rulo/camera/image_raw/compressedDepth" to="/camera/rgb/image_raw/compressedDepth"/>
-    <remap from="/Rulo/camera/image_raw/compressedDepth/parameter_descriptions" to="/camera/rgb/image_raw/compressedDepth/parameter_descriptions"/>
-    <remap from="/Rulo/camera/image_raw/compressedDepth/parameter_updates" to="/camera/rgb/image_raw/compressedDepth/parameter_updates"/>
-    <remap from="/Rulo/camera/image_raw/theora" to="/camera/rgb/image_raw/theora"/>
-    <remap from="/Rulo/camera/image_raw/theora/parameter_descriptions" to="/camera/rgb/image_raw/theora/parameter_descriptions"/>
-    -->
-
 <!-- make world -->
   <arg name="world_file"  default="$(find onigiri_war)/world/onigiri_field.world"/>
   <arg name="gui" default="true"/>
@@ -35,7 +20,7 @@
 
       <!-- ar reader -->
       <node pkg="ros_aruco" type="ros_aruco" name="ros_aruco" output="screen">
-        <remap from="image_raw" to="/camera/image_raw"/>
+        <remap from="/image_raw" to="camera/image_raw"/>
         <param name="camera_param_path" value="$(find ros_aruco)/data/ost.yaml" type="str"/>
         <param name="debug_view" value="true" type="bool"/>
       </node>
@@ -59,9 +44,9 @@
 
       <!-- ar reader -->
       <node pkg="ros_aruco" type="ros_aruco" name="ros_aruco" output="screen">
-        <remap from="image_raw" to="/camera/image_raw"/>
+        <remap from="/image_raw" to="camera/image_raw"/>
         <param name="camera_param_path" value="$(find ros_aruco)/data/ost.yaml" type="str"/>
-        <param name="debug_view" value="false" type="bool"/>
+        <param name="debug_view" value="true" type="bool"/>
       </node>
 
       <!-- send target ID to judge server -->
