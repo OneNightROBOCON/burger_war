@@ -28,23 +28,46 @@
   </include>
 
 
-  <!-- spawn the robot -->
-  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find rulo_simulation)/Rulo/Rulo.urdf -urdf -x 0.0 -y 2.0 -z 0.0 -Y -1.57 -model Rulo"/>
+<!-- red side robot -->
+  <group ns="blue_bot">
+      <!-- spawn the robot -->
+      <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find rulo_simulation)/Rulo/Rulo.urdf -urdf -x 0.0 -y 2.0 -z 0.0 -Y -1.57 -model blue_bot"/>
 
-<!-- ar reader -->
-  <node pkg="ros_aruco" type="ros_aruco" name="ros_aruco" output="screen">
-    <remap from="image_raw" to="/camera/image_raw"/>
-    <param name="camera_param_path" value="$(find ros_aruco)/data/ost.yaml" type="str"/>
-    <param name="debug_view" value="true" type="bool"/>
-  </node>
+      <!-- ar reader -->
+      <node pkg="ros_aruco" type="ros_aruco" name="ros_aruco" output="screen">
+        <remap from="image_raw" to="/camera/image_raw"/>
+        <param name="camera_param_path" value="$(find ros_aruco)/data/ost.yaml" type="str"/>
+        <param name="debug_view" value="true" type="bool"/>
+      </node>
+
+      <!-- send target ID to judge server -->
+      <node pkg="onigiri_war" type="sendIdToJudge.py" name="send_id_to_judge" output="screen">
+        <param name="judge_url" value="http://127.0.0.1:5000/submits" />
+        <param name="player_name" value="blue_bot" />
+        <param name="side" value="b" />
+      </node>
+  </group>
+
+<!-- blue side robot -->
+  <group ns="red_bot">
+      <!-- spawn the robot -->
+      <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find rulo_simulation)/Rulo/Rulo.urdf -urdf -x 0.0 -y -2.0 -z 0.0 -Y 1.57 -model red_bot"/>
 
 
-<!-- send target ID to judge server -->
-  <node pkg="onigiri_war" type="sendIdToJudge.py" name="send_id_to_judge" output="screen">
-    <param name="judge_url" value="http://127.0.0.1:5000/submits" />
-    <param name="player_name" value="roborobo" />
-    <param name="side" value="r" />
-  </node>
+      <!-- ar reader -->
+      <node pkg="ros_aruco" type="ros_aruco" name="ros_aruco" output="screen">
+        <remap from="image_raw" to="/camera/image_raw"/>
+        <param name="camera_param_path" value="$(find ros_aruco)/data/ost.yaml" type="str"/>
+        <param name="debug_view" value="true" type="bool"/>
+      </node>
+
+      <!-- send target ID to judge server -->
+      <node pkg="onigiri_war" type="sendIdToJudge.py" name="send_id_to_judge" output="screen">
+        <param name="judge_url" value="http://127.0.0.1:5000/submits" />
+        <param name="player_name" value="red_bot" />
+        <param name="side" value="r" />
+      </node>
+  </group>
 
 </launch>
 
