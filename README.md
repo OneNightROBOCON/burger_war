@@ -72,6 +72,7 @@ sudo pip install requests flask
 opencv必要なのでrosをinstallしてからインストールしてください。
 
 以下のURLからaruco-2.0.19.zipをダウンロード　※バージョンは都度変更する可能性あり
+(2018/5/14現在 aruco-3.0.9のバージョンではmake時にエラーが発生するためaruco-2.0.19を推奨)
 
 https://sourceforge.net/projects/aruco/files/2.0.19/
 ```
