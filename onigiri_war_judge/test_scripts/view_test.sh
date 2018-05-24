@@ -20,22 +20,22 @@ curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -
 curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"RE_L", "id":"0022", "point":3}' localhost:5000/warState/targets
 curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"RE_R", "id":"0023", "point":3}' localhost:5000/warState/targets
 
-curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"hoge1_N", "id":"1001", "point":1}' localhost:5000/warState/targets
-curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"hoge1_S", "id":"1002", "point":1}' localhost:5000/warState/targets
+curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"Tomato_N", "id":"1001", "point":1}' localhost:5000/warState/targets
+curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"Tomato_S", "id":"1002", "point":1}' localhost:5000/warState/targets
 
-curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"hoge2_N", "id":"2001", "point":1}' localhost:5000/warState/targets
-curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"hoge2_S", "id":"2002", "point":1}' localhost:5000/warState/targets
+curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"Omelette_N", "id":"2001", "point":1}' localhost:5000/warState/targets
+curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"Omelette_S", "id":"2002", "point":1}' localhost:5000/warState/targets
 
-curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"hoge3_N", "id":"3001", "point":1}' localhost:5000/warState/targets
-curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"hoge3_S", "id":"3002", "point":1}' localhost:5000/warState/targets
+curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"Pudding_N", "id":"3001", "point":1}' localhost:5000/warState/targets
+curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"Pudding_S", "id":"3002", "point":1}' localhost:5000/warState/targets
 
-curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"hoge4_N", "id":"4001", "point":1}' localhost:5000/warState/targets
-curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"hoge4_S", "id":"4002", "point":1}' localhost:5000/warState/targets
+curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"OctopusWiener_N", "id":"4001", "point":1}' localhost:5000/warState/targets
+curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"OctopusWiener_S", "id":"4002", "point":1}' localhost:5000/warState/targets
 
-curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"hoge5_N", "id":"5001", "point":1}' localhost:5000/warState/targets
-curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"hoge5_E", "id":"5002", "point":1}' localhost:5000/warState/targets
-curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"hoge5_W", "id":"5003", "point":1}' localhost:5000/warState/targets
-curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"hoge5_S", "id":"5004", "point":1}' localhost:5000/warState/targets
+curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"FriedShrimp_N", "id":"5001", "point":1}' localhost:5000/warState/targets
+curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"FriedShrimp_E", "id":"5002", "point":1}' localhost:5000/warState/targets
+curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"FriedShrimp_W", "id":"5003", "point":1}' localhost:5000/warState/targets
+curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"FriedShrimp_S", "id":"5004", "point":1}' localhost:5000/warState/targets
 
 sleep 1
 
@@ -87,6 +87,12 @@ curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -
 
 sleep 1
 
+
+curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"ishiro", "side":"r", "id":"0011"}' localhost:5000/submits
+
+sleep 1
+
+
 curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"jiro", "side":"b", "id":"0023"}' localhost:5000/submits
 
 sleep 1
@@ -95,9 +101,6 @@ curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -
 
 sleep 1
 
-curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"ishiro", "side":"r", "id":"0013"}' localhost:5000/submits
-
-sleep 1
 
 curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"ishiro", "side":"r", "id":"0012"}' localhost:5000/submits
 
