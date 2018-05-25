@@ -185,3 +185,92 @@ json sample
   }
 }
 ```
+
+# オブジェクトの配置設定
+setting.jsonから設定可能
++ nameとmarker_set.csv内で設定する名前をそろえること
++ nameと同じ名前の画像ファイルを/picture内のpng形式で用意すること
+
+## 設定例
+```
+{
+    "objects":{
+        "top_left":{ # 場所がわかりやすいような名前
+            "name":"Tomato", # オブジェクトの名前
+            "position":{ # 画面内での表示位置（画像の中心位置）
+                "x":550, 
+                "y":540
+            },
+            "size":{ #画像のサイズ
+                "height":100,
+                "width":150
+            },
+            "north":1, #マーカーの場所（1:ON　0:OFF）
+            "south":1,
+            "west":0,
+            "east":0
+        },
+        "top_right":{ # 場所がわかりやすいような名前
+            "name":"Omelette", # オブジェクトの名前
+            "position":{ # 画面内での表示位置（画像の中心位置）
+                "x":550, 
+                "y":830
+            },
+            "size":{ #画像のサイズ
+                "height":100,
+                "width":150
+            },
+            "north":1, #マーカーの場所（1:ON　0:OFF）
+            "south":1,
+            "west":0,
+            "east":0
+        },
+        "bottom_left":{ # 場所がわかりやすいような名前
+            "name":"Pudding", # オブジェクトの名前
+            "position":{ # 画面内での表示位置（画像の中心位置）
+            "position":{ 
+                "x":770,
+                "y":550
+            },
+            "size":{ #画像のサイズ
+                "height":100,
+                "width":150
+            },
+            "north":1, #マーカーの場所（1:ON　0:OFF）
+            "south":1,
+            "west":0,
+            "east":0
+        },
+        "bottom_right":{ # 場所がわかりやすいような名前
+            "name":"OctopusWiener", # オブジェクトの名前
+            "position":{ # 画面内での表示位置（画像の中心位置）
+                "x":770,
+                "y":800
+            },
+            "size":{ #画像のサイズ
+                "height":100,
+                "width":150
+            },
+            "north":1, #マーカーの場所（1:ON　0:OFF）
+            "south":1,
+            "west":0,
+            "east":0
+        },
+        "center":{ # 場所がわかりやすいような名前
+            "name":"FriedShrimp", # オブジェクトの名前
+            "position":{ # 画面内での表示位置（画像の中心位置）
+                "x":660,
+                "y":680
+            },
+            "size":{ #画像のサイズ
+                "height":120,
+                "width":120
+            },
+            "north":1, #マーカーの場所（1:ON　0:OFF）
+            "south":1,
+            "west":1,
+            "east":1
+        }
+    }
+}
+```
