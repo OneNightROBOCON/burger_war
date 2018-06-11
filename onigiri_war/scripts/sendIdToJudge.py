@@ -11,7 +11,7 @@ class TargetId(object):
 
     def __init__(self, judge_url, side, player_name, init_code='0000'):
         # target ID  val subscriver
-        self.target_id_sub = rospy.Subscriber('/target_id', String, self.targetIdCallback)
+        self.target_id_sub = rospy.Subscriber('target_id', String, self.targetIdCallback)
         self.judge_url = judge_url
         self.historys = []
         self.side = side
