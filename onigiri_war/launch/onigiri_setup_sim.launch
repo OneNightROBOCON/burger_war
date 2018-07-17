@@ -16,7 +16,7 @@
 <!-- red side robot -->
   <group ns="blue_bot">
       <!-- spawn the robot -->
-      <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find rulo_simulation)/Rulo/Rulo.urdf -urdf -x 0.0 -y 2.0 -z 0.0 -Y -1.57 -model blue_bot"/>
+      <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find rulo_simulation)/Rulo/Rulo_b.urdf -urdf -x 0.0 -y 2.0 -z 0.0 -Y -1.57 -model blue_bot"/>
 
       <!-- ar reader -->
       <node pkg="ros_aruco" type="ros_aruco" name="ros_aruco" output="screen">
@@ -39,7 +39,7 @@
 <!-- blue side robot -->
   <group ns="red_bot">
       <!-- spawn the robot -->
-      <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find rulo_simulation)/Rulo/Rulo.urdf -urdf -x 0.0 -y -2.0 -z 0.0 -Y 1.57 -model red_bot"/>
+      <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find rulo_simulation)/Rulo/Rulo_r.urdf -urdf -x 0.0 -y -2.0 -z 0.0 -Y 1.57 -model red_bot"/>
 
 
       <!-- ar reader -->
