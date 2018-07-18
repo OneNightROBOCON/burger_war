@@ -117,10 +117,15 @@ catkin_make --pkg ros_aruco -DARUCO_PATH=/usr/local  
 ```
 bash scripts/sim_with_judge.sh
 ```
+フィールドとロボットが立ち上がったら
+別のターミナルで下記ロボット動作スクリプトを実行
+```
+bash scripts/start.sh
+```
 
 ![screenshot at 2018-01-09 23 52 12](https://user-images.githubusercontent.com/17049327/34726839-7ed4694e-f598-11e7-8e8e-2e0311b099d2.png)
 
-↑このようなフィールドが現れロボットが2台出現してランダムに走行をはじめます。
+↑このようなフィールドが現れロボットが2台出現します。
 審判画面も表示されます。
 
 
@@ -128,7 +133,13 @@ bash scripts/sim_with_judge.sh
 ```
 roslaunch onigiri_war　onigiri_setup_sim.launch
 ```
-審判サーバー以外は上記と同じ結果になります。
+フィールドとロボットが立ち上がったら
+別のターミナルで下記ロボット動作スクリプトを実行
+```
+bash scripts/start.sh
+```
+審判サーバー以外は上記と同じです。
+
 
 ### 実機
 センサなどが立ち上がりロボットを動かす準備
@@ -165,12 +176,9 @@ onigiti_war
 ├── onigiri_war
 │   ├── CMakeLists.txt
 │   ├── launch  launchファイルの置き場
-│   │   ├── action.launch  ロボットを動かすlaunchファイル
-│   │   ├── onigiri_setup.launch  初期化、センサの起動などするlaunchファイル
-│   │   ├── onigiri_setup_sim.launch  Gazeboシミュレータ上でロボットを起動、初期化するlaunchファイル
-│   │   ├── run_with_realsense.launch  カメラ単体でテストするlaunchファイル
-│   │   ├── run_with_usbcam.launch     カメラ単体でテストするlaunchファイル
-│   │   └── turtlebot_setup_sim.launch   Gazeboシミュレータ上でロボットを起動、初期化するlaunchファイル
+│   │   ├── sim_robot_run.launch  シミュレータ上で２台のロボットを動かすlaunchファイル
+│   │   └─ onigiri_setup_sim.launch  Gazeboシミュレータ上でフィールドの生成ロボットを起動、初期化するlaunchファイル
+│   │
 │   ├── models   GAZEBOシミュレーター用のモデルファイル
 │   ├── package.xml
 │   ├── scripts    pythonで書かれたROSノード
@@ -191,9 +199,10 @@ onigiti_war
 |
 ├── README.md   これ
 ├── ros_aruco  ARマーカーの読み取りパッケージ
-├── rulebook.md  ルールブック(2017/03の第３回大会のもの)
+├── rulebook.md  ルールブック(過去版 2017/03の第３回大会のもの)
 └── scripts      一発起動スクリプト
-    └── sim_with_judge.sh   シミュレーターとturtlebotと審判サーバーの立ち上げ初期化をすべて行う
+    ├─── sim_with_judge.sh   シミュレーターとロボットと審判サーバーの立ち上げ初期化をすべて行う    
+    └──  start.sh             赤サイド、青サイドのロボットを動作させるノードを立ち上げるスクリプト
 ```
 ↑ディレクトリと特に重要なファイルのみ説明しています。
 
