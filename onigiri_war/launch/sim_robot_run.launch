@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<launch>
+
+<!-- red side robot -->
+  <group ns="blue_bot">
+
+      <!-- robot run -->
+      <node pkg="onigiri_war" type="randomRun.py" name="randomRun" output="screen"/>
+  </group>
+
+<!-- blue side robot -->
+  <group ns="red_bot">
+      <!-- robot run -->
+      <node pkg="onigiri_war" type="randomRun.py" name="randomRun" output="screen"/>
+  </group>
+
+
+</launch>
+
