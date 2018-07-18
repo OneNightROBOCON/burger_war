@@ -6,21 +6,19 @@ OneNightROBOCON競技「onigiri war」プロジェクト
 
 
 ## 目次
-- ルール
 - インストール
 - 審判サーバー
 - ファイル構成
 - その他
 - 動作環境
 
-## ルール
-大会のルールは[rulebook.md](rulebook.md)を参照
-
 ## インストール
+onigiri_warには**実機**と**シミュレータ**があります。
+シミュレータで動かす場合には `4. PC上でシミュレーションする場合`も実行してください。
+
 
 ### 1. ros (kinetic) のインストール
-**2018年からkineticで開発しています｡
-indigoでもまだ動くと思いますがところどころ不具合がある可能性があります｡**
+**2018年からkineticで開発しています**
 
 rosのインストールが終わっている人は`2.このリポジトリをクローン` まで飛ばしてください。
 
@@ -84,35 +82,24 @@ make
 sudo make install 
 ```
 
-#### 3.1　PC上でシミュレーションする場合
-- LetsBotを使う場合
+### 4. PC上でシミュレーションする場合
+- ロボットモデルのインストール
 LetsBotコミュニティのOneNightROBOCONグループで共有されている
 `rulo_sim_package.tar.gz`
 を支持に従い`src`以下に展開
 
-**LetBotシミュレータの注意点**
-- 赤外線距離センサトピックと超音波センサトピックは実機と形式が違います。
-実機は左右のセンサを別トピックでpublishしていますが、
-シミュレーションではleft,rightのタグをつけて１つのトピックでpublishしています。
-
 ロボットモデルをコピー
 ```
 cp -a ~/catkin_ws/src/ros_simulator/models ~/.gazebo/
-```
-- turtlebot を使う場合
-turtlebot 関係のインストール
-```
-sudo apt-get install ros-indigo-turtlebot ros-indigo-turtlebot-apps ros-indigo-turtlebot-interactions ros-indigo-turtlebot-simulator ros-indigo-kobuki-ftdi ros-indigo-rocon-remocon ros-indigo-rocon-qt-library ros-indigo-ar-track-alvar-msgs
 ```
 
 このリポジトリのフィールド用のGAZEBOモデルにPATHを通す
 ```
 export GAZEBO_MODEL_PATH=$HOME/catkin_ws/src/onigiri_war/onigiri_war/models/
 ```
-シェルごとに毎回実行するのは面倒なので
-`~/.bashrc`に書いておくと便利です｡
+シェルごとに毎回実行するのは面倒なので上記は`~/.bashrc`に書いておくと便利です｡
 
-### 6. make
+### 5. make
 ```
 cd ~/catkin_ws
 catkin_make
@@ -122,42 +109,36 @@ arucoのmakeがうまく行かない場合、下記を試してみてくださ�
 ```
 catkin_make --pkg ros_aruco -DARUCO_PATH=/usr/local  
 ```
+インストールは以上です。
 
-### 7. サンプルの実行
-
-#### とにかく起動してみる
-シミュレータ､ロボット(turtle_bot),審判サーバー､観戦画面のすべてを一発で起動するスクリプトを用意してあります
+## サンプルの実行
+### シミュレータ
+シミュレータ､ロボット(turtle_bot),審判サーバー､観戦画面のすべてを一発で起動する。大会で使用するスクリプト。
 ```
 bash scripts/sim_with_judge.sh
 ```
-いろいろ画面がたちあがります｡
-ロボットを動かしたい場合はシミュレーターの起動完了後にロボットを動かすノードを起動してください｡
 
-#### マニュアルで起動する
-
-sample では
-- 実機で動かす場合 `{ROBOTNAME}_setup.launch` 
-- PC上のシミュレータで動かす場合 `{ROBOTNAME}_setup_sim.launch` 
-でセンサなどが立ち上がりロボットを動かす準備ができるようになっています。
-
-`action.launch`でロボットに移動を指令するノードが立ち上がります。
-
-サンプルでは走行制御はランダム走行する`randomRulo.py`が実装されています。
-
-#### 実機の場合
-```
-roslaunch onigiri_war onigiri_setup.launch
-roslaunch onigiri_war action.launch
-```
-
-#### PCでGazeboでシミュレーションする場合
-```
-roslaunch onigiri_war onigiri_setup_sim.launch
-roslaunch onigiri_war action.launch
-```
 ![screenshot at 2018-01-09 23 52 12](https://user-images.githubusercontent.com/17049327/34726839-7ed4694e-f598-11e7-8e8e-2e0311b099d2.png)
 
-このようなフィールドが現れます
+↑このようなフィールドが現れロボットが2台出現してランダムに走行をはじめます。
+審判画面も表示されます。
+
+
+審判サーバーを立ち上げずにシミュレータとロボットのみ立ち上げる場合
+```
+roslaunch onigiri_war　onigiri_setup_sim.launch
+```
+審判サーバー以外は上記と同じ結果になります。
+
+### 実機
+センサなどが立ち上がりロボットを動かす準備
+```
+roslaunch onigiri_war onigiri_setup.launch
+```
+別のターミナルで
+```
+roslaunch onigiri_war action.launch
+```
 
 #### PCにUSBカメラをつないでマーカー読み取りのみ実験する場合
 ```
@@ -168,6 +149,8 @@ roslaunch onigiri_war run_with_usbcam.launch
 ```
 roslaunch onigiri_war run_with_realsense.launch
 ```
+
+
 ## 審判サーバー
 審判サーバーは`onigiri_war_judge/`以下にあります
 そちらのREADMEを参照ください
@@ -198,24 +181,25 @@ onigiti_war
 │       └── onigiri_field.world.em  worldファイルのマクロ表記版､こっちを編集する
 |
 ├── onigiri_war_judge   審判サーバー
-│   ├── judgeServer.py  審判サーバー
-│   ├── log   ログがここにたまる
-│   ├── marker_set  マーカーの配置ファイル
-│   ├── picture  観戦画面用
-│   ├── README.md  
+│   ├── judgeServer.py  審判サーバー本体
+│   ├── log   ログがここにたまる
+│   ├── marker_set  マーカーの配置設定ファイル置き場
+│   ├── picture  観戦画面用画像素材
+│   ├── README.md  
 │   ├── test_scripts   初期化などのスクリプト
-│   └── visualizeWindow.py  観戦画面
+│   └── visualizeWindow.py  観戦画面表示プログラム
 |
 ├── README.md   これ
 ├── ros_aruco  ARマーカーの読み取りパッケージ
-├── rulebook.md  ルールブック
-└── scripts       一発起動スクリプト
+├── rulebook.md  ルールブック(2017/03の第３回大会のもの)
+└── scripts      一発起動スクリプト
     └── sim_with_judge.sh   シミュレーターとturtlebotと審判サーバーの立ち上げ初期化をすべて行う
 ```
 ↑ディレクトリと特に重要なファイルのみ説明しています。
 
 ## その他
 ### カメラの露光時間の設定
+実機で動作する場合のカメラの露光時間の設定に関する情報です。
 QRコード認識の時に画像ぶれにより認識精度が落ちないように設定が必要
 
 #### Webカメラの場合
@@ -247,4 +231,3 @@ exposure_auto=1で露光の調整をマニュアルに変更し、exposure_absol
 - Ubuntu 16.04 
 - Ros kinetic
 2018年からkineticで開発しています｡
-indigoでもまだ動くと思いますがところどころ不具合がある可能性があります｡
