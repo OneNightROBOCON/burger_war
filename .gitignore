@@ -5,6 +5,9 @@
 onigiri_war_judge/log/*
 !.gitkeep
 
+# for ignore robot model
+*.urdf
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
