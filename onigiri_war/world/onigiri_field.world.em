@@ -3,7 +3,7 @@
 <world name="onigiri_field">
 <gui>
   <camera name="camera">
-    <pose>3 -2 3.5 0.0 .85 2.4</pose>
+    <pose>1.5 -5. 6. 0.0 .85 1.8</pose>
     <view_controller>orbit</view_controller>
   </camera>
 </gui>
@@ -19,12 +19,12 @@
 </include>
 <include>
   <name>plate_@(tag_count)</name>
-  <pose>0 -0.2505 0.15 0 0 0</pose>
+  <pose>0 0.2505 0.2 0 0 0</pose>
   <uri>model://plate</uri>
 </include>
 <model name="box_@(box_count)_tag_@(tag_count)">
   <static>true</static>
-  <pose>0 -0.251 0.15 0 0 0</pose>
+  <pose>0 0.251 0.2 0 0 0</pose>
   <link name="link">
     <visual name="visual">
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
@@ -39,12 +39,12 @@
 @{tag_count += 1}
 <include>
   <name>plate_@(tag_count)</name>
-  <pose>0 0.2505 0.15 0 0 0</pose>
+  <pose>0 -0.2505 0.2 0 0 0</pose>
   <uri>model://plate</uri>
 </include>
 <model name="box_@(box_count)_tag_@(tag_count)">
   <static>true</static>
-  <pose>0 0.251 0.15 0 0 0</pose>
+  <pose>0 -0.251 0.2 0 0 0</pose>
   <link name="link">
     <visual name="visual">
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
@@ -60,12 +60,12 @@
 @{tag_count += 1}
 <include>
   <name>plate_@(tag_count)</name>
-  <pose>-0.2505 0 0.15 0 0 1.571</pose>
+  <pose>0.2505 0 0.2 0 0 1.571</pose>
   <uri>model://plate</uri>
 </include>
 <model name="box_@(box_count)_tag_@(tag_count)">
   <static>true</static>
-  <pose>-0.251 0 0.15 0 0 1.571</pose>
+  <pose>0.251 0 0.2 0 0 1.571</pose>
   <link name="link">
     <visual name="visual">
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
@@ -81,12 +81,12 @@
 @{tag_count += 1}
 <include>
   <name>plate_@(tag_count)</name>
-  <pose>0.2505 0 0.15 0 0 1.571</pose>
+  <pose>-0.2505 0 0.2 0 0 1.571</pose>
   <uri>model://plate</uri>
 </include>
 <model name="box_@(box_count)_tag_@(tag_count)">
   <static>true</static>
-  <pose>0.251 0 0.15 0 0 1.571</pose>
+  <pose>-0.251 0 0.2 0 0 1.571</pose>
   <link name="link">
     <visual name="visual">
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
@@ -104,8 +104,8 @@
 
 <!-- Corner BOX -->
 @{side_pos = 0.74}
-@[for x in [-side_pos, side_pos]]
-@[for y in [-side_pos, side_pos]]
+@[for x in [side_pos, -side_pos]]
+@[for y in [side_pos, -side_pos]]
 <include>
   <name>box_@(box_count)</name>
   <pose>@(x) @(y) 0.25 0 0 0</pose>
@@ -113,12 +113,12 @@
 </include>
 <include>
   <name>plate_@(tag_count)</name>
-  <pose>@(x) @(y-0.105) 0.15 0 0 0</pose>
+  <pose>@(x) @(y+0.105) 0.2 0 0 0</pose>
   <uri>model://plate</uri>
 </include>
 <model name="box_@(box_count)_tag_@(tag_count)">
   <static>true</static>
-  <pose>@(x) @(y-0.11) 0.15 0 0 0</pose>
+  <pose>@(x) @(y+0.11) 0.2 0 0 0</pose>
   <link name="link">
     <visual name="visual">
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
@@ -134,12 +134,12 @@
 @{tag_count += 1}
 <include>
   <name>plate_@(tag_count)</name>
-  <pose>@(x) @(y+0.105) 0.15 0 0 0</pose>
+  <pose>@(x) @(y-0.105) 0.2 0 0 0</pose>
   <uri>model://plate</uri>
 </include>
 <model name="box_@(box_count)_tag_@(tag_count)">
   <static>true</static>
-  <pose>@(x) @(y+0.11) 0.15 0 0 0</pose>
+  <pose>@(x) @(y-0.11) 0.2 0 0 0</pose>
   <link name="link">
     <visual name="visual">
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
@@ -195,5 +195,38 @@
 @( wall((wall_size, 0), (0, -wall_size), 0.5) )
 @( wall((0, -wall_size), (-wall_size, 0), 0.5) )
 @( wall((-wall_size, 0), ( 0, wall_size), 0.5) )
+
+<!-- RED and BLUE maker -->
+<model name="blue_maker">
+  <static>true</static>
+  <link name="link">
+    <visual name="visual">
+      <pose>0 3 0 0 0 0</pose>
+      <geometry>
+        <cylinder>
+          <radius>0.3</radius>
+          <length>0.1</length>
+        </cylinder>
+      </geometry>
+      <material><script><name>Gazebo/Blue</name></script></material>
+    </visual>
+  </link>
+</model>
+<model name="red_maker">
+  <static>true</static>
+  <link name="link">
+    <visual name="visual">
+      <pose>0 -3 0 0 0 0</pose>
+      <geometry>
+        <cylinder>
+          <radius>0.3</radius>
+          <length>0.1</length>
+        </cylinder>
+      </geometry>
+      <material><script><name>Gazebo/Red</name></script></material>
+    </visual>
+  </link>
+</model>
+
 </world>
 </sdf>
