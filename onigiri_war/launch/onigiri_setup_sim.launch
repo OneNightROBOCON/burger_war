@@ -26,7 +26,8 @@
       <node pkg="ros_aruco" type="ros_aruco" name="ros_aruco" output="screen">
         <remap from="/image_raw" to="camera/image_raw"/>
         <param name="camera_param_path" value="$(find ros_aruco)/data/ost.yaml" type="str"/>
-        <param name="debug_view" value="true" type="bool"/>
+        <!-- if you want ar reader view, change "false" to "true" -->
+        <param name="debug_view" value="false" type="bool"/>
       </node>
 
       <!-- send target ID to judge server -->
@@ -53,7 +54,8 @@
       <node pkg="ros_aruco" type="ros_aruco" name="ros_aruco" output="screen">
         <remap from="/image_raw" to="camera/image_raw"/>
         <param name="camera_param_path" value="$(find ros_aruco)/data/ost.yaml" type="str"/>
-        <param name="debug_view" value="true" type="bool"/>
+        <!-- if you want ar reader view, change "false" to "true" -->
+        <param name="debug_view" value="false" type="bool"/>
       </node>
 
       <!-- send target ID to judge server -->
