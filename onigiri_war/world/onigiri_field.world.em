@@ -14,7 +14,7 @@
 <!-- Centor BOX -->
 <include>
   <name>box_@(box_count)</name>
-  <pose>0 0 0.2 0 0 0</pose>
+  <pose>0 0 0.25 0 0 0</pose>
   <uri>model://center_box</uri>
 </include>
 <include>
@@ -108,7 +108,7 @@
 @[for y in [-side_pos, side_pos]]
 <include>
   <name>box_@(box_count)</name>
-  <pose>@(x) @(y) 0.2 0 0 0</pose>
+  <pose>@(x) @(y) 0.25 0 0 0</pose>
   <uri>model://corner_box</uri>
 </include>
 <include>
