@@ -93,7 +93,8 @@ class StatusWindow:
 
         self.histories = []
         self.last_score_time = {"r":"", "b":""}
-
+        self.init_time = None
+       
         offset = 5
         for ob in self.objects_info.keys():
             #print(self.objects_info[ob]["name"])
@@ -177,20 +178,26 @@ class StatusWindow:
 
     def showScoreTime(self, name, p):
         score_time = datetime.datetime.now()
-        score_datetime = "{0:%Y/%m/%d\n%H:%M:%S.%f}".format(score_time)
+        score_datetime = "{0: %Y/%m/%d\n %H:%M:%S.%f}".format(score_time)
+        elapsed_time = score_time - self.init_time
         print("############################") 
         print("Player: " + p)
-        print("get point: " + name)
-        print(score_datetime) 
+        print("Get point: " + name)
+        print("Date time: ")
+        print(score_datetime)
+        print("Elapsed time: " + str(elapsed_time))
         print("############################") 
         score_time = "{0:%H:%M:%S}".format(score_time)
-        return score_time
+        return score_time, elapsed_time
 
     def setObject(self, display):
         display = copy.deepcopy(self.background_image)
         for ob in self.objects_info.keys():
             display = self.setImage(display, ob)            
         return display
+
+    def initTime(self):
+        self.ini_time = datetime.datetime.now()
 
     def initWindow(self):
         display = copy.deepcopy(self.background_image)
@@ -226,13 +233,23 @@ class StatusWindow:
         
         #Get background image
         display = copy.deepcopy(_display)
+
+        #試合開始時間の初期化
+        if(self.init_time is None and state["state"] == "running"):
+            self.init_time = datetime.datetime.now()
         
         #####
         #文字の表示
         cv2.putText(display, "Game State: " + state["state"], (self.w_width*1/4, self.w_height/20), self.font, self.font_size, self.text_color, self.text_thickness)
         s = cv2.getTextSize("Game State: " + state["state"], self.font, self.font_size, self.text_thickness)
-        cv2.putText(display, "Players", (self.w_width*3/7, self.w_height*1/7), self.font, self.font_size, self.text_color, self.text_thickness)
-        cv2.putText(display, " Score ", (self.w_width*3/7, self.w_height*2/7-50), self.font, self.font_size, self.text_color, self.text_thickness)
+        cv2.putText(display, "Players", (self.w_width*3/7, self.w_height*1/7-10), self.font, self.font_size, self.text_color, self.text_thickness)
+        cv2.putText(display, " Score ", (self.w_width*3/7, self.w_height*2/7-70), self.font, self.font_size, self.text_color, self.text_thickness)
+        #経過時刻の表示
+        if(self.init_time is not None):
+            elapsed_datetime = datetime.datetime.now() - self.init_time
+            # print(elapsed_datetime)
+            cv2.putText(display, str(elapsed_datetime), (self.w_width*3/7, self.w_height*2/7+10), self.font, self.font_size, self.text_color, self.text_thickness)
+
         #スコア表示
         for player, position in ("b", 0), ("r", self.w_width*12/20):
             if(state["ready"][player]):
@@ -263,14 +280,15 @@ class StatusWindow:
                     pass
                 else: 
                     print(state_json)
-                    score_time = self.showScoreTime(target["name"], target["player"])
-                    self.last_score_time[target["player"]] = score_time
+                    _, elapsed_time = self.showScoreTime(target["name"], target["player"])
+                    # self.last_score_time[target["player"]] = score_time
+                    self.last_score_time[target["player"]] = str(elapsed_time).split(".")[0]
                     self.histories.append(target["name"])
 
             cv2.putText(display, "Last Score Time:", (1000, 750), self.font, 2, self.p_color["r"], 2)
-            cv2.putText(display, self.last_score_time["r"], (1000, 780), self.font, 2, self.p_color["r"], 2)
+            cv2.putText(display, self.last_score_time["r"], (1000, 800), self.font, 4, self.p_color["r"], 3)
             cv2.putText(display, "Last Score Time:", (50, 500), self.font, 2, self.p_color["b"], 2)
-            cv2.putText(display, self.last_score_time["b"], (50, 530), self.font, 2, self.p_color["b"], 2)
+            cv2.putText(display, self.last_score_time["b"], (50, 550), self.font, 4, self.p_color["b"], 3)
                     
         
         #####

@@ -8,14 +8,16 @@ from sensor_msgs.msg import Image
 from std_msgs.msg import String
 from cv_bridge import CvBridge, CvBridgeError
 import cv2
-
+import requests
+import json
 
 class AbstractRulo(object):
     __metaclass__ = ABCMeta
 
-    def __init__(self, bot_name):
+    def __init__(self, bot_name, judge_url= 'http://127.0.0.1:5000/submits'):
         # bot name 
         self.name = bot_name
+       
 
         # bumper state
         self.bumper = Bumper()
@@ -27,13 +29,17 @@ class AbstractRulo(object):
 
         # velocity publisher
         self.vel_pub = rospy.Publisher('/Rulo/cmd_vel', Twist,queue_size=1)
-	self.mode_pub = rospy.Publisher('/mobile_base/command/mode', String,queue_size=1)
+        self.mode_pub = rospy.Publisher('/mobile_base/command/mode', String,queue_size=1)
         # bumper subscrivre
         self.bumper_sub = rospy.Subscriber('/mobile_base/event/bumper', Bumper, self.bumperCallback)
 
         # camera subscriver
         # please uncoment out if you use camera
         #self.image_sub = rospy.Subscriber('/camera/rgb/image_raw', Image, self.imageCallback)
+
+        self.judge_url = judge_url
+        self.sendToJudge()
+        print("send to server")
 
     # bumper topic call back sample
     # update bumper state
@@ -58,6 +64,14 @@ class AbstractRulo(object):
 
         cv2.imshow("Image window", cv_image)
         cv2.waitKey(3)
+
+    def sendToJudge(self):
+        data = {"name": None, "side": None, "id": "9999"}
+        res = requests.post(self.judge_url,
+                            json.dumps(data),
+                            headers={'Content-Type': 'application/json'}
+                            )
+        return res
 
     @abstractmethod
     def strategy(self):
