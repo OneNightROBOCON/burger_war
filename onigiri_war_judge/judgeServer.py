@@ -94,13 +94,6 @@ class Referee:
             response.error = "success set ready"
             return response.makeJson()
 
-        # set state running @kato
-        if target_id == "9999":
-            self.war_state.state = "running"
-            response.mutch = True
-            response.error = "success set state running"
-            return response.makeJson()
-
         # check state is running
         if self.war_state.state != "running":
             response.error = "ERR state is not running"
@@ -119,7 +112,7 @@ class Referee:
 
     def checkBothPlayerReady(self):
         if self.war_state.ready["r"] and self.war_state.ready["b"]:
-            self.war_state.state = "ready" #kato modified runnning -> ready
+            self.war_state.state = "running"
         return
 
     def updateWarState(self, target, player_name, player_side):
