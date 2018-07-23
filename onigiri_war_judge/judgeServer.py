@@ -84,14 +84,21 @@ class Referee:
             app.logger.info("player_name: " + player_name)
             app.logger.info("player_side: " + player_side)
             app.logger.info("target_id: " + target_id)
-            renponse.error = "ERR id length is not 4"
-            return renponse.makeJson()
+            response.error = "ERR id length is not 4"
+            return response.makeJson()
 
         # set ready if id = 0000
         if target_id == "0000":
             self.war_state.ready[player_side] = True
             response.mutch = True
             response.error = "success set ready"
+            return response.makeJson()
+
+        # set state running @kato
+        if target_id == "9999":
+            self.war_state.state = "running"
+            response.mutch = True
+            response.error = "success set state running"
             return response.makeJson()
 
         # check state is running
@@ -112,7 +119,7 @@ class Referee:
 
     def checkBothPlayerReady(self):
         if self.war_state.ready["r"] and self.war_state.ready["b"]:
-            self.war_state.state = "running"
+            self.war_state.state = "ready" #kato modified runnning -> ready
         return
 
     def updateWarState(self, target, player_name, player_side):
@@ -252,6 +259,8 @@ def postTest():
     body = request.json
     ip = request.remote_addr
     app.logger.info(str(ip) + body )
+    state = body["state"]
+    ret = referee.setState(state)
     res = ret
     app.logger.info("RESPONSE /test "+ str(ip) + str(res))
     return jsonify(res)

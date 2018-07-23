@@ -63,8 +63,3 @@ echo "=================set ready players======================"
 curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d "{\"name\":\"${RED_PLAYER_NAME}\", \"side\":\"r\", \"id\":\"0000\"}" ${SERVER_IP}/submits
 curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d "{\"name\":\"${BLUE_PLAYER_NAME}\", \"side\":\"b\", \"id\":\"0000\"}" ${SERVER_IP}/submits
 
-
-# set state to "running"
-echo "=================set state "running"======================"
-curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"state":"running"}' ${SERVER_IP}/warState/state
-
