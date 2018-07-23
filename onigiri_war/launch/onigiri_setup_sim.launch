@@ -16,7 +16,7 @@
 <!-- blue side robot -->
   <group ns="blue_bot">
       <!-- spawn the robot -->
-      <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find rulo_simulation)/Rulo/Rulo_b.urdf -urdf -x 0.0 -y 2.0 -z 0.0 -Y -1.57 -model blue_bot"/>
+      <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find ccr_simulator)/ccr/onigiri_b.urdf -urdf -x 0.0 -y 2.0 -z 0.0 -Y -1.57 -model blue_bot"/>
       <node name="static_transform_publisher_laser" pkg="tf" type="static_transform_publisher" args="0.0 0.0 0.35 3.1415 0 0 /blue_bot/base_link /blue_bot/laser 1"/>
       <node name="static_transform_publisher_opt_left" pkg="tf" type="static_transform_publisher" args="0.08 0.15 0.06 1.04 0 0 /blue_bot/base_link /blue_bot/optical_ranging_sensor_left 1"/>
       <node name="static_transform_publisher_opt_right" pkg="tf" type="static_transform_publisher" args="0.08 -0.15 0.06 -1.04 0 0 /blue_bot/base_link /blue_bot/optical_ranging_sensor_right 1"/>
@@ -44,7 +44,7 @@
 <!-- red side robot -->
   <group ns="red_bot">
       <!-- spawn the robot -->
-      <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find rulo_simulation)/Rulo/Rulo_r.urdf -urdf -x 0.0 -y -2.0 -z 0.0 -Y 1.57 -model red_bot"/>
+      <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find ccr_simulator)/ccr/onigiri_r.urdf -urdf -x 0.0 -y -2.0 -z 0.0 -Y 1.57 -model red_bot"/>
       <node name="static_transform_publisher_laser" pkg="tf" type="static_transform_publisher" args="0.0 0.0 0.35 3.1415 0 0 /red_bot/base_link /red_bot/laser 1"/>
       <node name="static_transform_publisher_opt_left" pkg="tf" type="static_transform_publisher" args="0.08 0.15 0.06 1.04 0 0 /red_bot/base_link /red_bot/optical_ranging_sensor_left 1"/>
       <node name="static_transform_publisher_opt_right" pkg="tf" type="static_transform_publisher" args="0.08 -0.15 0.06 -1.04 0 0 /red_bot/base_link /red_bot/optical_ranging_sensor_right 1"/>
