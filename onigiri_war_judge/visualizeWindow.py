@@ -248,7 +248,7 @@ class StatusWindow:
         if(self.init_time is not None):
             elapsed_datetime = datetime.datetime.now() - self.init_time
             # print(elapsed_datetime)
-            cv2.putText(display, str(elapsed_datetime), (self.w_width*3/7, self.w_height*2/7+10), self.font, self.font_size, self.text_color, self.text_thickness)
+            cv2.putText(display, str(elapsed_datetime)[:-5], (self.w_width*3/7, self.w_height*2/7+10), self.font, self.font_size, self.text_color, self.text_thickness)
 
         #スコア表示
         for player, position in ("b", 0), ("r", self.w_width*12/20):
@@ -282,7 +282,7 @@ class StatusWindow:
                     print(state_json)
                     _, elapsed_time = self.showScoreTime(target["name"], target["player"])
                     # self.last_score_time[target["player"]] = score_time
-                    self.last_score_time[target["player"]] = str(elapsed_time).split(".")[0]
+                    self.last_score_time[target["player"]] = str(elapsed_time)[:-5]
                     self.histories.append(target["name"])
 
             cv2.putText(display, "Last Score Time:", (1000, 750), self.font, 2, self.p_color["r"], 2)
