@@ -59,9 +59,14 @@ cd ~/catkin_ws/src
 git clone https://github.com/OneNightROBOCON/onigiri_war
 ```
 ### 3. 依存ライブラリのインストール
+- pip : pythonのパッケージ管理ツール
 - requests : HTTP lib
 - flask : HTTP server 審判サーバーで使用
+
 ```
+# pip のインストール 
+sudo apt-get install python-pip
+#　requests flask のインストール
 sudo pip install requests flask
 ```
 
