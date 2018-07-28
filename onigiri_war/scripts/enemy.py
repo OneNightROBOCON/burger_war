@@ -28,7 +28,7 @@ class SioBot():
         self.pose_y = 0
 
         # speed [m/s]
-        self.speed = 0.4
+        self.speed = 0.25
 
         # publisher
         self.vel_pub = rospy.Publisher('cmd_vel', Twist,queue_size=1)
