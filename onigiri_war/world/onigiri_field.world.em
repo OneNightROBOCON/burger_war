@@ -1,6 +1,16 @@
 <?xml version="1.0" ?>
 <sdf version="1.4">
 <world name="onigiri_field">
+
+<scene>
+  <shadows>false</shadows>
+</scene>
+
+<physics name="ode_100iters" type="ode">
+  <real_time_update_rate>100</real_time_update_rate>
+  <max_step_size>0.01</max_step_size>
+</physics>
+
 <gui>
   <camera name="camera">
     <pose>1.5 -5. 6. 0.0 .85 1.8</pose>
