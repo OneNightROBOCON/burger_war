@@ -153,15 +153,14 @@ int main(int argc,char **argv) {
   ros::Publisher centre_pub = n.advertise<geometry_msgs::Pose>("aruco/centre/pose", 1);
   ros::Publisher ar_pub = n.advertise<std_msgs::String>("target_id", 1); //20171116 added by T.Okada
 
-
+  ros::Rate rate(5);
   while (ros::ok()){
-
-    key = cv::waitKey(1);
-
+    rate.sleep();
+    //key = cv::waitKey(1);
+    
     ros::spinOnce();
-
     ic.getCurrentImage(&current_image);
-
+    
     // Detection of markers
     MDetector.detect(current_image, TheMarkers, TheCameraParameters, TheMarkerSize);
 
