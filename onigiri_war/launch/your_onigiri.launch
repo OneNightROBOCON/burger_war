@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- You can change control program  -->
+
+
+
+
+    <!-- sample program  -->
+    <node pkg="onigiri_war" type="randomRun.py" name="randomRun" output="screen"/>
+
+
+
+
+
+
+
+    <!-- End of your space  -->
+</launch>
+
