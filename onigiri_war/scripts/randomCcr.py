@@ -11,6 +11,14 @@ from geometry_msgs.msg import Twist
 class RandomBot(AbstractCcr):
     '''
     AbstractCcr を継承
+    update cmd_vel 1Hz
+
+    run randomly
+      50% straight
+      25% turn left
+      25% turn right 
+    if bumper hit
+       back
     '''
     def strategy(self):
         r = rospy.Rate(100)
@@ -22,22 +30,27 @@ class RandomBot(AbstractCcr):
             if self.left_bumper or self.right_bumper:
                 update_time = time.time()
                 rospy.loginfo('bumper hit!!')
-		x = 0
-                th = 1
+                x = -0.2
+                th = 0
 
             elif time.time() - update_time > UPDATE_FREQUENCY:
                 update_time = time.time()
                 value = random.randint(1,1000)
-                if value < 500: x = 0.2
+                # go
+                if value < 500:
+                    x = 0.2
                     th = 0
 
+                # turn left
                 elif value < 750:
                     x = 0
                     th = 1
 
+                # turn right
                 elif value < 1000:
                     x = 0
                     th = -1
+
                 else:
                     x = 0
                     th = 0
@@ -51,5 +64,5 @@ class RandomBot(AbstractCcr):
 
 if __name__ == '__main__':
     rospy.init_node('random_ccr')
-    bot = RandomBot(use_bumper=True)
+    bot = RandomBot(use_camera=True, camera_preview=True, use_bumper=True)
     bot.strategy()
