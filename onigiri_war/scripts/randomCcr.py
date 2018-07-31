@@ -64,5 +64,5 @@ class RandomBot(AbstractCcr):
 
 if __name__ == '__main__':
     rospy.init_node('random_ccr')
-    bot = RandomBot(use_camera=True, camera_preview=True, use_bumper=True)
+    bot = RandomBot(use_bumper=True)
     bot.strategy()
