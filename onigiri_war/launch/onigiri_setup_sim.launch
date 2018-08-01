@@ -57,7 +57,7 @@
         <remap from="/image_raw" to="camera/image_raw"/>
         <param name="camera_param_path" value="$(find ros_aruco)/data/ost.yaml" type="str"/>
         <!-- if you want ar reader view, change "false" to "true" -->
-        <param name="debug_view" value="false" type="bool"/>
+        <param name="debug_view" value="true" type="bool"/>
       </node>
 
       <!-- send target ID to judge server -->
