@@ -7,6 +7,7 @@ import numpy as np
 import cv2
 import os
 import copy
+import datetime
 
 class StatusWindow:
     def __init__(self, w_name=None, window_size=(960,1280), object_info_path=None, picture_path=None ):
@@ -88,27 +89,12 @@ class StatusWindow:
         object_info_file = open(self.objects_info_path, "r")
         self.objects_info = json.load(object_info_file)["objects"]
 
-        # self.objects_name = []
-        # for ob in self.objects_info.keys():
-        #     print(ob)
-        #     self.objects_name.append(self.objects_info[ob]["name"])
-           
-
-        # #self.objects_name = [self.objects_info["top_left"]["name"], self.objects_info["bottom_left"]["name"], self.objects_info["top_right"]["name"], self.objects_info["bottom_right"]["name"], self.objects_info["center"]["name"]]
-
         self.objects = {}
-        # #Object marker position
-        # #Tomato
-        # self.objects[self.objects_name[0]] = {"N":(470,525), "S":(560,525)}
-        # #Pudding
-        # self.objects[self.objects_name[1]] = {"N":(470,790), "S":(560,790)}
-        # #Fried egg
-        # self.objects[self.objects_name[2]] = {"N":(680,525), "S":(775,525)}
-        # #Octopus wiener
-        # self.objects[self.objects_name[3]] = {"N":(680,790), "S":(775,790)}
-        # #Fried shrimp
-        # self.objects[self.objects_name[4]] = {"N":(575,660), "E":(630,715), "W":(630,595), "S":(680,660)}
 
+        self.histories = []
+        self.last_score_time = {"r":"", "b":""}
+        self.init_time = None
+       
         offset = 5
         for ob in self.objects_info.keys():
             #print(self.objects_info[ob]["name"])
@@ -179,22 +165,39 @@ class StatusWindow:
         
         pos_h = self.objects_info[ob]["position"]["x"]
         pos_w = self.objects_info[ob]["position"]["y"]
-        print(pos_h, pos_w)
+        # print(pos_h, pos_w)
         
         img = cv2.imread(self.script_dir + "/picture/" + self.objects_info[ob]["name"] + ".png",-1)
         img, mask = self.getMask(img, height=self.objects_info[ob]["size"]["height"], width=self.objects_info[ob]["size"]["width"])
         height, width = img.shape[:2]
-        print(height, width)
+        # print(height, width)
         np.multiply(display[pos_h-height/2:pos_h+height/2, pos_w-width/2:pos_w+width/2], 1 - mask, out=display[pos_h-height/2:pos_h+height/2, pos_w-width/2:pos_w+width/2], casting="unsafe") 
         np.add(display[pos_h-height/2:pos_h+height/2, pos_w-width/2:pos_w+width/2], img * mask, out=display[pos_h-height/2:pos_h+height/2, pos_w-width/2:pos_w+width/2], casting="unsafe")
 
         return display
+
+    def showScoreTime(self, name, p):
+        score_time = datetime.datetime.now()
+        score_datetime = "{0: %Y/%m/%d\n %H:%M:%S.%f}".format(score_time)
+        elapsed_time = score_time - self.init_time
+        print("############################") 
+        print("Player: " + p)
+        print("Get point: " + name)
+        print("Date time: ")
+        print(score_datetime)
+        print("Elapsed time: " + str(elapsed_time))
+        print("############################") 
+        score_time = "{0:%H:%M:%S}".format(score_time)
+        return score_time, elapsed_time
 
     def setObject(self, display):
         display = copy.deepcopy(self.background_image)
         for ob in self.objects_info.keys():
             display = self.setImage(display, ob)            
         return display
+
+    def initTime(self):
+        self.ini_time = datetime.datetime.now()
 
     def initWindow(self):
         display = copy.deepcopy(self.background_image)
@@ -224,19 +227,29 @@ class StatusWindow:
 
         state_json = self.urlreq()
         #Get current state
-        print(state_json)
+        # print(state_json)
         j = json.dumps(state_json)
         state = json.loads(state_json)
         
         #Get background image
         display = copy.deepcopy(_display)
+
+        #試合開始時間の初期化
+        if(self.init_time is None and state["state"] == "running"):
+            self.init_time = datetime.datetime.now()
         
         #####
-        #文字の表示（力技）
+        #文字の表示
         cv2.putText(display, "Game State: " + state["state"], (self.w_width*1/4, self.w_height/20), self.font, self.font_size, self.text_color, self.text_thickness)
         s = cv2.getTextSize("Game State: " + state["state"], self.font, self.font_size, self.text_thickness)
-        cv2.putText(display, "Players", (self.w_width*2/5, self.w_height*1/7), self.font, self.font_size, self.text_color, self.text_thickness)
-        cv2.putText(display, " Score ", (self.w_width*2/5, self.w_height*2/7-50), self.font, self.font_size, self.text_color, self.text_thickness)
+        cv2.putText(display, "Players", (self.w_width*3/7, self.w_height*1/7-10), self.font, self.font_size, self.text_color, self.text_thickness)
+        cv2.putText(display, " Score ", (self.w_width*3/7, self.w_height*2/7-70), self.font, self.font_size, self.text_color, self.text_thickness)
+        #経過時刻の表示
+        if(self.init_time is not None):
+            elapsed_datetime = datetime.datetime.now() - self.init_time
+            # print(elapsed_datetime)
+            cv2.putText(display, str(elapsed_datetime)[:-5], (self.w_width*3/7, self.w_height*2/7+10), self.font, self.font_size, self.text_color, self.text_thickness)
+
         #スコア表示
         for player, position in ("b", 0), ("r", self.w_width*12/20):
             if(state["ready"][player]):
@@ -247,22 +260,36 @@ class StatusWindow:
             cv2.putText(display, str(state["scores"][player]).center(10, ' '), (position,  self.w_height*2/7-50), self.font, self.font_size+2, ready_color, self.text_thickness)
         
         if len(state["targets"])>0:
-            
             for target in state["targets"]:
+                if(target["player"]=="n"):
+                    continue
                 if("BL" in target["name"] or "RE" in target["name"]):
-                    if(target["player"]!="n"):
-                        self.setChecker(display,target["name"],target["player"])
-                        #ロボットの背面ターゲットを取った場合に勝敗を表示
-                        if(target["name"]=="BL_B"):
-                            cv2.putText(display, " RED", (150,  720), self.font, 10, (0,0,255), 10)
-                            cv2.putText(display, "WIN!", (750,  720), self.font, 10, (0,0,255), 10)
-                            cv2.putText(display, "One-shot KO!", (480, 300), self.font, self.font_size+3, (0,0,255), 5)
-                        if(target["name"]=="RE_B"):
-                            cv2.putText(display, "BLUE", (150,  720), self.font, 10, (255,0,0), 10)
-                            cv2.putText(display, "WIN!", (750,  720), self.font, 10, (255,0,0), 10)
-                            cv2.putText(display, "One-shot KO!", (0,  300), self.font, self.font_size+3, (255,0,0), 5)
+                    self.setChecker(display,target["name"],target["player"])
+                    #ロボットの背面ターゲットを取った場合に勝敗を表示
+                    if(target["name"]=="BL_B"):
+                        cv2.putText(display, " RED", (150,  720), self.font, 10, (0,0,255), 10)
+                        cv2.putText(display, "WIN!", (750,  720), self.font, 10, (0,0,255), 10)
+                        cv2.putText(display, "One-shot KO!", (480, 300), self.font, self.font_size+3, (0,0,255), 5)
+                    if(target["name"]=="RE_B"):
+                        cv2.putText(display, "BLUE", (150,  720), self.font, 10, (255,0,0), 10)
+                        cv2.putText(display, "WIN!", (750,  720), self.font, 10, (255,0,0), 10)
+                        cv2.putText(display, "One-shot KO!", (0,  300), self.font, self.font_size+3, (255,0,0), 5)
                 else:
-                    self.setMarker(display,target["name"],target["player"])    
+                    self.setMarker(display,target["name"],target["player"])
+                if(target["name"] in self.histories):
+                    pass
+                else: 
+                    print(state_json)
+                    _, elapsed_time = self.showScoreTime(target["name"], target["player"])
+                    # self.last_score_time[target["player"]] = score_time
+                    self.last_score_time[target["player"]] = str(elapsed_time)[:-5]
+                    self.histories.append(target["name"])
+
+            cv2.putText(display, "Last Score Time:", (1000, 750), self.font, 2, self.p_color["r"], 2)
+            cv2.putText(display, self.last_score_time["r"], (1000, 800), self.font, 4, self.p_color["r"], 3)
+            cv2.putText(display, "Last Score Time:", (50, 500), self.font, 2, self.p_color["b"], 2)
+            cv2.putText(display, self.last_score_time["b"], (50, 550), self.font, 4, self.p_color["b"], 3)
+                    
         
         #####
         

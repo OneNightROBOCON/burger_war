@@ -6,6 +6,7 @@ PROJECT(ros_aruco)
 ## is used, also find other catkin packages
 FIND_PACKAGE(catkin REQUIRED COMPONENTS roscpp rospy tf std_msgs sensor_msgs stereo_msgs stereo_msgs geometry_msgs message_generation genmsg cv_bridge image_transport)
 
+SET(ARUCO_PATH /usr/local)
 SET(CMAKE_MODULE_PATH ${ARUCO_PATH}/lib/cmake)
 SET(ARUCO_INCLUDE_DIRS ${ARUCO_PATH}/include/aruco)
 

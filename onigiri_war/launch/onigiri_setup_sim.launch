@@ -4,25 +4,32 @@
 <!-- make world -->
   <arg name="world_file"  default="$(find onigiri_war)/world/onigiri_field.world"/>
   <arg name="gui" default="true"/>
+  <arg name="record" default="false"/>
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="use_sim_time" value="true"/>
     <arg name="debug" value="false"/>
     <arg name="gui" value="$(arg gui)" />
+    <arg name="recording" value="$(arg record)" />
     <arg name="world_name" value="$(arg world_file)"/>
   </include>
 
 
-<!-- red side robot -->
+<!-- blue side robot -->
   <group ns="blue_bot">
       <!-- spawn the robot -->
-      <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find rulo_simulation)/Rulo/Rulo_b.urdf -urdf -x 0.0 -y 2.0 -z 0.0 -Y -1.57 -model blue_bot"/>
-
+      <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find ccr_simulator)/ccr/onigiri_b.urdf -urdf -x 0.0 -y 2.0 -z 0.0 -Y -1.57 -model blue_bot"/>
+      <node name="static_transform_publisher_laser" pkg="tf" type="static_transform_publisher" args="0.0 0.0 0.35 3.1415 0 0 /blue_bot/base_link /blue_bot/laser 1"/>
+      <node name="static_transform_publisher_opt_left" pkg="tf" type="static_transform_publisher" args="0.08 0.15 0.06 1.04 0 0 /blue_bot/base_link /blue_bot/optical_ranging_sensor_left 1"/>
+      <node name="static_transform_publisher_opt_right" pkg="tf" type="static_transform_publisher" args="0.08 -0.15 0.06 -1.04 0 0 /blue_bot/base_link /blue_bot/optical_ranging_sensor_right 1"/>
+      <node name="static_transform_publisher_us_left" pkg="tf" type="static_transform_publisher" args="0.14 0.075 0.06 0 0 0 /blue_bot/base_link /blue_bot/ultrasonic_sensor_left 1"/>
+      <node name="static_transform_publisher_us_right" pkg="tf" type="static_transform_publisher" args="0.14 -0.075 0.06 0 0 0 /blue_bot/base_link /blue_bot/ultrasonic_sensor_right 1"/>
       <!-- ar reader -->
       <node pkg="ros_aruco" type="ros_aruco" name="ros_aruco" output="screen">
         <remap from="/image_raw" to="camera/image_raw"/>
         <param name="camera_param_path" value="$(find ros_aruco)/data/ost.yaml" type="str"/>
-        <param name="debug_view" value="true" type="bool"/>
+        <!-- if you want ar reader view, change "false" to "true" -->
+        <param name="debug_view" value="false" type="bool"/>
       </node>
 
       <!-- send target ID to judge server -->
@@ -36,16 +43,20 @@
       <!--node pkg="onigiri_war" type="randomRun.py" name="randomRun" output="screen"/-->
   </group>
 
-<!-- blue side robot -->
+<!-- red side robot -->
   <group ns="red_bot">
       <!-- spawn the robot -->
-      <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find rulo_simulation)/Rulo/Rulo_r.urdf -urdf -x 0.0 -y -2.0 -z 0.0 -Y 1.57 -model red_bot"/>
-
-
+      <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find ccr_simulator)/ccr/onigiri_r.urdf -urdf -x 0.0 -y -2.0 -z 0.0 -Y 1.57 -model red_bot"/>
+      <node name="static_transform_publisher_laser" pkg="tf" type="static_transform_publisher" args="0.0 0.0 0.35 3.1415 0 0 /red_bot/base_link /red_bot/laser 1"/>
+      <node name="static_transform_publisher_opt_left" pkg="tf" type="static_transform_publisher" args="0.08 0.15 0.06 1.04 0 0 /red_bot/base_link /red_bot/optical_ranging_sensor_left 1"/>
+      <node name="static_transform_publisher_opt_right" pkg="tf" type="static_transform_publisher" args="0.08 -0.15 0.06 -1.04 0 0 /red_bot/base_link /red_bot/optical_ranging_sensor_right 1"/>
+      <node name="static_transform_publisher_us_left" pkg="tf" type="static_transform_publisher" args="0.14 0.075 0.06 0 0 0 /red_bot/base_link /red_bot/ultrasonic_sensor_left 1"/>
+      <node name="static_transform_publisher_us_right" pkg="tf" type="static_transform_publisher" args="0.14 -0.075 0.06 0 0 0 /red_bot/base_link /red_bot/ultrasonic_sensor_right 1"/>
       <!-- ar reader -->
       <node pkg="ros_aruco" type="ros_aruco" name="ros_aruco" output="screen">
         <remap from="/image_raw" to="camera/image_raw"/>
         <param name="camera_param_path" value="$(find ros_aruco)/data/ost.yaml" type="str"/>
+        <!-- if you want ar reader view, change "false" to "true" -->
         <param name="debug_view" value="true" type="bool"/>
       </node>
 
@@ -62,4 +73,3 @@
 
 
 </launch>
-

@@ -18,8 +18,8 @@
 // ROS libs
 #include "ros/ros.h"
 #include <tf/transform_broadcaster.h>
-#include <geometry_msgs/Pose.h>
-#include <geometry_msgs/PointStamped.h>
+//#include <geometry_msgs/Pose.h>
+//#include <geometry_msgs/PointStamped.h>
 #include <visualization_msgs/MarkerArray.h>
 #include <visualization_msgs/Marker.h>
 #include <image_transport/image_transport.h>
@@ -28,34 +28,18 @@
 
 #include <std_msgs/String.h>  //20171116 added by T.Okada
 
+//#define DEBUG_BUILD
+
 using namespace aruco;
 using namespace cv;
 
-cv::Mat current_image_copy;
 cv::Mat current_image;
-
-cv::Mat rot_mat(3, 3, cv::DataType<float>::type);
-
 
 CameraParameters TheCameraParameters;
 MarkerDetector MDetector;
 vector<Marker> TheMarkers;
 
 Dictionary di; //20171116 added by T.Okada
-
-bool update_images;
-char key = 0;
-
-ros::Time timestamp;
-ros::Time last_frame;
-
-float x_t,y_t,z_t;
-int x_c,y_c,z_c;
-float roll,pitch,yaw;
-
-const float p_off = CV_PI;
-const float r_off = CV_PI/2;
-const float y_off = CV_PI/2;
 
 
 class ImageConverter
@@ -68,22 +52,16 @@ class ImageConverter
   public:
   ImageConverter() : it_(nh_)
   {
-    // subscribe to input video feed and publish output video feed
-    //image_sub_ = it_.subscribe("/camera/left/image_rect_color", 1, &ImageConverter::imageCb, this); 
     image_sub_ = it_.subscribe("/image_raw", 1, &ImageConverter::imageCb, this); 
   }
 
   void getCurrentImage(cv::Mat *input_image)
   {
-
     *input_image = src_img;
-    last_frame = timestamp;
   }
 
   void imageCb(const sensor_msgs::ImageConstPtr& msg)
   {
-    ros::Time frame_time = ros::Time::now();
-    timestamp = frame_time;
     cv_bridge::CvImagePtr cv_ptr;
     try
     {
@@ -94,19 +72,19 @@ class ImageConverter
       ROS_ERROR("cv_bridge exception: %s", e.what());
       return;
     }
-
     src_img = cv_ptr->image;   
   }
-
 };
+
 
 int main(int argc,char **argv) {
   // ROS messaging init
   ros::init(argc, argv, "listener");
   ros::NodeHandle n;
   std::string camera_param_path;
+  int scan_rate = 3;
+  float TheMarkerSize = 0.02; //select the marker size (in m) by measuring it
   bool debug_view;
-  //20171121 added by yamaguchi ->
   if(!ros::param::get("~camera_param_path", camera_param_path))
   {
     ROS_INFO("No camera_param_path setting");
@@ -117,47 +95,31 @@ int main(int argc,char **argv) {
     ROS_INFO("No debug_view setting");
     debug_view = false;
   }
-  //<- 20171121 added by yamaguchi
-  ros::spinOnce();
 
-  update_images = true;
+  ros::Rate rate(scan_rate);
 
   ImageConverter ic = ImageConverter();
+  std_msgs::String msg_id;  //20171116 added by T.Okada
 
   while (current_image.empty()) 
   {
+    rate.sleep();
     ros::spinOnce();
     ic.getCurrentImage(&current_image);
-    usleep(1000);
   }
 
-  float TheMarkerSize; //select the marker size (in m) by measuring it
   TheCameraParameters.readFromXMLFile(camera_param_path);  //20171116 added by T.Okada //20171121 yamaguchi
   TheCameraParameters.resize(current_image.size());
-  TheMarkerSize=0.02; //20171116 added by T.Okada
 
-  //cv::namedWindow("ROS ARUCO", 1);
   MDetector.setThresholdParams(7, 7);
   MDetector.setThresholdParamRange(2, 0);
   std::map<uint32_t,MarkerPoseTracker> MTracker;
 
-  //MDetector.setDictionary("ARUCO_MIP_36h12",0.f);  //set type of marker from dictionary.h
   MDetector.setDictionary("ARUCO_MIP_36h12",0.f);  //20171116 added by T.Okada
-  //di.loadPredefined("/home/okada/lib/aruco-2.0.19/utils/myown.dict");
-  //MDetector.setDictionary("CUSTOM",0.f);
-
-  //di.loadFromFile("/home/okada/lib/aruco-2.0.19/utils/myown.dict");
-
-
-  ros::Publisher pose_pub = n.advertise<geometry_msgs::Pose>("aruco/linear/pose", 1);
-  ros::Publisher centre_pub = n.advertise<geometry_msgs::Pose>("aruco/centre/pose", 1);
   ros::Publisher ar_pub = n.advertise<std_msgs::String>("target_id", 1); //20171116 added by T.Okada
 
-
   while (ros::ok()){
-
-    key = cv::waitKey(1);
-
+    rate.sleep();
     ros::spinOnce();
 
     ic.getCurrentImage(&current_image);
@@ -165,72 +127,19 @@ int main(int argc,char **argv) {
     // Detection of markers
     MDetector.detect(current_image, TheMarkers, TheCameraParameters, TheMarkerSize);
 
-    bool found = (TheMarkers.size()>0)?true:false;
 
-    std_msgs::String msg_id;  //20171116 added by T.Okada
-
-    if(found)
-    {
-      x_t = -TheMarkers[0].Tvec.at<Vec3f>(0,0)[0];
-      y_t = TheMarkers[0].Tvec.at<Vec3f>(0,0)[1];
-      z_t = TheMarkers[0].Tvec.at<Vec3f>(0,0)[2];
-
-      x_c = TheMarkers[0].getCenter().x;
-      y_c = TheMarkers[0].getCenter().y;
-      z_c = 0;
-
-      cv::Rodrigues(TheMarkers[0].Rvec, rot_mat);
-
-      pitch = -atan2(rot_mat.at<float>(2,0), rot_mat.at<float>(2,1));
-      yaw   = acos(rot_mat.at<float>(2,2));
-      roll  = -atan2(rot_mat.at<float>(0,2), rot_mat.at<float>(1,2));
-
-      geometry_msgs::Pose msg;
-      geometry_msgs::Pose msg_ps;
-
-      if(ros::ok())
-      {
-        msg.position.x = x_t;
-        msg.position.y = y_t;
-        msg.position.z = z_t;
-
-        geometry_msgs::Quaternion p_quat = tf::createQuaternionMsgFromRollPitchYaw(roll - r_off, pitch + p_off, yaw - y_off);
-        msg.orientation = p_quat;
-
-        pose_pub.publish(msg);
-      }
-      if(ros::ok())
-      {
-        msg_ps.position.x = x_c;
-        msg_ps.position.y = y_c;
-        msg_ps.position.z = 0;
-
-        centre_pub.publish(msg_ps);
-      }
-    }
-
-    //std::cout<<"x trans = "<<x_t<<"  "<<"y trans = "<<y_t<<"  ""z trans = "<<z_t<<std::endl;
     for (unsigned int i = 0; i < TheMarkers.size(); i++) 
     {
       msg_id.data = std::to_string(TheMarkers[i].id); //20171116 added by T.Okada
       ar_pub.publish(msg_id); //20171116 added by T.Okada
       TheMarkers[i].draw(current_image, Scalar(0, 0, 255), 5);
-      //std::cout<<TheMarkers[0].getCenter()<<"  "<<z_t<<std::endl;
-      std::cout<<x_c<<"  "<<y_c<<"   "<<z_t<<std::endl;
     }
 
-    if (TheCameraParameters.isValid()){
-      for (unsigned int i=0;i<TheMarkers.size();i++)
-      {
-        CvDrawingUtils::draw3dCube(current_image, TheMarkers[i], TheCameraParameters);
-        CvDrawingUtils::draw3dAxis(current_image, TheMarkers[i], TheCameraParameters);
-      }
-    }
     // Show input with augmented information and the thresholded image
     if (debug_view)
     {
       cv::imshow("ROS_ARUCO", current_image);
-      //cv::imshow("THRESHOLD IMAGE", MDetector.getThresholdedImage());
+      cv::waitKey(1);
     }
   }
 }

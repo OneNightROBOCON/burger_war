@@ -84,8 +84,8 @@ class Referee:
             app.logger.info("player_name: " + player_name)
             app.logger.info("player_side: " + player_side)
             app.logger.info("target_id: " + target_id)
-            renponse.error = "ERR id length is not 4"
-            return renponse.makeJson()
+            response.error = "ERR id length is not 4"
+            return response.makeJson()
 
         # set ready if id = 0000
         if target_id == "0000":
@@ -252,6 +252,8 @@ def postTest():
     body = request.json
     ip = request.remote_addr
     app.logger.info(str(ip) + body )
+    state = body["state"]
+    ret = referee.setState(state)
     res = ret
     app.logger.info("RESPONSE /test "+ str(ip) + str(res))
     return jsonify(res)
