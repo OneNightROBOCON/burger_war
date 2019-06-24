@@ -22,9 +22,13 @@ only (world, robot_spawn , run)
 <!-- blue side robot -->
   <group ns="blue_bot">
       <!-- spawn the robot -->
-      <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find ccr_simulator)/ccr/onigiri_b.urdf -urdf -x 0.0 -y 2.0 -z 0.0 -Y -1.57 -model blue_bot"/>
+      <param name="robot_description" command="$(find xacro)/xacro --inorder $(find onigiri_war)/models/hoge.urdf.xacro" />
+
+      <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -x 0.0 -y 2.0 -z 0.0 -Y -1.57 -model turtlebot3_burger -param robot_description"/>
 
       <!-- run node -->
+<!--
       <node pkg="onigiri_war" type="wallRun.py" name="wallRun" output="screen"/>
+-->
   </group>
 </launch>
