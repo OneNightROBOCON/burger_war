@@ -7,8 +7,8 @@
 </scene>
 
 <physics name="ode_100iters" type="ode">
-  <real_time_update_rate>100</real_time_update_rate>
-  <max_step_size>0.01</max_step_size>
+  <real_time_update_rate>1000</real_time_update_rate>
+  <max_step_size>0.001</max_step_size>
 </physics>
 
 <gui>

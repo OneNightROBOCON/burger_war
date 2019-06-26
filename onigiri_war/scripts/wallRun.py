@@ -60,3 +60,4 @@ if __name__ == '__main__':
     rospy.init_node('random_ccr')
     bot = WallRunBot(use_opt=True)
     bot.strategy()
+

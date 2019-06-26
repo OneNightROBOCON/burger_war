@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import rospy
 from std_msgs.msg import String
+from aruco_msgs.msg import MarkerArray
 import requests
 import json
 from time import sleep
@@ -11,7 +12,7 @@ class TargetId(object):
 
     def __init__(self, judge_url, side, player_name, init_code='0000'):
         # target ID  val subscriver
-        self.target_id_sub = rospy.Subscriber('target_id', String, self.targetIdCallback)
+        self.target_id_sub = rospy.Subscriber('target_id', MarkerArray, self.targetIdCallback)
         self.judge_url = judge_url
         self.historys = []
         self.side = side
@@ -61,20 +62,22 @@ class TargetId(object):
             return False
 
     def targetIdCallback(self, data):
-        target_id = data.data
-        target_id = self.lengthTo4(target_id)
-        if target_id in self.historys:
-            return
-        try:
-            resp_raw = self.sendToJudge(target_id)
-        except:
-            print("Try Send " + target_id + " but, Requests Error Please Check URL " + self.judge_url)
-        else:
-            resp = json.loads(resp_raw.text)
-            print("Send " + target_id + " To " + self.judge_url)
-            print(resp)
-            if resp["error"] == "no error" or resp["error"] == "ERR not mutch id":
-                self.historys.append(target_id)
+        markers = data.markers
+        for marker in markers:
+            target_id = str(marker.id)
+            target_id = self.lengthTo4(target_id)
+            if target_id in self.historys:
+                return
+            try:
+                resp_raw = self.sendToJudge(target_id)
+            except:
+                print("Try Send " + target_id + " but, Requests Error Please Check URL " + self.judge_url)
+            else:
+                resp = json.loads(resp_raw.text)
+                print("Send " + target_id + " To " + self.judge_url)
+                print(resp)
+                if resp["error"] == "no error" or resp["error"] == "ERR not mutch id":
+                    self.historys.append(target_id)
 
 
 if __name__ == "__main__":

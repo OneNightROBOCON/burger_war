@@ -4,6 +4,7 @@ import rospy
 import random
 
 from geometry_msgs.msg import Twist
+
 #from std_msgs.msg import String
 #from sensor_msgs.msg import Image
 #from cv_bridge import CvBridge, CvBridgeError
@@ -56,7 +57,7 @@ class RandomBot():
 
 
 if __name__ == '__main__':
-    rospy.init_node('random_rulo')
+    rospy.init_node('random_run')
     bot = RandomBot('Random')
     bot.strategy()
 
