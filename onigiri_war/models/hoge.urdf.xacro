@@ -163,7 +163,81 @@
       </geometry>
       <material name="dark"/>
     </visual>
+  </link>
 
+ <!--One Night ROBOCON add-->
+  <joint name="tag1_joint" type="fixed">
+    <origin rpy="-1.571 3.1415 0" xyz="-0.03 0.07 0.09"/>
+    <parent link="base_link"/>
+    <child link="tag1"/>
+  </joint>
+  <link name="tag1">
+    <visual>
+      <geometry>
+          <mesh filename="package://onigiri_war/models/tags/0050g.dae" scale="1.0 1.0 1.0" />
+      </geometry>
+    </visual>
+  </link>
+  <joint name="tag1-1_joint" type="fixed">
+    <origin rpy="-1.571 3.1415 0" xyz="-0.03 0.069 0.09"/>
+    <parent link="base_link"/>
+    <child link="tag1-1"/>
+  </joint>
+  <link name="tag1-1">
+    <visual>
+      <geometry>
+          <mesh filename="package://onigiri_war/models/tags/test.dae" scale="1.0 1.0 1.0"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="tag2_joint" type="fixed">
+    <origin rpy="1.571 0 0" xyz="-0.03 -0.07 0.09"/>
+    <parent link="base_link"/>
+    <child link="tag2"/>
+  </joint>
+  <link name="tag2">
+    <visual>
+      <geometry>
+          <mesh filename="package://onigiri_war/models/tags/0051g.dae" scale="1.0 1.0 1.0" />
+      </geometry>
+    </visual>
+  </link>
+  <joint name="tag2-1_joint" type="fixed">
+    <origin rpy="1.571 0 0" xyz="-0.03 -0.069 0.09"/>
+    <parent link="base_link"/>
+    <child link="tag2-1"/>
+  </joint>
+  <link name="tag2-1">
+    <visual>
+      <geometry>
+          <mesh filename="package://onigiri_war/models/tags/test.dae" scale="1.0 1.0 1.0"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="tag3_joint" type="fixed">
+    <origin rpy="1.571 0 -1.571" xyz="-0.101 0.0 0.09"/>
+    <parent link="base_link"/>
+    <child link="tag3"/>
+  </joint>
+  <link name="tag3">
+    <visual>
+      <geometry>
+          <mesh filename="package://onigiri_war/models/tags/0052g.dae" scale="1.0 1.0 1.0" />
+      </geometry>
+    </visual>
+  </link>
+  <joint name="tag3-1_joint" type="fixed">
+    <origin rpy="1.571 0 -1.571" xyz="-0.10 0.0 0.09"/>
+    <parent link="base_link"/>
+    <child link="tag3-1"/>
+  </joint>
+  <link name="tag3-1">
+    <visual>
+      <geometry>
+          <mesh filename="package://onigiri_war/models/tags/test.dae" scale="1.0 1.0 1.0"/>
+      </geometry>
+    </visual>
   </link>
 
 </robot>
