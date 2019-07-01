@@ -195,6 +195,12 @@
             <size>@(thickness_x) @(thickness_y) @(height)</size>
           </box>
         </geometry>
+        <material>
+          <script>
+            <uri>model://wall</uri>
+            <name>wall_@(wall.count)</name>
+          </script>
+        </material>
       </visual>
     </link>
   </model>

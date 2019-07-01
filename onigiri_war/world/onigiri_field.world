@@ -347,6 +347,12 @@
             <size>3.50017856687 0.05 0.5</size>
           </box>
         </geometry>
+        <material>
+          <script>
+            <uri>model://wall</uri>
+            <name>wall_1</name>
+          </script>
+        </material>
       </visual>
     </link>
   </model>
@@ -377,6 +383,12 @@
             <size>3.50017856687 0.05 0.5</size>
           </box>
         </geometry>
+        <material>
+          <script>
+            <uri>model://wall</uri>
+            <name>wall_2</name>
+          </script>
+        </material>
       </visual>
     </link>
   </model>
@@ -407,6 +419,12 @@
             <size>3.50017856687 0.05 0.5</size>
           </box>
         </geometry>
+        <material>
+          <script>
+            <uri>model://wall</uri>
+            <name>wall_3</name>
+          </script>
+        </material>
       </visual>
     </link>
   </model>
@@ -437,6 +455,12 @@
             <size>3.50017856687 0.05 0.5</size>
           </box>
         </geometry>
+        <material>
+          <script>
+            <uri>model://wall</uri>
+            <name>wall_4</name>
+          </script>
+        </material>
       </visual>
     </link>
   </model>
