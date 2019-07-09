@@ -116,12 +116,29 @@ class Referee:
         return
 
     def updateWarState(self, target, player_name, player_side):
+        # new target or not
         if not target.player == "n":
-            return False
+            is_new =  False
         else:
-            target.player = player_side
-            self.war_state.scores[player_side] += int(target.point)
-        return True
+            is_new = True
+
+        # change target player
+        target.player = player_side
+
+        # recount score
+        red = 0
+        blue = 0
+        for target in self.war_state.targets:
+            if target.player == 'n':
+                pass
+            elif target.player == 'b':
+                blue += target.point
+            elif target.player == 'r':
+                red += target.point
+        self.war_state.scores['b'] = blue
+        self.war_state.scores['r'] = red
+
+        return is_new 
 
     def registPlayer(self, name):
         if self.war_state.players['r'] == "NoPlayer":
