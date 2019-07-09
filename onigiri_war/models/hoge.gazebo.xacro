@@ -19,9 +19,7 @@
   </gazebo>
 
   <gazebo reference="wheel_right_link">
-    <mu1>0.1</mu1>
-    <mu2>0.1</mu2>
-    <kp>500000.0</kp>
+    <mu1>0.1</mu1> <mu2>0.1</mu2> <kp>500000.0</kp>
     <kd>10.0</kd>
     <minDepth>0.001</minDepth>
     <maxVel>0.1</maxVel>
@@ -165,8 +163,15 @@
           <distortionK3>0.0</distortionK3>
           <distortionT1>0.0</distortionT1>
           <distortionT2>0.0</distortionT2>
-        </plugin>
-      </sensor>
+        </plugin> </sensor>
     </gazebo>
+
+  <gazebo reference="ball">
+    <material>Gazebo/Red</material>
+  </gazebo>
+
+  <gazebo reference="poll">
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
 
 </robot>

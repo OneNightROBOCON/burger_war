@@ -240,4 +240,30 @@
     </visual>
   </link>
 
+  <joint name="poll_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="-0.09 0.0 0.17"/>
+    <parent link="base_link"/>
+    <child link="poll"/>
+  </joint>
+  <link name="poll">
+    <visual>
+      <geometry>
+        <cylinder length="0.05" radius="0.002"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="ball_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="-0.09 0.0 0.21"/>
+    <parent link="base_link"/>
+    <child link="ball"/>
+  </joint>
+  <link name="ball">
+    <visual>
+      <geometry>
+        <sphere radius="0.025"/>
+      </geometry>
+    </visual>
+  </link>
+
 </robot>

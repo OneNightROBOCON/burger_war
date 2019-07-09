@@ -18,7 +18,8 @@
   </camera>
 </gui>
 <include><uri>model://sun</uri></include>
-<include><uri>model://ground_plane</uri></include>
+<include><uri>model://my_ground_plane</uri></include>
+
 @{box_count = 0}
 @{tag_count = 1}
 <!-- Centor BOX -->
