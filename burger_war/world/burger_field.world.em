@@ -25,17 +25,17 @@
 <!-- Centor BOX -->
 <include>
   <name>box_@(box_count)</name>
-  <pose>0 0 0.25 0 0 0</pose>
+  <pose>0 0 0.1 0 0 0</pose>
   <uri>model://center_box</uri>
 </include>
 <include>
   <name>plate_@(tag_count)</name>
-  <pose>0 0.2505 0.2 0 0 0</pose>
+  <pose>0 0.1755 0.1 0 0 0</pose>
   <uri>model://plate</uri>
 </include>
 <model name="box_@(box_count)_tag_@(tag_count)">
   <static>true</static>
-  <pose>0 0.251 0.2 0 0 0</pose>
+  <pose>0 0.176 0.1 0 0 0</pose>
   <link name="link">
     <visual name="visual">
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
@@ -50,12 +50,12 @@
 @{tag_count += 1}
 <include>
   <name>plate_@(tag_count)</name>
-  <pose>0 -0.2505 0.2 0 0 0</pose>
+  <pose>0 -0.1755 0.1 0 0 0</pose>
   <uri>model://plate</uri>
 </include>
 <model name="box_@(box_count)_tag_@(tag_count)">
   <static>true</static>
-  <pose>0 -0.251 0.2 0 0 0</pose>
+  <pose>0 -0.176 0.1 0 0 0</pose>
   <link name="link">
     <visual name="visual">
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
@@ -71,12 +71,12 @@
 @{tag_count += 1}
 <include>
   <name>plate_@(tag_count)</name>
-  <pose>0.2505 0 0.2 0 0 1.571</pose>
+  <pose>0.1755 0 0.1 0 0 1.571</pose>
   <uri>model://plate</uri>
 </include>
 <model name="box_@(box_count)_tag_@(tag_count)">
   <static>true</static>
-  <pose>0.251 0 0.2 0 0 1.571</pose>
+  <pose>0.176 0 0.1 0 0 1.571</pose>
   <link name="link">
     <visual name="visual">
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
@@ -92,12 +92,12 @@
 @{tag_count += 1}
 <include>
   <name>plate_@(tag_count)</name>
-  <pose>-0.2505 0 0.2 0 0 1.571</pose>
+  <pose>-0.1755 0 0.1 0 0 1.571</pose>
   <uri>model://plate</uri>
 </include>
 <model name="box_@(box_count)_tag_@(tag_count)">
   <static>true</static>
-  <pose>-0.251 0 0.2 0 0 1.571</pose>
+  <pose>-0.176 0 0.1 0 0 1.571</pose>
   <link name="link">
     <visual name="visual">
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
@@ -119,17 +119,17 @@
 @[for y in [side_pos, -side_pos]]
 <include>
   <name>box_@(box_count)</name>
-  <pose>@(x) @(y) 0.25 0 0 0</pose>
+  <pose>@(x) @(y) 0.1 0 0 0</pose>
   <uri>model://corner_box</uri>
 </include>
 <include>
   <name>plate_@(tag_count)</name>
-  <pose>@(x) @(y+0.105) 0.2 0 0 0</pose>
+  <pose>@(x) @(y+0.08) 0.1 0 0 0</pose>
   <uri>model://plate</uri>
 </include>
 <model name="box_@(box_count)_tag_@(tag_count)">
   <static>true</static>
-  <pose>@(x) @(y+0.11) 0.2 0 0 0</pose>
+  <pose>@(x) @(y+0.085) 0.1 0 0 0</pose>
   <link name="link">
     <visual name="visual">
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
@@ -145,12 +145,12 @@
 @{tag_count += 1}
 <include>
   <name>plate_@(tag_count)</name>
-  <pose>@(x) @(y-0.105) 0.2 0 0 0</pose>
+  <pose>@(x) @(y-0.08) 0.1 0 0 0</pose>
   <uri>model://plate</uri>
 </include>
 <model name="box_@(box_count)_tag_@(tag_count)">
   <static>true</static>
-  <pose>@(x) @(y-0.11) 0.2 0 0 0</pose>
+  <pose>@(x) @(y-0.085) 0.1 0 0 0</pose>
   <link name="link">
     <visual name="visual">
       <geometry><box><size>0.03 0.001 0.03</size></box></geometry>
@@ -207,11 +207,11 @@
   </model>
 @[end def]
 @{wall.count = 0}
-@{wall_size = 2.475}
-@( wall((0, wall_size), (wall_size, 0), 0.5) )
-@( wall((wall_size, 0), (0, -wall_size), 0.5) )
-@( wall((0, -wall_size), (-wall_size, 0), 0.5) )
-@( wall((-wall_size, 0), ( 0, wall_size), 0.5) )
+@{wall_size = 1.697}
+@( wall((0, wall_size), (wall_size, 0), 0.3) )
+@( wall((wall_size, 0), (0, -wall_size), 0.3) )
+@( wall((0, -wall_size), (-wall_size, 0), 0.3) )
+@( wall((-wall_size, 0), ( 0, wall_size), 0.3) )
 
 <!-- RED and BLUE maker -->
 <model name="blue_maker">

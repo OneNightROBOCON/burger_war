@@ -2,7 +2,7 @@
 *.swp
 *.pyc
 
-onigiri_war_judge/log/*
+judge/log/*
 !.gitkeep
 
 # for ignore robot model

@@ -7,7 +7,7 @@
         <geometry>
           <plane>
             <normal>0 0 1</normal>
-            <size>8 8</size>
+            <size>4 4</size>
           </plane>
         </geometry>
         <surface>
@@ -24,7 +24,7 @@
         <geometry>
           <plane>
             <normal>0 0 1</normal>
-            <size>8 8</size>
+            <size>4 4</size>
           </plane>
         </geometry>
         <material>
