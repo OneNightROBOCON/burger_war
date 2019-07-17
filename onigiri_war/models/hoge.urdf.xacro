@@ -174,7 +174,8 @@
   <link name="tag1">
     <visual>
       <geometry>
-          <mesh filename="package://onigiri_war/models/tags/0050g.dae" scale="1.0 1.0 1.0" />
+          <!-- 120mm x 0.666 = 80mm -->
+          <mesh filename="package://onigiri_war/models/tags/0050g.dae" scale="0.666 0.666 1.0" />
       </geometry>
     </visual>
   </link>
@@ -186,7 +187,7 @@
   <link name="tag1-1">
     <visual>
       <geometry>
-          <mesh filename="package://onigiri_war/models/tags/test.dae" scale="1.0 1.0 1.0"/>
+          <mesh filename="package://onigiri_war/models/tags/test.dae" scale="0.666 0.666 1.0"/>
       </geometry>
     </visual>
   </link>
@@ -198,7 +199,7 @@
   <link name="tag2">
     <visual>
       <geometry>
-          <mesh filename="package://onigiri_war/models/tags/0051g.dae" scale="1.0 1.0 1.0" />
+          <mesh filename="package://onigiri_war/models/tags/0051g.dae" scale="0.666 0.666 1.0" />
       </geometry>
     </visual>
   </link>
@@ -210,7 +211,7 @@
   <link name="tag2-1">
     <visual>
       <geometry>
-          <mesh filename="package://onigiri_war/models/tags/test.dae" scale="1.0 1.0 1.0"/>
+          <mesh filename="package://onigiri_war/models/tags/test.dae" scale="0.666 0.666 1.0"/>
       </geometry>
     </visual>
   </link>
@@ -223,7 +224,7 @@
   <link name="tag3">
     <visual>
       <geometry>
-          <mesh filename="package://onigiri_war/models/tags/0052g.dae" scale="1.0 1.0 1.0" />
+          <mesh filename="package://onigiri_war/models/tags/0052g.dae" scale="0.666 0.666 1.0" />
       </geometry>
     </visual>
   </link>
@@ -235,13 +236,13 @@
   <link name="tag3-1">
     <visual>
       <geometry>
-          <mesh filename="package://onigiri_war/models/tags/test.dae" scale="1.0 1.0 1.0"/>
+          <mesh filename="package://onigiri_war/models/tags/test.dae" scale="0.666 0.666 1.0"/>
       </geometry>
     </visual>
   </link>
 
   <joint name="poll_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="-0.09 0.0 0.17"/>
+    <origin rpy="0 0 0" xyz="-0.09 0.0 0.12"/>
     <parent link="base_link"/>
     <child link="poll"/>
   </joint>

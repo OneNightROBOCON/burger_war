@@ -114,7 +114,7 @@
 @{box_count += 1}
 
 <!-- Corner BOX -->
-@{side_pos = 0.74}
+@{side_pos = 0.53}
 @[for x in [side_pos, -side_pos]]
 @[for y in [side_pos, -side_pos]]
 <include>
