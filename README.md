@@ -1,7 +1,6 @@
-
-ロボットで戦車対戦をするようなゲームです。
+# burger_war
+ロボットで戦車対戦をするゲームです。
 大砲で撃つ代わりに、カメラでターゲットのARマーカーを読み取ります。
-
 
 ## 目次
 - インストール
@@ -11,9 +10,7 @@
 - 動作環境
 
 ## インストール
-onigiri_warには**実機**と**シミュレータ**があります。
-シミュレータで動かす場合には `4. PC上でシミュレーションする場合`も実行してください。
-
+burger_warには**実機**と**シミュレータ**があります。
 
 ### 1. ros (kinetic) のインストール
 rosのインストールが終わっている人は`2.このリポジトリをクローン` まで飛ばしてください。
@@ -52,12 +49,12 @@ turtlr_war リポジトリをクローンします。
 先程作ったワークスペースの`src/`の下においてください。
 ```
 cd ~/catkin_ws/src
-git clone https://github.com/OneNightROBOCON/onigiri_war
+git clone https://github.com/OneNightROBOCON/burger_war
 ```
 
 このリポジトリのフィールド用のGAZEBOモデルにPATHを通す
 ```
-export GAZEBO_MODEL_PATH=$HOME/catkin_ws/src/onigiri_war/onigiri_war/models/
+export GAZEBO_MODEL_PATH=$HOME/catkin_ws/src/burger_war/burger_war/models/
 ```
 シェルごとに毎回実行するのは面倒なので上記は`~/.bashrc`に書いておくと便利です｡
 
@@ -74,10 +71,9 @@ sudo apt-get install python-pip
 #　requests flask のインストール
 sudo pip install requests flask
 # turtlebot3 ロボットモデルのインストール
-sudo apt-get install ros-kinetic-turtlebot3hogehgo#TODO
+sudo apt-get install ros-kinetic-turtlebot3 ros-kinetic-turtlebot3-msgs ros-kinetic-turtlebot3-simulations
 # aruco (ARマーカー読み取りライブラリ）
 sudo apt-get install ros-kinetic-aruco-ros
-
 ```
 
 
@@ -111,7 +107,7 @@ TODO change image
 
 審判サーバーを立ち上げずにシミュレータとロボットのみ立ち上げる場合
 ```
-roslaunch onigiri_war　onigiri_setup_sim.launch
+roslaunch burger_war　setup_sim.launch
 ```
 フィールドとロボットが立ち上がったら
 別のターミナルで下記ロボット動作スクリプトを実行
@@ -124,16 +120,16 @@ bash scripts/start.sh
 ### 実機
 センサなどが立ち上がりロボットを動かす準備
 ```
-roslaunch onigiri_war onigiri_setup.launch
+roslaunch burger_war setup.launch
 ```
 別のターミナルで
 ```
-roslaunch onigiri_war action.launch
+roslaunch burger_war action.launch
 ```
 
 
 ## 審判サーバー
-審判サーバーは`onigiri_war_judge/`以下にあります
+審判サーバーは`burger_war_judge/`以下にあります
 そちらのREADMEを参照ください
 
 ## ファイル構成
@@ -142,23 +138,22 @@ roslaunch onigiri_war action.launch
 下記のようなディレクトリ構成になっています。  
 
 ```
-onigiti_war
-├── onigiri_war
+burger_war
+├── burger_war
 │   ├── CMakeLists.txt
 │   ├── launch  launchファイルの置き場
 │   │   ├── sim_robot_run.launch  シミュレータ上で２台のロボットを動かすlaunchファイル
-│   │   └─ onigiri_setup_sim.launch  Gazeboシミュレータ上でフィールドの生成ロボットを起動、初期化するlaunchファイル
+│   │   └─ setup_sim.launch  Gazeboシミュレータ上でフィールドの生成ロボットを起動、初期化するlaunchファイル
 │   │
 │   ├── models   GAZEBOシミュレーター用のモデルファイル
 │   ├── package.xml
 │   ├── scripts    pythonで書かれたROSノード
-│   └── world     シミュレータGAZEBO用の環境ファイル
-│       ├── field_v0.world  昔のヤツ
-│       ├── gen.sh          onigiri_field.world.emから onigiri_field.worldを作成するスクリプト
-│       ├── onigiri_field.world  最新のworldファイル
-│       └── onigiri_field.world.em  worldファイルのマクロ表記版､こっちを編集する
+│   └── world     GAZEBO用の環境ファイル
+│       ├── gen.sh          burger_field.world.emから burger_field.worldを作成するスクリプト
+│       ├── burger_field.world  最新のworldファイル
+│       └── burger_field.world.em  worldファイルのマクロ表記版､こっちを編集する
 |
-├── onigiri_war_judge   審判サーバー
+├── judge   審判サーバー
 │   ├── judgeServer.py  審判サーバー本体
 │   ├── log   ログがここにたまる
 │   ├── marker_set  マーカーの配置設定ファイル置き場
@@ -168,8 +163,7 @@ onigiti_war
 │   └── visualizeWindow.py  観戦画面表示プログラム
 |
 ├── README.md   これ
-├── ros_aruco  ARマーカーの読み取りパッケージ
-├── rulebook.md  ルールブック(過去版 2017/03の第３回大会のもの)
+├── rulebook.md  ルールブック
 └── scripts      一発起動スクリプト
     ├─── sim_with_judge.sh   シミュレーターとロボットと審判サーバーの立ち上げ初期化をすべて行う
     └──  start.sh             赤サイド、青サイドのロボットを動作させるノードを立ち上げるスクリプト
