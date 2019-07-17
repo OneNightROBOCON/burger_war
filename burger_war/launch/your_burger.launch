@@ -5,11 +5,9 @@
 
 
 
-    <!-- sample program  -->
-    <node pkg="onigiri_war" type="randomRun.py" name="randomRun" output="screen"/>
-
-
-
+    <!-- sample program node -->
+    <node pkg="burger_war" type="randomRun.py" name="randomRun" output="screen"/>
+    <!-- END sample program node -->
 
 
 

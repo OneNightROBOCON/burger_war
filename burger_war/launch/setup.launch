@@ -28,7 +28,7 @@
   </node>
 
 <!-- send target ID to judge server -->
-  <node pkg="onigiri_war" type="sendIdToJudge.py" name="send_id_to_judge" output="screen">
+  <node pkg="burger_war" type="sendIdToJudge.py" name="send_id_to_judge" output="screen">
     <param name="judge_url" value="http://127.0.0.1:5000/submits" />
     <param name="player_name" value="roborobo" />
     <param name="side" value="r" />

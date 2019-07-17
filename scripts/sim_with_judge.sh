@@ -4,12 +4,12 @@ set -x
 
 # judge
 # run judge server and visualize window
-gnome-terminal -e "python onigiri_war_judge/judgeServer.py"
-gnome-terminal -e "python onigiri_war_judge/visualizeWindow.py"
+gnome-terminal -e "python judge/judgeServer.py"
+gnome-terminal -e "python judge/visualizeWindow.py"
 
 # init judge server for sim setting
-bash onigiri_war_judge/test_scripts/init_single_play.sh onigiri_war_judge/marker_set/sim.csv localhost:5000 you enemy
+bash judge/test_scripts/init_single_play.sh judge/marker_set/sim.csv localhost:5000 you enemy
 
 # robot
-roslaunch onigiri_war onigiri_setup_sim.launch
+roslaunch burger_war setup_sim.launch
 
