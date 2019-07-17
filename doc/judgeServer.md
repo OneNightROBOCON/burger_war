@@ -1,4 +1,4 @@
-# ONIGIRI-WAR Judge WebAPIドキュメント
+# Judge WebAPIドキュメント
 
 ## 戦況を表示する [/warState]
 
