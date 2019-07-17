@@ -1,5 +1,3 @@
-# onigiri_war
-OneNightROBOCON競技「onigiri war」プロジェクト
 
 ロボットで戦車対戦をするようなゲームです。
 大砲で撃つ代わりに、カメラでターゲットのARマーカーを読み取ります。
@@ -18,8 +16,6 @@ onigiri_warには**実機**と**シミュレータ**があります。
 
 
 ### 1. ros (kinetic) のインストール
-**2018年からkineticで開発しています**
-
 rosのインストールが終わっている人は`2.このリポジトリをクローン` まで飛ばしてください。
 
 参考  ROS公式サイト<http://wiki.ros.org/ja/kinetic/Installation/Ubuntu>
@@ -58,45 +54,6 @@ turtlr_war リポジトリをクローンします。
 cd ~/catkin_ws/src
 git clone https://github.com/OneNightROBOCON/onigiri_war
 ```
-### 3. 依存ライブラリのインストール
-- pip : pythonのパッケージ管理ツール
-- requests : HTTP lib
-- flask : HTTP server 審判サーバーで使用
-
-```
-# pip のインストール 
-sudo apt-get install python-pip
-#　requests flask のインストール
-sudo pip install requests flask
-```
-
-- aruco (ARマーカー読み取りライブラリ）
-
-opencv必要なのでrosをinstallしてからインストールしてください。
-
-以下のURLからaruco-2.0.19.zipをダウンロード　※バージョンは都度変更する可能性あり
-(2018/5/14現在 aruco-3.0.9のバージョンではmake時にエラーが発生するためaruco-2.0.19を推奨)
-
-https://sourceforge.net/projects/aruco/files/2.0.19/
-```
-cd Downloads/aruco-2.0.19
-mkdir build
-cd build
-cmake ..
-make
-sudo make install 
-```
-
-### 4. PC上でシミュレーションする場合
-- ロボットモデルのインストール
-LetsBotコミュニティのOneNightROBOCONグループで共有されている
-`rulo_sim_package.tar.gz`
-を支持に従い`src`以下に展開
-
-ロボットモデルをコピー
-```
-cp -a ~/catkin_ws/src/ros_simulator/models ~/.gazebo/
-```
 
 このリポジトリのフィールド用のGAZEBOモデルにPATHを通す
 ```
@@ -104,16 +61,32 @@ export GAZEBO_MODEL_PATH=$HOME/catkin_ws/src/onigiri_war/onigiri_war/models/
 ```
 シェルごとに毎回実行するのは面倒なので上記は`~/.bashrc`に書いておくと便利です｡
 
+### 3. 依存ライブラリのインストール
+- pip : pythonのパッケージ管理ツール
+- requests : HTTP lib
+- flask : HTTP server 審判サーバーで使用
+- turtlebot3
+- aruco
+
+```
+# pip のインストール 
+sudo apt-get install python-pip
+#　requests flask のインストール
+sudo pip install requests flask
+# turtlebot3 ロボットモデルのインストール
+sudo apt-get install ros-kinetic-turtlebot3hogehgo#TODO
+# aruco (ARマーカー読み取りライブラリ）
+sudo apt-get install ros-kinetic-aruco-ros
+
+```
+
+
 ### 5. make
 ```
 cd ~/catkin_ws
 catkin_make
 ```
 
-arucoのmakeがうまく行かない場合、下記を試してみてください
-```
-catkin_make --pkg ros_aruco -DARUCO_PATH=/usr/local  
-```
 インストールは以上です。
 
 ## サンプルの実行
@@ -127,6 +100,8 @@ bash scripts/sim_with_judge.sh
 ```
 bash scripts/start.sh
 ```
+
+TODO change image
 
 ![screenshot at 2018-01-09 23 52 12](https://user-images.githubusercontent.com/17049327/34726839-7ed4694e-f598-11e7-8e8e-2e0311b099d2.png)
 
@@ -154,16 +129,6 @@ roslaunch onigiri_war onigiri_setup.launch
 別のターミナルで
 ```
 roslaunch onigiri_war action.launch
-```
-
-#### PCにUSBカメラをつないでマーカー読み取りのみ実験する場合
-```
-roslaunch onigiri_war run_with_usbcam.launch
-```
-
-#### PCにRealSenceをつないでマーカー読み取りのみ実験する場合
-```
-roslaunch onigiri_war run_with_realsense.launch
 ```
 
 
@@ -206,40 +171,10 @@ onigiti_war
 ├── ros_aruco  ARマーカーの読み取りパッケージ
 ├── rulebook.md  ルールブック(過去版 2017/03の第３回大会のもの)
 └── scripts      一発起動スクリプト
-    ├─── sim_with_judge.sh   シミュレーターとロボットと審判サーバーの立ち上げ初期化をすべて行う    
+    ├─── sim_with_judge.sh   シミュレーターとロボットと審判サーバーの立ち上げ初期化をすべて行う
     └──  start.sh             赤サイド、青サイドのロボットを動作させるノードを立ち上げるスクリプト
 ```
 ↑ディレクトリと特に重要なファイルのみ説明しています。
-
-## その他
-### カメラの露光時間の設定
-実機で動作する場合のカメラの露光時間の設定に関する情報です。
-QRコード認識の時に画像ぶれにより認識精度が落ちないように設定が必要
-
-#### Webカメラの場合
-ターミナルを開いて以下を実行
-```
-v4l2-ctl -c exposure_auto=1
-v4l2-ctl -c exposure_absolute=20
-```
-
-exposure_auto=1で露光の調整をマニュアルに変更し、exposure_absolute=20で露光時間を設定
-
-#### RealSenseの場合
-~/realsense/realsense_camera/launch/includes/nodelet_rgbd_launch.xmlを開き、以下の該当箇所を探す。
-```
-<node pkg="nodelet" type="nodelet" name="driver"
-        args="load realsense_camera/$(arg camera_type)Nodelet $(arg manager)">
-```
-        
-この直下に以下の内容を記載。
-```
-<param name="color_enable_auto_exposure" value="0"/>
-<param name="color_exposure" value="39"/>
-```
-#### 注意点
-環境の明るさにより画像が暗くなりすぎるので、環境により適宜調整が必要
-
 
 ## 推奨動作環境
 - Ubuntu 16.04 
