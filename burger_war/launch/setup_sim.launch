@@ -23,8 +23,9 @@
 
       <!-- ar reader -->
      <node pkg="aruco_ros" type="marker_publisher" name="aruco_marker_publisher">
+            <param name="use_camera_info" value="False"/>
             <remap from="/image" to="image_raw" />
-            <remap from="/aruco_marker_publisher/markers" to="target_id" />
+            <remap from="/blue_bot/aruco_marker_publisher/markers" to="target_id" />
      </node>
 
       <!-- send target ID to judge server -->
@@ -44,8 +45,9 @@
 
       <!-- ar reader -->
       <node pkg="aruco_ros" type="marker_publisher" name="aruco_marker_publisher">
+          <param name="use_camera_info" value="False"/>
           <remap from="/image" to="image_raw" />
-          <remap from="/aruco_marker_publisher/markers" to="target_id" />
+          <remap from="/red_bot/aruco_marker_publisher/markers" to="target_id" />
       </node>
 
       <!-- send target ID to judge server -->

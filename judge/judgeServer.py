@@ -80,7 +80,7 @@ class Referee:
         response = Response()
         # check id length
         if not len(target_id) == 4:
-            app.logger.info("ERROR target length is not 4")
+            app.logger.error("ERROR target length is not 4")
             app.logger.info("player_name: " + player_name)
             app.logger.info("player_side: " + player_side)
             app.logger.info("target_id: " + target_id)
@@ -128,13 +128,15 @@ class Referee:
         # recount score
         red = 0
         blue = 0
-        for target in self.war_state.targets:
-            if target.player == 'n':
+        for target_ in self.war_state.targets:
+            if target_.player == 'n':
                 pass
-            elif target.player == 'b':
-                blue += target.point
-            elif target.player == 'r':
-                red += target.point
+            elif target_.player == 'b':
+                blue += int(target_.point)
+            elif target_.player == 'r':
+                red += int(target_.point)
+            else:
+                app.logger.error("ERROR recount score")
         self.war_state.scores['b'] = blue
         self.war_state.scores['r'] = red
 
@@ -199,10 +201,10 @@ def judgeTargetId():
 @app.route('/warState', methods=['GET'])
 def getState():
     ip = request.remote_addr
-    app.logger.info("GET /warState " + str(ip))
+    #app.logger.info("GET /warState " + str(ip))
     state_json = referee.war_state.makeJson()
     res = state_json
-    app.logger.info("RESPONSE /warState "+ str(ip) + str(res))
+    #app.logger.info("RESPONSE /warState "+ str(ip) + str(res))
     return jsonify(res)
 
 
