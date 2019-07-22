@@ -2,7 +2,7 @@
 <robot name="turtlebot3_burger" xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:include filename="$(find turtlebot3_description)/urdf/common_properties.xacro"/>
   <!-- xacro:include filename="$(find turtlebot3_description)/urdf/turtlebot3_burger.gazebo.xacro"/-->
-  <xacro:include filename="$(find burger_war)/models/hoge.gazebo.xacro"/>
+  <xacro:include filename="$(find burger_war)/models/burgerbot.gazebo.xacro"/>
 
   <link name="base_footprint"/>
 
@@ -175,7 +175,7 @@
     <visual>
       <geometry>
           <!-- 120mm x 0.666 = 80mm -->
-          <mesh filename="package://burger_war/models/tags/0050g.dae" scale="0.666 0.666 1.0" />
+          <mesh filename="package://burger_war/models/tags/0040g.dae" scale="0.666 0.666 1.0" />
       </geometry>
     </visual>
   </link>
@@ -199,7 +199,7 @@
   <link name="tag2">
     <visual>
       <geometry>
-          <mesh filename="package://burger_war/models/tags/0051g.dae" scale="0.666 0.666 1.0" />
+          <mesh filename="package://burger_war/models/tags/0041g.dae" scale="0.666 0.666 1.0" />
       </geometry>
     </visual>
   </link>
@@ -224,7 +224,7 @@
   <link name="tag3">
     <visual>
       <geometry>
-          <mesh filename="package://burger_war/models/tags/0052g.dae" scale="0.666 0.666 1.0" />
+          <mesh filename="package://burger_war/models/tags/0042g.dae" scale="0.666 0.666 1.0" />
       </geometry>
     </visual>
   </link>
