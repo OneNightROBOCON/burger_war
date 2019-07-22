@@ -20,7 +20,7 @@ rosのインストールが終わっている人は`2.このリポジトリを�
 ros インストール
 ```
 sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
-sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
+sudo apt-key adv --keyserver 'hkp://ha.pool.sks-keyservers.net:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 sudo apt-get update
 sudo apt-get install ros-kinetic-desktop-full
 ```
@@ -97,9 +97,7 @@ bash scripts/sim_with_judge.sh
 bash scripts/start.sh
 ```
 
-TODO change image
-
-![screenshot at 2018-01-09 23 52 12](https://user-images.githubusercontent.com/17049327/34726839-7ed4694e-f598-11e7-8e8e-2e0311b099d2.png)
+![screenshot](https://user-images.githubusercontent.com/17049327/61606479-7ed49680-ac85-11e9-8c77-5cad3a5db4ed.png)
 
 ↑このようなフィールドが現れロボットが2台出現します。
 審判画面も表示されます。
