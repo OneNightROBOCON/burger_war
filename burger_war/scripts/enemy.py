@@ -76,7 +76,7 @@ class SioBot():
         '''
         update robot state 'go' or 'back'
         '''
-        if self.state == 'go' and self.wheel_rot_r > 45:
+        if self.state == 'go' and self.wheel_rot_r > 30:
             self.state = 'back'
         elif self.state == 'back' and self.wheel_rot_r < 5:
             self.state = 'go'
