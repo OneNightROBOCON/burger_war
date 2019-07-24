@@ -1,13 +1,15 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="bot_name" default=""/>
+  <arg name="robot_name" default=""/>
     <!-- You can change control program  -->
 
 
 
 
     <!-- sample program node -->
-    <include file="$(find burger_navigation)/launch/burger_navigation.launch">
+
+    <node pkg="burger_war" type="randomRun.py" name="randomRun" output="screen"/>
+
     <!-- END sample program node -->
 
 
