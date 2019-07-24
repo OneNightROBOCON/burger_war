@@ -32,20 +32,18 @@ IMUはOpenCR（マイコンボード）に搭載されています。
 LiDARとIMUについてはTurtlebot3 Burgerのサイトをご覧ください。
 
 http://emanual.robotis.com/docs/en/platform/turtlebot3/specifications/
+
 WebカメラはロジクールC270を搭載しています。
 
 ## Intel NUCのスペック表は？
- 名称：NUC8i3BEK
-
- CPU ： Intel Core i3-8109U Processor (4M Cache, up to 3.60 GHz) 
-
- メモリ：DDR4-2400 8GB
-
- SDD：M.2 SSD 250GB
-
- OS：Ubuntu 16.04
-
- ROS：kinetic-desktop-full
+| 項目 | スペック |
+----|----
+| 型番 | NUC8i3BEK |
+| CPU | Intel Core i3-8109U Processor (4M Cache, up to 3.60 GHz) |
+| メモリ | DDR4-2400 8GB |
+| SDD | M.2 SSD 250GB |
+| OS | Ubuntu 16.04 |
+| ROS | kinetic-desktop-full |
 
 ## モーターはステッピングモーターのような回転数が指定できるものか？
 Dynamixelのサーボモーターを搭載しています。
