@@ -80,17 +80,52 @@ class TargetId(object):
                     self.historys.append(target_id)
 
 
+class WarStatePublisher(object):
+    #jsonの内容
+        # players
+        #     b: "jiro" (string) - プレイヤー名 (blue side)
+        #     r: "ishiro"(string) - プレイヤー名 (red side)
+        # ready
+        #     b: True (boolean) - ジャッジサーバー接続確認、走行準備完了フラグ
+        #     r: True (boolean) - ジャッジサーバー接続確認、走行準備完了フラグ
+        # scores
+        #     b: 0 (int) - スコア
+        #     r: 2 (int) - スコア
+        # state: "end" (string) - 試合ステート running, ready, end, etc...
+        # targets
+        #     name: "one" (string) - ターゲット名 同じ名前はつけない。
+        #     player: "r" (string) - 所有プレイヤーサイド r(BlueSide), b(BlueSide), n(NoPlayer)
+        #     point: 1 (int) - ターゲットを取得したときのポイント  
+
+    def __init__(self, judge_url):
+        # target ID  val subscriver
+        self.judge_url = judge_url
+        self.vel_pub = rospy.Publisher('war_state', String, queue_size=1)
+
+    def publishWarState(self):
+        resp = requests.get(self.judge_url)
+        msg = resp.text
+        self.vel_pub.publish(msg)
+        return msg
+
+
 if __name__ == "__main__":
     rospy.init_node("send_id_to_judge")
 
     # set param from launch param
-    JUDGE_URL = rospy.get_param('~judge_url', 'http://127.0.0.1:5000/submits')
+    JUDGE_URL = rospy.get_param('~judge_url', 'http://127.0.0.1:5000')
     PLAYER_NAME = rospy.get_param('~player_name', 'NoName')
     SIDE = rospy.get_param('~side', 'r')
 
     INIT_CODE = '0000'
 
-    target_id = TargetId(JUDGE_URL, SIDE, PLAYER_NAME, INIT_CODE)
+    target_id = TargetId(JUDGE_URL + "/submits", SIDE, PLAYER_NAME, INIT_CODE)
+    state_publisher = WarStatePublisher(JUDGE_URL + "/warState")
     while not rospy.is_shutdown() and target_id.sendInitCode() == False:
         sleep(3)
-    rospy.spin()
+
+    while not rospy.is_shutdown():
+        state_publisher.publishWarState()
+        sleep(3)
+
+
