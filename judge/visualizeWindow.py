@@ -304,4 +304,4 @@ if __name__ == "__main__":
     
     while(True):
         sw.update(display)
-        sleep(0.1)
+        sleep(1)
