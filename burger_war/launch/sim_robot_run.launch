@@ -10,7 +10,7 @@
 <!-- red side robot -->
   <group ns="red_bot">
       <!-- Your robot control node run -->
-      <include file="$(find burger_war)/launch/your_burger.launch" />
+      <include file="$(find burger_war)/launch/your_burger.launch">
         <arg name="robot_name" value="red_bot" />
       </include>
   </group>
