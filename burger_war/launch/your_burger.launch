@@ -1,12 +1,15 @@
 <?xml version="1.0"?>
 <launch>
+  <arg name="robot_name" default=""/>
     <!-- You can change control program  -->
 
 
 
 
     <!-- sample program node -->
+
     <node pkg="burger_war" type="randomRun.py" name="randomRun" output="screen"/>
+
     <!-- END sample program node -->
 
 

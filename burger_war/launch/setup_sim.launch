@@ -30,7 +30,7 @@
 
       <!-- send target ID to judge server -->
       <node pkg="burger_war" type="sendIdToJudge.py" name="send_id_to_judge" output="screen">
-        <param name="judge_url" value="http://127.0.0.1:5000/submits" />
+        <param name="judge_url" value="http://127.0.0.1:5000" />
         <param name="player_name" value="blue_bot" />
         <param name="side" value="b" />
       </node>
@@ -52,7 +52,7 @@
 
       <!-- send target ID to judge server -->
       <node pkg="burger_war" type="sendIdToJudge.py" name="send_id_to_judge" output="screen">
-        <param name="judge_url" value="http://127.0.0.1:5000/submits" />
+        <param name="judge_url" value="http://127.0.0.1:5000" />
         <param name="player_name" value="red_bot" />
         <param name="side" value="r" />
       </node>

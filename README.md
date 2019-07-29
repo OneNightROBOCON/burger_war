@@ -1,6 +1,6 @@
 # burger_war
 ロボットで戦車対戦をするゲームです。
-大砲で撃つ代わりに、カメラでターゲットのARマーカーを読み取ります。
+大砲で撃つ代わりに、カメラでターゲットのARマーカーを読み取ります。<BR>
 
 ## 目次
 - インストール
@@ -45,6 +45,11 @@ source ~/.bashrc
 ```
 
 ### 2. このリポジトリをクローン
+gitをインストールします。
+```
+sudo apt-get install git
+```
+
 turtlr_war リポジトリをクローンします。
 先程作ったワークスペースの`src/`の下においてください。
 ```
@@ -87,7 +92,17 @@ catkin_make
 
 ## サンプルの実行
 ### シミュレータ
-シミュレータ､ロボット(turtle_bot),審判サーバー､観戦画面のすべてを一発で起動する。大会で使用するスクリプト。
+シミュレータ､ロボット(turtle_bot),審判サーバー､観戦画面のすべてを一発で起動する。大会で使用するスクリプト。<BR>
+最初にburger_warのフォルダまで移動します。
+```
+cd ~/catkin_ws/src/burger_war
+```
+初回のみ、以下のコマンドでGazeboを起動し、モデルデータ等を読み込んでおくとよいです。<BR>
+(初回はGazeboの起動がおそいので)
+```
+gazebo
+```
+次にシミュレーションを起動
 ```
 bash scripts/sim_with_judge.sh
 ```
@@ -133,34 +148,34 @@ roslaunch burger_war action.launch
 ## ファイル構成
 各ディレクトリの役割と、特に参加者に重要なファイルについての説明
 
-下記のようなディレクトリ構成になっています。  
+下記のようなディレクトリ構成になっています。  
 
 ```
 burger_war
 ├── burger_war
-│   ├── CMakeLists.txt
-│   ├── launch  launchファイルの置き場
+│   ├── CMakeLists.txt
+│   ├── launch  launchファイルの置き場
 │   │   ├── sim_robot_run.launch  シミュレータ上で２台のロボットを動かすlaunchファイル
 │   │   └─ setup_sim.launch  Gazeboシミュレータ上でフィールドの生成ロボットを起動、初期化するlaunchファイル
 │   │
-│   ├── models   GAZEBOシミュレーター用のモデルファイル
-│   ├── package.xml
-│   ├── scripts    pythonで書かれたROSノード
-│   └── world     GAZEBO用の環境ファイル
-│       ├── gen.sh          burger_field.world.emから burger_field.worldを作成するスクリプト
-│       ├── burger_field.world  最新のworldファイル
-│       └── burger_field.world.em  worldファイルのマクロ表記版､こっちを編集する
+│   ├── models   GAZEBOシミュレーター用のモデルファイル
+│   ├── package.xml
+│   ├── scripts    pythonで書かれたROSノード
+│   └── world     GAZEBO用の環境ファイル
+│       ├── gen.sh          burger_field.world.emから burger_field.worldを作成するスクリプト
+│       ├── burger_field.world  最新のworldファイル
+│       └── burger_field.world.em  worldファイルのマクロ表記版､こっちを編集する
 |
-├── judge   審判サーバー
+├── judge   審判サーバー
 │   ├── judgeServer.py  審判サーバー本体
 │   ├── log   ログがここにたまる
 │   ├── marker_set  マーカーの配置設定ファイル置き場
 │   ├── picture  観戦画面用画像素材
 │   ├── README.md  
-│   ├── test_scripts   初期化などのスクリプト
+│   ├── test_scripts   初期化などのスクリプト
 │   └── visualizeWindow.py  観戦画面表示プログラム
 |
-├── README.md   これ
+├── README.md   これ
 ├── rulebook.md  ルールブック
 └── scripts      一発起動スクリプト
     ├─── sim_with_judge.sh   シミュレーターとロボットと審判サーバーの立ち上げ初期化をすべて行う
@@ -172,3 +187,19 @@ burger_war
 - Ubuntu 16.04 
 - Ros kinetic
 2018年からkineticで開発しています｡
+
+## Turtlebot3のスペック
+- http://emanual.robotis.com/docs/en/platform/turtlebot3/specifications/
+
+## その他
+https://github.com/gogo5nta さんに一括でインストールするスクリプトを作成いただいたので本リポジトリにも置いています。
+ご活用ください。
+```
+// ROS(kinetic)を一括インストール
+$ chdmod 777 ./scripts/install_ros_kinetic.sh
+$ ./scripts/install_ros_kinetic.sh
+
+// Robocon2019に必要な物を一括インストール
+$ chdmod 777 ./scripts/add_robocon2019.sh
+$ ./scripts/add_robocon2019.sh
+```

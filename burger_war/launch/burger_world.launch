@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+simple test launch
+only (world, robot_spawn , run)
+-->
+
+<launch>
+<!-- make world -->
+  <arg name="world_file"  default="$(find burger_war)/world/burger_field.world"/>
+  <arg name="gui" default="true"/>
+  <arg name="record" default="false"/>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="use_sim_time" value="true"/>
+    <arg name="debug" value="false"/>
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="recording" value="$(arg record)" />
+    <arg name="world_name" value="$(arg world_file)"/>
+  </include>
+
+
+  <!-- spawn the robot -->
+  <param name="robot_description" command="$(find xacro)/xacro --inorder $(find burger_war)/models/blue_bot.urdf.xacro" />
+
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -x 0.0 -y 1.3 -z 0.0 -Y -1.57 -model turtlebot3_burger -param robot_description"/>
+
+  <!-- aruco read node -->
+ <node pkg="aruco_ros" type="marker_publisher" name="aruco_marker_publisher">
+        <remap from="/image" to="image_raw" />
+        <remap from="/aruco_marker_publisher/markers" to="target_id" />
+ </node>
+
+</launch>
