@@ -190,3 +190,16 @@ burger_war
 
 ## Turtlebot3のスペック
 - http://emanual.robotis.com/docs/en/platform/turtlebot3/specifications/
+
+## その他
+https://github.com/gogo5nta さんに一括でインストールするスクリプトを作成いただいたので本リポジトリにも置いています。
+ご活用ください。
+```
+// ROS(kinetic)を一括インストール
+$ chdmod 777 ./scripts/install_ros_kinetic.sh
+$ ./scripts/install_ros_kinetic.sh
+
+// Robocon2019に必要な物を一括インストール
+$ chdmod 777 ./scripts/add_robocon2019.sh
+$ ./scripts/add_robocon2019.sh
+```
