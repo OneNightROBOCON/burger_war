@@ -28,12 +28,19 @@ class Target:
 
 
 class WarState:
-    def __init__(self):
+    def __init__(self, matchtime, extendtime=60.):
         self.state = "end"
         self.players = {"r": "NoPlayer", "b": "NoPlayer"}
         self.ready = {"r": False, "b": False}
         self.scores = {"r": 0, "b": 0}
         self.targets = []
+
+        self.passed_time = 0.
+        self.init_time = None
+        self.stoped_time = 0.
+
+        self.match_time = matchtime # [sec]
+        self.extend_time = extendtime # 1 minutes [sec]
 
     def makeJson(self):
         json = {
@@ -42,8 +49,59 @@ class WarState:
             "scores": self.scores,
             "state": self.state,
             "targets": [t.makeJson() for t in self.targets],
+            "time": self.passed_time,
         }
         return json
+
+    def makeCsv(self):
+        '''
+        convert war_state to one line string
+        datetime, player_name_r, player_name_b, score_r, score_b, state, time, targets
+        '''
+        csv_list = ["{0:%y%m%d-%H%M%S}".format(datetime.datetime.now()),
+                    str(self.players["r"]),
+                    str(self.players["b"]),
+                    str(self.scores["r"]),
+                    str(self.scores["b"]),
+                    str(self.state),
+                    str(self.stoped_time),
+                    ' '.join([str(t.makeJson()) for t in self.targets]),
+                    ]
+        csv = ','.join(csv_list)
+        return csv
+
+    def updateTime(self):
+        app.logger.info("updateTime")
+        if self.init_time is None:
+            return False
+
+        passed_time = self.stoped_time + (time.time() - self.init_time)
+        app.logger.info("passed_Time {}".format(passed_time))
+
+        if self.isOverMatchTime(passed_time):
+            self.setStateStop()
+            return True
+        else:
+            self.passed_time = passed_time
+        return False
+
+    def isOverMatchTime(self, passed_time):
+        if passed_time > self.match_time + self.extend_time:
+            return True
+        elif passed_time > self.match_time:
+            if self.scores['r'] == self.scores['b']:
+                return False
+            else:
+                return True
+        else:
+            return False
+
+    def setStateStop(self):
+        self.state = "stop"
+        self.init_time = None
+        self.stoped_time = self.passed_time
+        self.passed_time = 0.
+
 
 class Response:
     def __init__(self):
@@ -66,10 +124,15 @@ class Response:
         return json
 
 
-
 class Referee:
-    def __init__(self):
-        self.war_state = WarState()
+    def __init__(self, matchtime, extendtime):
+        self.war_state = WarState(matchtime, extendtime)
+
+    def getWarStateJson(self):
+        is_finished = self.war_state.updateTime()
+        if is_finished:
+            self.writeResult()
+        return self.war_state.makeJson()
 
     def judgeTargetId(self, player_name, player_side, target_id):
         '''
@@ -78,6 +141,12 @@ class Referee:
         '''
         # make Response object
         response = Response()
+
+        # Update time and check match time
+        is_finished = self.war_state.updateTime()
+        if is_finished:
+            self.writeResult()
+
         # check id length
         if not len(target_id) == 4:
             app.logger.error("ERROR target length is not 4")
@@ -106,14 +175,23 @@ class Referee:
                 response.new = is_new
                 response.error = "no error"
                 response.target = target
+
+                if self.isIPPONTarget():
+                    self.war_state.setStateStop()
+                    self.writeResult()
                 return response.makeJson()
         response.error = "ERR not mutch id"
         return response.makeJson()
 
+
+    def isIPPONTarget(self):
+        return self.war_state.scores['r'] >= 100 or self.war_state.scores['b'] >= 100
+
     def checkBothPlayerReady(self):
         if self.war_state.ready["r"] and self.war_state.ready["b"]:
-            self.war_state.state = "running"
-        return
+            return True
+        else:
+            return False
 
     def updateWarState(self, target, player_name, player_side):
         # new target or not
@@ -159,21 +237,36 @@ class Referee:
         return target.name
 
     def setState(self, state):
+        app.logger.info("setState")
         if state == "end":
             self.war_state.state = state
         elif state == "running":
             if self.checkBothPlayerReady():
                 self.war_state.state = state
+                self.war_state.init_time = time.time()
         elif state == "stop":
-            self.war_state.state = state
+            self.war_state.setStateStop
         else:
             pass
         return state
 
+    def writeResult(self):
+        result_string = self.war_state.makeCsv()
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        log_file_path = script_dir + "/log/" + "game_result.log"
+        with open(log_file_path, "a") as f:
+            f.write(result_string + "\n")
+        app.logger.info("Write Result {}".format(result_string))
+
+
+import argparse
+parser = argparse.ArgumentParser(description='burger_war judger server')
+parser.add_argument('--matchtime', '--mt', default=float('inf'), type=float, help='match time [sec]')
+parser.add_argument('--extendtime','--et', default=60, type=float, help='extend time [sec]')
+args = parser.parse_args()
 
 # global object referee
-referee = Referee()
-
+referee = Referee(args.matchtime, args.extendtime)
 
 @app.route('/')
 def index():
@@ -202,7 +295,7 @@ def judgeTargetId():
 def getState():
     ip = request.remote_addr
     #app.logger.info("GET /warState " + str(ip))
-    state_json = referee.war_state.makeJson()
+    state_json = referee.getWarStateJson()
     res = state_json
     #app.logger.info("RESPONSE /warState "+ str(ip) + str(res))
     return jsonify(res)
@@ -262,18 +355,6 @@ def getTest():
     ip = request.remote_addr
     app.logger.info("GET /test "+ str(ip))
     res = { "foo": "bar", "hoge": "hogehoge" }
-    app.logger.info("RESPONSE /test "+ str(ip) + str(res))
-    return jsonify(res)
-
-
-@app.route('/test', methods=['POST'])
-def postTest():
-    body = request.json
-    ip = request.remote_addr
-    app.logger.info(str(ip) + body )
-    state = body["state"]
-    ret = referee.setState(state)
-    res = ret
     app.logger.info("RESPONSE /test "+ str(ip) + str(res))
     return jsonify(res)
 
