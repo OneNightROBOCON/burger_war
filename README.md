@@ -133,7 +133,7 @@ bash scripts/start.sh
 ### 実機
 センサなどが立ち上がりロボットを動かす準備
 
-引数 ip:審判サーバーのアドレス, side: 赤サイドなら r 青サイドなら b
+引数 ip:審判サーバーのアドレス, side: 赤サイドなら `r` 青サイドなら `b`
 ```
 roslaunch burger_war setup.launch ip:=http://127.0.0.1:5000 side:=r
 ```
@@ -145,7 +145,7 @@ roslaunch burger_war setup.launch
 
 別のターミナルでロボットを動かすノードを起動
 
-引数 robot_name: 赤サイドなら red_bot 青サイドなら blue_bot
+引数 robot_name: 赤サイドなら `red_bot` 青サイドなら `blue_bot`
 
 赤サイドの場合
 ```
