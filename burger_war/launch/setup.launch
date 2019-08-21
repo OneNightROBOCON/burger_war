@@ -1,5 +1,10 @@
 <launch>
 
+<arg name="player_name" default="NoName"/>
+<arg name="side" default="b"/>
+<arg name="ip" default="http://127.0.0.1:5000"/>
+
+<!-- turtlebot bringup -->
 <include file="$(find turtlebot3_bringup)/launch/turtlebot3_robot.launch" />
 
 <!-- usb camera -->
@@ -14,9 +19,9 @@
 
 <!-- send target ID to judge server -->
 <node pkg="burger_war" type="sendIdToJudge.py" name="send_id_to_judge" output="screen">
-    <param name="judge_url" value="http://127.0.0.1:5000" />
-    <param name="player_name" value="blue_bot" />
-    <param name="side" value="b" />
+    <param name="judge_url" value="$(arg ip)" />
+    <param name="player_name" value="$(arg player_name)" />
+    <param name="side" value="$(arg side)" />
 </node>
 
 </launch>
