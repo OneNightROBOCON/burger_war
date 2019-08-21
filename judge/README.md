@@ -10,6 +10,19 @@ bash test_scripts/view_test.sh
 ```
 画面が出てうごけばOK
 
+### 試合時間の設定
+`judgeServer.py`の引数で試合時間と延長時間を設定する。
+
+--matchtime (--mt) 試合時間を秒単位で指定
+
+--extendtime (--et) 引き分けだった場合の最大延長時間を秒単位で指定
+
+
+試合時間３分（１８０秒） 延長時間１分（６０秒）の場合次のようになる。
+```
+python judgeServer.py --mt 180 --et 60
+```
+
 ### 試合の初期化スクリプト
 #### 引数
 - マーカーセットのcsvファイル
@@ -47,10 +60,10 @@ bash test_scripts/init_single_play.sh {makerset file} {server IP(default localho
 
 サンプル
 ```
-BL_B,5,0011
+BL_B,100,0011
 BL_L,5,0012
 BL_R,5,0013
-RE_B,5,0021
+RE_B,100,0021
 RE_L,5,0022
 RE_R,5,0023
 hoge1_N,1,0064
