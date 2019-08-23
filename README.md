@@ -132,17 +132,33 @@ bash scripts/start.sh
 
 ### 実機
 センサなどが立ち上がりロボットを動かす準備
+
+引数 ip:審判サーバーのアドレス, side: 赤サイドなら `r` 青サイドなら `b`
+```
+roslaunch burger_war setup.launch ip:=http://127.0.0.1:5000 side:=r
+```
+
+審判サーバーを使わない走行テストのみの場合は引数は省略可
 ```
 roslaunch burger_war setup.launch
 ```
-別のターミナルで
+
+別のターミナルでロボットを動かすノードを起動
+
+引数 robot_name: 赤サイドなら `red_bot` 青サイドなら `blue_bot`
+
+赤サイドの場合
 ```
-roslaunch burger_war action.launch
+roslaunch burger_war your_burger.launch robot_name:=red_bot
+```
+青サイドの場合
+```
+roslaunch burger_war your_burger.launch robot_name:=blue_bot
 ```
 
 
 ## 審判サーバー
-審判サーバーは`burger_war_judge/`以下にあります
+審判サーバーは`judge/`以下にあります
 そちらのREADMEを参照ください
 
 ## ファイル構成
