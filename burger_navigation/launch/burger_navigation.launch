@@ -79,8 +79,10 @@
 
     <param name="local_costmap/global_frame"             value="$(arg robot_name)/odom"/>
     <param name="local_costmap/robot_base_frame"             value="$(arg robot_name)/base_link"/>
+    <param name="local_costmap/scan/sensor_frame"             value="$(arg robot_name)/base_scan"/>
     <param name="global_costmap/robot_base_frame"            value="$(arg robot_name)/base_link"/>
     <param name="global_costmap/global_frame"            value="$(arg robot_name)/map"/>
+    <param name="global_costmap/scan/sensor_frame"             value="$(arg robot_name)/base_scan"/>
   </node>
 
   <!-- rviz -->
