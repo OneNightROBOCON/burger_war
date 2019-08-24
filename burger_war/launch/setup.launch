@@ -1,12 +1,15 @@
 <?xml version="1.0"?>
 <launch>
-
+<arg name="robot_name" default=""/> <!-- robot_name for use NAMESPACE -->
 <arg name="player_name" default="NoName"/>
-<arg name="side" default="b"/>
+<arg name="side" default="b"/> <!-- "b" = blue side, "r" = red side  -->
 <arg name="ip" default="http://127.0.0.1:5000"/>
 
 <!-- turtlebot bringup -->
-<include file="$(find turtlebot3_bringup)/launch/turtlebot3_robot.launch" />
+<include file="$(find turtlebot3_bringup)/launch/turtlebot3_robot.launch" >
+   <arg name="multi_robot_name" value="$(arg robot_name)" />
+   <arg name="set_lidar_frame_id" value="$(arg robot_name)/base_scan" />
+</include>
 
 <!-- usb camera -->
 <node pkg="uvc_camera" type="uvc_camera_node" name="uvc_camera_node"/>
