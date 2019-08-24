@@ -92,7 +92,7 @@ catkin_make
 
 ## サンプルの実行
 ### シミュレータ
-シミュレータ､ロボット(turtle_bot),審判サーバー､観戦画面のすべてを一発で起動する。大会で使用するスクリプト。<BR>
+シミュレータ､ロボット(turtle_bot),審判サーバー､観戦画面のすべてを一発で起動する。大会で使用するスクリプト。
 最初にburger_warのフォルダまで移動します。
 ```
 cd ~/catkin_ws/src/burger_war
@@ -131,9 +131,12 @@ bash scripts/start.sh
 
 
 ### 実機
-センサなどが立ち上がりロボットを動かす準備
+センサなどが立ち上がりロボットを動かす準備 `burger_war setup.launch`
+引数
+- `side`: (default: 'b') ロボットが赤サイドか青サイドか表す引数。赤サイドと青サイドによって戦略やパラメータを切り替えるためなどに使用する。赤サイドなら `r` 青サイドなら `b`
+- `robot_name`: (default: '' ) ロボットのネームスペースを分けるときに使用する。　赤サイドなら`red_bot`, 青サイドなら`blue_bot`
+- `ip`: (default:'http://localhost:5000') 審判サーバーのアドレス。
 
-引数 ip:審判サーバーのアドレス, side: 赤サイドなら `r` 青サイドなら `b`
 ```
 roslaunch burger_war setup.launch ip:=http://127.0.0.1:5000 side:=r
 ```
@@ -143,9 +146,11 @@ roslaunch burger_war setup.launch ip:=http://127.0.0.1:5000 side:=r
 roslaunch burger_war setup.launch
 ```
 
-別のターミナルでロボットを動かすノードを起動
+別のターミナルでロボットを動かすノードを起動 `burger_war your_burger.launch`
 
-引数 robot_name: 赤サイドなら `red_bot` 青サイドなら `blue_bot`
+引数
+- `side`: (default: 'b') ロボットが赤サイドか青サイドか表す引数。赤サイドと青サイドによって戦略やパラメータを切り替えるためなどに使用する。赤サイドなら `r` 青サイドなら `b`
+- `robot_name`: (default: "" ) ロボットのネームスペースを分けるときに使用する。　赤サイドなら`red_bot`, 青サイドなら`blue_bot`
 
 赤サイドの場合
 ```
@@ -156,6 +161,16 @@ roslaunch burger_war your_burger.launch robot_name:=red_bot
 roslaunch burger_war your_burger.launch robot_name:=blue_bot
 ```
 
+### サンプルについて補足
+`your_burger.launch`の引数`robot_name` `side`についてその経緯を補足する。
+シミュレーターでは1つのGAZEBOシミュレーター内で2台のロボット動かしている。しかしGAZEBOサーバーとROSMASTERは1:1に対応していて1つのGAZEBOサーバーに2つ以上のROSMASTERを接続することができなかった。(方法知っている人いたら教えて下さい。)そのため、1つのROSMASTERで、別々のネームスペースを使って2台のロボットを動かしている。
+赤サイドのロボットを`red_bot`, 青サイドのロボットを`blue_bot`としている。これらネームスペースはやり取りされるトピック及び、座標系を表すTFにも反映する必要がある。ロボットのネームスペースは`robot_name`という名前の引数でlaunchファイルに渡される。 
+
+実機の場合は上記のような制約はないためネームスペースは使用しない。`robot_name:=''`というようにネームスペースを表す引数は空で実行される。
+
+ `side`は審判サーバーに対して、どちらサイドのロボットか宣言するため、および、赤サイドと青サイドによって戦略やパラメータを変更する用途を想定したパラメータである。
+ 以前はyour_burger.launchの引数に`side`はなく、`robot_name`がred_botかblue_botかによって自分のサイドを判断するようにしていたが、このあたりの引数の役割を整理した結果`robot_name` `side`に分割をした。
+赤サイドと青サイドによって戦略やパラメータを変更する用途には`side`を使うようにしてもらいたい。実機での動作の場合`robot_name`は空で実行されるためである。
 
 ## 審判サーバー
 審判サーバーは`judge/`以下にあります

@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="robot_name" default=""/>
+  <arg name="robot_name" default=""/> <!-- robot_name for use NAMESPACE -->
+  <arg name="side" default="b"/> <!-- "b" = blue side, "r" = red side  -->
+
     <!-- You can change control program  -->
 
 
