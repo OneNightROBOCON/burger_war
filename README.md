@@ -154,11 +154,11 @@ roslaunch burger_war setup.launch
 
 赤サイドの場合
 ```
-roslaunch burger_war your_burger.launch robot_name:=red_bot
+roslaunch burger_war your_burger.launch side:=r
 ```
 青サイドの場合
 ```
-roslaunch burger_war your_burger.launch robot_name:=blue_bot
+roslaunch burger_war your_burger.launch side:=b
 ```
 
 ### サンプルについて補足
