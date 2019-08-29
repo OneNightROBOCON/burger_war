@@ -87,3 +87,24 @@ function setting(){
   console.log("completed post answers");
 }
 
+function ready(){
+    console.log("clicked ready");
+    var url = 'http://' + location.host + '/submits';
+    console.log(url);
+    //red side
+    var post_str = JSON.stringify({"name":"foo", "side": "r", "id": "0000"});
+    console.log(post_str);
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', url, false);
+    xhr.setRequestHeader('content-type', 'application/json');
+    xhr.send(post_str);
+
+    // blue side
+    var post_str = JSON.stringify({"name":"bar", "side": "b", "id": "0000"});
+    console.log(post_str);
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', url, false);
+    xhr.setRequestHeader('content-type', 'application/json');
+    xhr.send(post_str);
+}
+
