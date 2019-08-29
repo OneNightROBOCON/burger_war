@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
+from flask import send_from_directory
 import os
 import logging
 from logging.handlers import RotatingFileHandler
@@ -271,10 +272,12 @@ referee = Referee(args.matchtime, args.extendtime)
 @app.route('/')
 def index():
     ip = request.remote_addr
-    msg = "Hello, Welcome to ONIGIRI WAR!"
     app.logger.info("GET /(root) "+ str(ip))
-    app.logger.info("RESPONSE /(root) "+ str(ip) + msg)
-    return msg
+    return render_template('index.html')
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='static/')
 
 
 @app.route('/submits', methods=['POST'])
@@ -342,10 +345,10 @@ def setState():
 @app.route('/reset', methods=['GET'])
 def reset():
     ip = request.remote_addr
-    app.logger.info("GET /reset "+ str(ip))
+    app.logger.info("GET /reset " + str(ip))
     global referee
-    referee = Referee()
-    res =  "reset"
+    referee = Referee(args.matchtime, args.extendtime)
+    res = "reset"
     app.logger.info("RESPONSE /reset "+ str(ip) + str(res))
     return jsonify(res)
 
