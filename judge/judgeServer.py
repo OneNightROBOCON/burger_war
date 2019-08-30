@@ -349,7 +349,7 @@ def reset():
     global referee
     referee = Referee(args.matchtime, args.extendtime)
     res = "reset"
-    app.logger.info("RESPONSE /reset "+ str(ip) + str(res))
+    app.logger.info("RESPONSE /reset " + str(ip) + str(res) + str(args.matchtime) + str(args.extendtime))
     return jsonify(res)
 
 
