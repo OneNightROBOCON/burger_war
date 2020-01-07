@@ -272,14 +272,14 @@ class StatusWindow:
                 if("BL" in target["name"] or "RE" in target["name"]):
                     self.setChecker(display,target["name"],target["player"])
                     #ロボットの背面ターゲットを取った場合に勝敗を表示
-                    if(target["name"]=="BL_B"):
-                        cv2.putText(display, " RED", (150,  720), self.font, 10, (0,0,255), 10)
-                        cv2.putText(display, "WIN!", (750,  720), self.font, 10, (0,0,255), 10)
-                        cv2.putText(display, "One-shot KO!", (480, 300), self.font, self.font_size+3, (0,0,255), 5)
-                    if(target["name"]=="RE_B"):
-                        cv2.putText(display, "BLUE", (150,  720), self.font, 10, (255,0,0), 10)
-                        cv2.putText(display, "WIN!", (750,  720), self.font, 10, (255,0,0), 10)
-                        cv2.putText(display, "One-shot KO!", (0,  300), self.font, self.font_size+3, (255,0,0), 5)
+                    #if(target["name"]=="BL_B"):
+                    #    cv2.putText(display, " RED", (150,  720), self.font, 10, (0,0,255), 10)
+                    #    cv2.putText(display, "WIN!", (750,  720), self.font, 10, (0,0,255), 10)
+                    #    cv2.putText(display, "One-shot KO!", (480, 300), self.font, self.font_size+3, (0,0,255), 5)
+                    #if(target["name"]=="RE_B"):
+                    #    cv2.putText(display, "BLUE", (150,  720), self.font, 10, (255,0,0), 10)
+                    #    cv2.putText(display, "WIN!", (750,  720), self.font, 10, (255,0,0), 10)
+                    #    cv2.putText(display, "One-shot KO!", (0,  300), self.font, self.font_size+3, (255,0,0), 5)
                 else:
                     self.setMarker(display,target["name"],target["player"])
                 if(target["name"] in self.histories):
