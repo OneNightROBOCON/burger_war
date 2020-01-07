@@ -1,10 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 # enemy.py
 # write by yamaguchi takuya @dashimaki360
-#
-# Enemy "SIO ONIGIRI" sorce code for One month ROBOCON
-# SIO strategy 
 ## GO and Back only
 
 

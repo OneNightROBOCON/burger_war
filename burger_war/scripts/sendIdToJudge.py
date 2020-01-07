@@ -1,5 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
+'''
+This is ar marger Id send node.
+subscribe 'target_id' topic. 
+if subscribe 'target_id' then post ID to judge server.
+
+by Takuya Yamaguhi.
+'''
+
 import rospy
 from std_msgs.msg import String
 from aruco_msgs.msg import MarkerArray

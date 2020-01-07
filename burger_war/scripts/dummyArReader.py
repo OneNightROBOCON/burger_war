@@ -1,5 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+'''
+This is dummy ar marker reader node.
+mainly for judge server test.
+
+by Takuya Yamaguhi.
+'''
+
 from time import sleep
 import rospy
 from std_msgs.msg import String

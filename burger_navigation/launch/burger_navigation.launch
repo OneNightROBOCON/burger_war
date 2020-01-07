@@ -11,17 +11,14 @@
   <arg name="initial_pose_x" default="-1.3"/>
   <arg name="initial_pose_y" default="0.0"/>
   <arg name="initial_pose_a" default="0.0"/>
-  <arg name="robot_name" default="" />
 
   <!-- Turtlebot3 -->
   <include file="$(find turtlebot3_bringup)/launch/turtlebot3_remote.launch">
     <arg name="model" value="burger" />
-    <arg name="multi_robot_name" value="$(arg robot_name)" />
   </include>
 
   <!-- Map server -->
   <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)">
-    <param name="frame_id"           value="$(arg robot_name)/map"/>
   </node>
 
 
@@ -58,9 +55,9 @@
     <param name="odom_alpha2"               value="0.1"/>
     <param name="odom_alpha3"               value="0.1"/>
     <param name="odom_alpha4"               value="0.1"/>
-    <param name="odom_frame_id"             value="$(arg robot_name)/odom"/>
-    <param name="base_frame_id"             value="$(arg robot_name)/base_footprint"/>
-    <param name="global_frame_id"           value="$(arg robot_name)/map"/>
+    <param name="odom_frame_id"             value="odom"/>
+    <param name="base_frame_id"             value="base_footprint"/>
+    <param name="global_frame_id"           value="map"/>
   </node>
 
 
@@ -77,17 +74,17 @@
     <remap from="odom" to="$(arg odom_topic)"/>
     <param name="DWAPlannerROS/min_vel_x" value="0.0" if="$(arg move_forward_only)" />
 
-    <param name="local_costmap/global_frame"             value="$(arg robot_name)/odom"/>
-    <param name="local_costmap/robot_base_frame"             value="$(arg robot_name)/base_link"/>
-    <param name="local_costmap/scan/sensor_frame"             value="$(arg robot_name)/base_scan"/>
-    <param name="global_costmap/robot_base_frame"            value="$(arg robot_name)/base_link"/>
-    <param name="global_costmap/global_frame"            value="$(arg robot_name)/map"/>
-    <param name="global_costmap/scan/sensor_frame"             value="$(arg robot_name)/base_scan"/>
+    <param name="local_costmap/global_frame"             value="odom"/>
+    <param name="local_costmap/robot_base_frame"             value="base_link"/>
+    <param name="local_costmap/scan/sensor_frame"             value="base_scan"/>
+    <param name="global_costmap/robot_base_frame"            value="base_link"/>
+    <param name="global_costmap/global_frame"            value="map"/>
+    <param name="global_costmap/scan/sensor_frame"             value="base_scan"/>
   </node>
 
   <!-- rviz -->
   <group if="$(arg open_rviz)"> 
-    <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find burger_navigation)/rviz/$(arg robot_name)_navigation.rviz">
+    <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find burger_navigation)/rviz/burger_navigation.rviz">
       <remap from="/move_base_simple/goal" to="move_base_simple/goal"/>
     </node>
   </group>
