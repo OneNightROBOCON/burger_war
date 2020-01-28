@@ -177,7 +177,7 @@ class Referee:
                 response.error = "no error"
                 response.target = target
 
-                if self.isIPPONTarget():
+                if self.isIPPONTarget() or self.isCalledGame():
                     self.war_state.setStateStop()
                     self.writeResult()
                 return response.makeJson()
@@ -187,6 +187,10 @@ class Referee:
 
     def isIPPONTarget(self):
         return self.war_state.scores['r'] >= 100 or self.war_state.scores['b'] >= 100
+
+    def isCalledGame(self):
+        length = abs(self.war_state.scores['r'] - self.war_state.scores['b'])
+        return length >= 10
 
     def checkBothPlayerReady(self):
         if self.war_state.ready["r"] and self.war_state.ready["b"]:

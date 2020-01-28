@@ -1,18 +1,14 @@
 <?xml version="1.0"?>
 <launch>
 
-<!-- blue side robot -->
-  <group ns="blue_bot">
-      <!-- enemy bot run -->
-      <node pkg="burger_war" type="enemy.py" name="enemyRun" output="screen"/>
-  </group>
+<!-- Your robot control node run  red side-->
+  <include file="$(find burger_war)/launch/your_burger.launch">
+    <arg name="side" value="r" />
+  </include>
 
-<!-- red side robot -->
-  <group ns="red_bot">
-      <!-- Your robot control node run -->
-      <include file="$(find burger_war)/launch/your_burger.launch">
-        <arg name="robot_name" value="red_bot" />
-      </include>
+<!-- enemy bot run  blue side-->
+  <group ns="enemy_bot">
+    <node pkg="burger_war" type="enemy.py" name="enemyRun" output="screen"/>
   </group>
 
 </launch>

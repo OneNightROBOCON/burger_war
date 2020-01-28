@@ -1,13 +1,11 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="robot_name" default=""/> <!-- robot_name for use NAMESPACE usealy use "blue_bot" or "red_bot" -->
   <arg name="side" default="b"/> <!-- "b" = blue side, "r" = red side  -->
 
     <!-- You can change control program  -->
 
 
   <include file="$(find burger_navigation)/launch/burger_navigation.launch">
-    <arg name="robot_name" value="$(arg robot_name)" />
   </include>
 
 
