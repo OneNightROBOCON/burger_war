@@ -173,7 +173,7 @@
 @[def wall(p1, p2, height)]
   @{wall.count += 1}
   @{thickness_x = math.sqrt((p1[0]-p2[0])**2+(p1[1]-p2[1])**2)}
-  @{thickness_y = 0.05}
+  @{thickness_y = 0.0001}
   @{pose_x = (p1[0]+p2[0])/2.}
   @{pose_y = (p1[1]+p2[1])/2.}
   @{pose_z = height/2.}
