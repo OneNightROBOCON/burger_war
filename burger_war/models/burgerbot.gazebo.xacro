@@ -172,7 +172,15 @@
   </gazebo>
 
   <gazebo reference="poll">
-    <material>Gazebo/DarkGrey</material>
+    <material>Gazebo/White</material>
+  </gazebo>
+
+  <gazebo reference="blue_plate">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+
+  <gazebo reference="red_plate">
+    <material>Gazebo/Red</material>
   </gazebo>
 
 </robot>
