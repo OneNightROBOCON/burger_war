@@ -47,7 +47,7 @@
 
   <gazebo>
     <plugin name="turtlebot3_burger_controller" filename="libgazebo_ros_diff_drive.so">
-      <commandTopic>cmd_vel</commandTopic>
+      <commandTopic>limited_cmd_vel</commandTopic>
       <odometryTopic>odom</odometryTopic>
       <odometryFrame>odom</odometryFrame>
       <odometrySource>encoder</odometrySource>
