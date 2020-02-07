@@ -177,15 +177,20 @@ roslaunch burger_war your_burger.launch robot_name:=blue_bot
 そちらのREADMEを参照ください
 
 ## ファイル構成
-各ディレクトリの役割と、特に参加者に重要なファイルについての説明
 
-下記のようなディレクトリ構成になっています。  
+ソフト全体の構成は下記のようになっています．
+白の部分はすでにこのリポジトリに含まれており，参加者はオレンジの部分を開発します．
+![soft_map](https://user-images.githubusercontent.com/17049327/73993084-9448ae00-4994-11ea-9d86-ac3c94936845.png)
+
+リポジトリ全体は下記のようなディレクトリ構成になっています。  
 
 ```
 burger_war
 ├── burger_war
 │   ├── CMakeLists.txt
 │   ├── launch  launchファイルの置き場
+│   │   ├── your_burger.launch  ロボットの走行ノードを起動するlaunchファイル
+│   │   ├── setup.launch  実機でロボットを起動、初期化するlaunchファイル
 │   │   ├── sim_robot_run.launch  シミュレータ上で２台のロボットを動かすlaunchファイル
 │   │   └─ setup_sim.launch  Gazeboシミュレータ上でフィールドの生成ロボットを起動、初期化するlaunchファイル
 │   │
