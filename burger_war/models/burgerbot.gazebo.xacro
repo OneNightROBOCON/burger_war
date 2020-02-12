@@ -47,7 +47,7 @@
 
   <gazebo>
     <plugin name="turtlebot3_burger_controller" filename="libgazebo_ros_diff_drive.so">
-      <commandTopic>cmd_vel</commandTopic>
+      <commandTopic>limited_cmd_vel</commandTopic>
       <odometryTopic>odom</odometryTopic>
       <odometryFrame>odom</odometryFrame>
       <odometrySource>encoder</odometrySource>
@@ -172,7 +172,15 @@
   </gazebo>
 
   <gazebo reference="poll">
-    <material>Gazebo/DarkGrey</material>
+    <material>Gazebo/White</material>
+  </gazebo>
+
+  <gazebo reference="blue_plate">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+
+  <gazebo reference="red_plate">
+    <material>Gazebo/Red</material>
   </gazebo>
 
 </robot>
