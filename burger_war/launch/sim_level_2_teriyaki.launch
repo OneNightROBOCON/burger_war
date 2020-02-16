@@ -2,6 +2,7 @@
 <launch>
 
 <!-- Your robot control node run  red side-->
+
   <include file="$(find burger_war)/launch/your_burger.launch">
     <arg name="side" value="r" />
   </include>
@@ -10,7 +11,7 @@
   <group ns="enemy_bot">
     <!-- Arguments -->
     <arg name="map_file" default="$(find burger_navigation)/maps/map.yaml"/>
-    <arg name="open_rviz" default="true"/>
+    <arg name="open_rviz" default="false"/>
     <arg name="odom_topic" default="odom" />
     <arg name="scan_topic"     default="scan"/>
     <arg name="initial_pose_x" default="-1.3"/>
@@ -60,10 +61,10 @@
       <param name="laser_model_type"          value="likelihood_field"/>
 
       <param name="odom_model_type"           value="diff"/>
-      <param name="odom_alpha1"               value="0.1"/>
-      <param name="odom_alpha2"               value="0.1"/>
-      <param name="odom_alpha3"               value="0.1"/>
-      <param name="odom_alpha4"               value="0.1"/>
+      <param name="odom_alpha1"               value="0.3"/>
+      <param name="odom_alpha2"               value="0.6"/>
+      <param name="odom_alpha3"               value="0.3"/>
+      <param name="odom_alpha4"               value="0.6"/>
       <param name="odom_frame_id"             value="$(arg name_space)/odom"/>
       <param name="base_frame_id"             value="$(arg name_space)/base_footprint"/>
       <param name="global_frame_id"           value="$(arg name_space)/map"/>
