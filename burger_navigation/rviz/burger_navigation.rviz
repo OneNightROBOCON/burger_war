@@ -291,7 +291,7 @@ Visualization Manager:
           Draw Behind: false
           Enabled: true
           Name: Costmap
-          Topic: /red_bot/move_base/local_costmap/costmap
+          Topic: /move_base/local_costmap/costmap
           Unreliable: false
           Use Timestamp: false
           Value: true
