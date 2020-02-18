@@ -57,11 +57,15 @@ cd ~/catkin_ws/src
 git clone https://github.com/OneNightROBOCON/burger_war
 ```
 
-このリポジトリのフィールド用のGAZEBOモデルにPATHを通す
+このリポジトリのフィールド用のGAZEBOモデルにPATHを通す。
+
+Turtlebot3のモデル名の指定を環境変数に追加。
 ```
-export GAZEBO_MODEL_PATH=$HOME/catkin_ws/src/burger_war/burger_war/models/
+echo "export GAZEBO_MODEL_PATH=$HOME/catkin_ws/src/burger_war/burger_war/models/" >> ~/.bashrc
+echo "export TURTLEBOT3_MODEL=burger" >> ~/.bashrc
+source ~/.bashrc
 ```
-シェルごとに毎回実行するのは面倒なので上記は`~/.bashrc`に書いておくと便利です｡
+
 
 ### 3. 依存ライブラリのインストール
 - pip : pythonのパッケージ管理ツール
