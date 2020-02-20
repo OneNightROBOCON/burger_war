@@ -57,11 +57,15 @@ cd ~/catkin_ws/src
 git clone https://github.com/OneNightROBOCON/burger_war
 ```
 
-このリポジトリのフィールド用のGAZEBOモデルにPATHを通す
+このリポジトリのフィールド用のGAZEBOモデルにPATHを通す。
+
+Turtlebot3のモデル名の指定を環境変数に追加。
 ```
-export GAZEBO_MODEL_PATH=$HOME/catkin_ws/src/burger_war/burger_war/models/
+echo "export GAZEBO_MODEL_PATH=$HOME/catkin_ws/src/burger_war/burger_war/models/" >> ~/.bashrc
+echo "export TURTLEBOT3_MODEL=burger" >> ~/.bashrc
+source ~/.bashrc
 ```
-シェルごとに毎回実行するのは面倒なので上記は`~/.bashrc`に書いておくと便利です｡
+
 
 ### 3. 依存ライブラリのインストール
 - pip : pythonのパッケージ管理ツール
@@ -120,7 +124,7 @@ bash scripts/start.sh
 
 審判サーバーを立ち上げずにシミュレータとロボットのみ立ち上げる場合
 ```
-roslaunch burger_war　setup_sim.launch
+roslaunch burger_war setup_sim.launch
 ```
 フィールドとロボットが立ち上がったら
 別のターミナルで下記ロボット動作スクリプトを実行
@@ -154,11 +158,11 @@ roslaunch burger_war setup.launch
 
 赤サイドの場合
 ```
-roslaunch burger_war your_burger.launch robot_name:=red_bot
+roslaunch burger_war your_burger.launch side:=r
 ```
 青サイドの場合
 ```
-roslaunch burger_war your_burger.launch robot_name:=blue_bot
+roslaunch burger_war your_burger.launch side:=b
 ```
 
 ### サンプルについて補足
