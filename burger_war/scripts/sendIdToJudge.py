@@ -75,8 +75,8 @@ class TargetId(object):
         for marker in markers:
             target_id = str(marker.id)
             target_id = self.lengthTo4(target_id)
-            if target_id in self.historys:
-                return
+            # if target_id in self.historys:
+            #     return
             try:
                 resp_raw = self.sendToJudge(target_id)
             except:
@@ -85,8 +85,8 @@ class TargetId(object):
                 resp = json.loads(resp_raw.text)
                 print("Send " + target_id + " To " + self.judge_url)
                 print(resp)
-                if resp["error"] == "no error" or resp["error"] == "ERR not mutch id":
-                    self.historys.append(target_id)
+                # if resp["error"] == "no error" or resp["error"] == "ERR not mutch id":
+                #     self.historys.append(target_id)
 
 
 class WarStatePublisher(object):
