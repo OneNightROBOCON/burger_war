@@ -71,11 +71,11 @@ class EnemyDetector:
 
         enemy_scan = [1 if self.is_point_emnemy(x,i) else 0 for i,x in  enumerate(near_scan)]
 
-        is_near_enemy = sum(enemy_scan) > 5
+        is_near_enemy = sum(enemy_scan) > 5  # if less than 5 points, maybe noise
         if is_near_enemy:
             idx = enemy_scan.index(1)
             enemy_direction = idx / 360.0 * 2*PI
-            enemy_dist = enemy_scan[idx]
+            enemy_dist = near_scan[idx]
         else:
             enemy_direction = None
             enemy_dist = None
@@ -189,13 +189,13 @@ class TeriyakiBurger():
         
         self.pose_twist.angular.z = new_twist_ang_z
         self.pose_twist.linear.x = self.speed
-        print(th, th_xy, new_twist_ang_z)
+        #print(th, th_xy, new_twist_ang_z)
 
     def calcTargetTheta(self, pose_x, pose_y):
         x = self.poseToindex(pose_x)
         y = self.poseToindex(pose_y)
         th = TARGET_TH[x][y]
-        print("POSE pose_x: {}, pose_y: {}. INDEX x:{}, y:{}".format(pose_x, pose_y, x, y))
+        #print("POSE pose_x: {}, pose_y: {}. INDEX x:{}, y:{}".format(pose_x, pose_y, x, y))
         return th
 
     def poseToindex(self, pose):
@@ -227,10 +227,11 @@ class TeriyakiBurger():
                 th_diff += 2*PI
         new_twist_ang_z = th_diff * 1.2
 
-        if self.enemy_dist > 0.7:
-            speed = 0.08
+        if self.enemy_dist > 0.45:
+            speed = self.speed
         else:
-            speed = -0.08
+            speed = -self.speed
+        print("enemy_dist {}".format(self.enemy_dist))
         
         self.near_enemy_twist.angular.z = new_twist_ang_z
         self.near_enemy_twist.linear.x = speed
