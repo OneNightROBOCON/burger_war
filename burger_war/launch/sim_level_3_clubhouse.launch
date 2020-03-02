@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<launch>
+
+<!-- Your robot control node run  red side-->
+  <include file="$(find burger_war)/launch/your_burger.launch">
+    <arg name="side" value="r" />
+  </include>
+
+<!-- enemy bot run  blue side-->
+  <group ns="enemy_bot">
+    <!-- Arguments -->
+    <arg name="map_file" default="$(find burger_navigation)/maps/map.yaml"/>
+    <arg name="open_rviz" default="false"/>
+    <arg name="odom_topic" default="odom" />
+    <arg name="scan_topic"     default="scan"/>
+    <arg name="initial_pose_x" default="-1.3"/>
+    <arg name="initial_pose_y" default="0.0"/>
+    <arg name="initial_pose_a" default="0.0"/>
+    <arg name="name_space" default="enemy_bot"/>
+
+    <!-- Turtlebot3 -->
+    <include file="$(find turtlebot3_bringup)/launch/turtlebot3_remote.launch">
+      <arg name="model" value="burger" />
+      <arg name="multi_robot_name" value="$(arg name_space)" />
+    </include>
+
+
+    <!-- Map server -->
+    <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)">
+      <param name="frame_id"  value="$(arg name_space)/map"/>
+    </node>
+  
+    <!-- AMCL -->
+    <node pkg="amcl" type="amcl" name="amcl">
+      <param name="use_map_topic"             value="true"/>
+      <param name="min_particles"             value="150"/>
+      <param name="max_particles"             value="500"/>
+      <param name="kld_err"                   value="0.02"/>
+      <param name="update_min_d"              value="0.05"/>
+      <param name="update_min_a"              value="0.05"/>
+      <param name="resample_interval"         value="1"/>
+      <param name="transform_tolerance"       value="0.5"/>
+      <param name="recovery_alpha_slow"       value="0.00"/>
+      <param name="recovery_alpha_fast"       value="0.00"/>
+      <param name="initial_pose_x"            value="$(arg initial_pose_x)"/>
+      <param name="initial_pose_y"            value="$(arg initial_pose_y)"/>
+      <param name="initial_pose_a"            value="$(arg initial_pose_a)"/>
+      <param name="gui_publish_rate"          value="50.0"/>
+
+      <remap from="scan"                      to="$(arg scan_topic)"/>
+      <param name="laser_max_range"           value="3.5"/>
+      <param name="laser_max_beams"           value="180"/>
+      <param name="laser_z_hit"               value="0.5"/>
+      <param name="laser_z_short"             value="0.05"/>
+      <param name="laser_z_max"               value="0.05"/>
+      <param name="laser_z_rand"              value="0.5"/>
+      <param name="laser_sigma_hit"           value="0.2"/>
+      <param name="laser_lambda_short"        value="0.1"/>
+      <param name="laser_likelihood_max_dist" value="2.0"/>
+      <param name="laser_model_type"          value="likelihood_field"/>
+
+      <param name="odom_model_type"           value="diff"/>
+      <param name="odom_alpha1"               value="0.3"/>
+      <param name="odom_alpha2"               value="0.6"/>
+      <param name="odom_alpha3"               value="0.3"/>
+      <param name="odom_alpha4"               value="0.6"/>
+      <param name="odom_frame_id"             value="$(arg name_space)/odom"/>
+      <param name="base_frame_id"             value="$(arg name_space)/base_footprint"/>
+      <param name="global_frame_id"           value="$(arg name_space)/map"/>
+    </node>
+
+    <!-- rviz -->
+    <group if="$(arg open_rviz)"> 
+      <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find burger_navigation)/rviz/sim_level_2_teriyaki_burger_navigation.rviz">
+      </node>
+    </group>
+    
+    <!-- clubhouse -->
+    <node pkg="burger_war" type="level_3_clubhouse.py" name="clubhouseRun" output="screen"/>
+
+
+  </group>
+
+</launch>
+
