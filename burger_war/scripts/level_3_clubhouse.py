@@ -24,8 +24,8 @@ TARGET_TH = (
     (-PI/4, -PI/5,     0,     0,      PI,  PI*6/10,  PI*3/4,    PI/2),
     (    0,     0,  PI/2,  PI/2,      PI,  PI*3/4,  PI*3/4,    PI/2),
     (    0,  PI/4,  PI/3,  PI/2,  PI*5/6,  PI*3/4,  PI*3/4,  PI*3/4),
-    ( PI/4,  PI/4,  PI/3,  PI/4,  PI*5/6,    PI/2,  PI*3/4,  PI*3/4),
-    ( PI/4,  PI/4,  PI/4,  PI/4,    PI/2,    PI/2,  PI*3/4,  PI*3/4),
+    ( PI/4,  PI/4,  PI/3,  PI/3,  PI*5/6,    PI/2,  PI*3/4,  PI*3/4),
+    ( PI/4,  PI/4,  PI/4,  PI/3,    PI/2,    PI/2,  PI*3/4,  PI*3/4),
 )
 WIDTH = 1.2 * (2 **0.5) # [m]
 
