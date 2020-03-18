@@ -17,22 +17,12 @@ import tf
 
 PI = 3.1416
 # 8x8  [rad]
-# TARGET_TH = (
-#     (-PI/4, -PI/4, -PI/2, -PI/2, -PI*3/4, -PI*3/4, -PI*3/4, -PI*3/4),
-#     (-PI/4, -PI/4, -PI/4, -PI/4, -PI*3/4, -PI*3/4, -PI*3/4, -PI*3/4),
-#     (-PI/4, -PI/4, -PI/4,     0,   -PI/2, -PI*3/4, -PI*3/4,      PI),
-#     (-PI/4, -PI/4,     0,     0,   -PI/2,   -PI/2, -PI*3/4,      PI),
-#     (    0,     0,  PI/2,  PI/2,      PI,      PI,  PI*3/4,  PI*3/4),
-#     (    0,  PI/4,  PI/3,  PI/2,      PI,  PI*3/4,  PI*3/4,  PI*3/4),
-#     ( PI/4,  PI/4,  PI/3,  PI/4,  PI*3/4,  PI*3/4,  PI*3/4,  PI*3/4),
-#     ( PI/4,  PI/4,  PI/4,  PI/4,    PI/2,    PI/2,  PI*3/4,  PI*3/4),
-# )
 TARGET_TH = (
     (-PI/4, -PI/4, -PI/2, -PI/2, -PI*3/4, -PI*3/4, -PI*3/4, -PI*3/4),
-    (-PI/4, -PI/4, -PI/3, -PI/2, -PI*3/5, -PI*3/4, -PI*3/4, -PI*3/4),
-    (-PI/4, -PI/4, -PI/6,     0,   -PI/2, -PI*3/4,     -PI,  PI*3/4),
-    (-PI/4, -PI/5,     0,     0,      PI,  PI*6/10,  PI*3/4,    PI/2),
-    (    0,     0,  PI/2,  PI/2,      PI,  PI*3/4,  PI*3/4,    PI/2),
+    (-PI/4, -PI/4, -PI/4, -PI/4, -PI*3/4, -PI*3/4, -PI*3/4, -PI*3/4),
+    (-PI/4, -PI/4, -PI/4,     0,   -PI/2, -PI*3/4, -PI*3/4,      PI),
+    (-PI/4, -PI/4,     0,     0,   -PI/2,   -PI/2, -PI*3/4,      PI),
+    (    0,     0,  PI/2,  PI/2,      PI,      PI,  PI*3/4,  PI*3/4),
     (    0,  PI/4,  PI/3,  PI/2,  PI*5/6,  PI*3/4,  PI*3/4,  PI*3/4),
     ( PI/4,  PI/4,  PI/3,  PI/4,  PI*5/6,    PI/2,  PI*3/4,  PI*3/4),
     ( PI/4,  PI/4,  PI/4,  PI/4,    PI/2,    PI/2,  PI*3/4,  PI*3/4),
