@@ -20,12 +20,12 @@ PI = 3.1416
 TARGET_TH = (
     (-PI/4, -PI/4, -PI/2, -PI/2, -PI*3/4, -PI*3/4, -PI*3/4, -PI*3/4),
     (-PI/4, -PI/4, -PI/4, -PI/4, -PI*3/4, -PI*3/4, -PI*3/4, -PI*3/4),
-    (-PI/4, -PI/4, -PI/4,     0,   -PI/2, -PI*3/4, -PI*3/4,      PI),
-    (-PI/4, -PI/4,     0,     0,   -PI/2,   -PI/2, -PI*3/4,      PI),
+    (-PI/4, -PI/4, -PI/6,     0,   -PI/2, -PI*3/4, -PI*3/4,      PI),
+    (-PI/4, -PI/6,     0,     0,   -PI/2,   -PI/2, -PI*3/4,      PI),
     (    0,     0,  PI/2,  PI/2,      PI,      PI,  PI*3/4,  PI*3/4),
     (    0,  PI/4,  PI/3,  PI/2,  PI*5/6,  PI*3/4,  PI*3/4,  PI*3/4),
-    ( PI/4,  PI/4,  PI/3,  PI/4,  PI*5/6,    PI/2,  PI*3/4,  PI*3/4),
-    ( PI/4,  PI/4,  PI/4,  PI/4,    PI/2,    PI/2,  PI*3/4,  PI*3/4),
+    ( PI/4,  PI/4,  PI/4,  PI/3,  PI*5/6,    PI/2,  PI*3/4,  PI*3/4),
+    ( PI/4,  PI/4,  PI/4,  PI/3,    PI/2,    PI/2,  PI*3/4,  PI*3/4),
 )
 
 WIDTH = 1.2 * (2 **0.5) # [m]
@@ -42,10 +42,10 @@ class TeriyakiBurger():
         self.pose_x = 0
         self.pose_y = 0
 
-        self.k = 0.7
+        self.k = 0.5
 
         # speed [m/s]
-        self.speed = 0.08
+        self.speed = 0.07
 
         # publisher
         self.vel_pub = rospy.Publisher('cmd_vel', Twist,queue_size=1)
