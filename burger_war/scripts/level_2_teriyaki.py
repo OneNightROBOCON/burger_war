@@ -20,13 +20,14 @@ PI = 3.1416
 TARGET_TH = (
     (-PI/4, -PI/4, -PI/2, -PI/2, -PI*3/4, -PI*3/4, -PI*3/4, -PI*3/4),
     (-PI/4, -PI/4, -PI/4, -PI/4, -PI*3/4, -PI*3/4, -PI*3/4, -PI*3/4),
-    (-PI/4, -PI/4, -PI/4,     0,   -PI/2, -PI*3/4, -PI*3/4,      PI),
-    (-PI/4, -PI/4,     0,     0,   -PI/2,   -PI/2, -PI*3/4,      PI),
-    (    0,  PI/4,  PI/2,  PI/2,      PI,      PI,  PI*3/4,  PI*3/4),
-    (    0,  PI/4,  PI/3,  PI/2,      PI,  PI*3/4,  PI*3/4,  PI*3/4),
-    ( PI/4,  PI/4,  PI/3,  PI/4,  PI*3/4,  PI*3/4,  PI*3/4,  PI*3/4),
-    ( PI/4,  PI/4,  PI/4,  PI/4,    PI/2,    PI/2,  PI*3/4,  PI*3/4),
+    (-PI/4, -PI/4, -PI/6,     0,   -PI/2, -PI*3/4, -PI*3/4,      PI),
+    (-PI/4, -PI/6,     0,     0,   -PI/2,   -PI/2, -PI*3/4,      PI),
+    (    0,     0,  PI/2,  PI/2,      PI,      PI,  PI*3/4,  PI*3/4),
+    (    0,  PI/4,  PI/3,  PI/2,  PI*5/6,  PI*3/4,  PI*3/4,  PI*3/4),
+    ( PI/4,  PI/4,  PI/4,  PI/3,  PI*5/6,    PI/2,  PI*3/4,  PI*3/4),
+    ( PI/4,  PI/4,  PI/4,  PI/3,    PI/2,    PI/2,  PI*3/4,  PI*3/4),
 )
+
 WIDTH = 1.2 * (2 **0.5) # [m]
 
 class TeriyakiBurger():

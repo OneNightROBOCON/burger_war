@@ -26,7 +26,7 @@ class CheeseBurger():
         self.pose_y = 0
 
         # speed [m/s]
-        self.speed = 0.25
+        self.speed = 0.12
 
         # publisher
         self.vel_pub = rospy.Publisher('cmd_vel', Twist,queue_size=1)
@@ -74,7 +74,7 @@ class CheeseBurger():
         '''
         update robot state 'go' or 'back'
         '''
-        if self.state == 'go' and self.wheel_rot_r > 30:
+        if self.state == 'go' and self.wheel_rot_r > 28:
             self.state = 'back'
         elif self.state == 'back' and self.wheel_rot_r < 5:
             self.state = 'go'
