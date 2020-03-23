@@ -103,10 +103,10 @@ class TeriyakiBurger():
         R1_idx = self.radToidx(th_diff - PI/4)
         L0_idx = self.radToidx(th_diff + PI/8)
         L1_idx = self.radToidx(th_diff + PI/4)
-        R0_range = inf if self.scan[R0_idx] < 0.1 else self.scan[R0_idx]
-        R1_range = inf if self.scan[R1_idx] < 0.1 else self.scan[R1_idx]
-        L0_range = inf if self.scan[L0_idx] < 0.1 else self.scan[L0_idx]
-        L1_range = inf if self.scan[L1_idx] < 0.1 else self.scan[L1_idx]
+        R0_range = 99. if self.scan[R0_idx] < 0.1 else self.scan[R0_idx]
+        R1_range = 99. if self.scan[R1_idx] < 0.1 else self.scan[R1_idx]
+        L0_range = 99. if self.scan[L0_idx] < 0.1 else self.scan[L0_idx]
+        L1_range = 99. if self.scan[L1_idx] < 0.1 else self.scan[L1_idx]
 
         print("Ranges R0: {}, R1: {}, L0: {}, L1: {}".format(R0_range, R1_range, L0_range, L1_range))
         if R0_range < 0.3 and L0_range > 0.3:

@@ -71,17 +71,18 @@ class EnemyDetector:
 
         enemy_scan = [1 if self.is_point_emnemy(x,i) else 0 for i,x in  enumerate(near_scan)]
 
-        is_near_enemy = sum(enemy_scan) > 8  # if less than 8 points, maybe noise
+        is_near_enemy = sum(enemy_scan) > 5  # if less than 5 points, maybe noise
         if is_near_enemy:
-            idx = enemy_scan.index(1)
+            idx_l = [i for i, x in enumerate(enemy_scan) if x == 1]
+            idx = idx_l[len(idx_l)/2]
             enemy_direction = idx / 360.0 * 2*PI
             enemy_dist = near_scan[idx]
         else:
             enemy_direction = None
             enemy_dist = None
 
-        # print("Enemy: {}, Direction: {}".format(is_near_enemy, enemy_direction))
-        # print("enemy points {}".format(sum(enemy_scan)))
+        print("Enemy: {}, Direction: {}".format(is_near_enemy, enemy_direction))
+        print("enemy points {}".format(sum(enemy_scan)))
         return is_near_enemy, enemy_direction, enemy_dist
         
 
@@ -195,13 +196,13 @@ class TeriyakiBurger():
         
         self.pose_twist.angular.z = new_twist_ang_z
         self.pose_twist.linear.x = self.speed
-        print("th: {}, th_xy: {}, delta_th: {}, new_twist_ang_z: {}".format(th, th_xy, delta_th, new_twist_ang_z))
+        #print("th: {}, th_xy: {}, delta_th: {}, new_twist_ang_z: {}".format(th, th_xy, delta_th, new_twist_ang_z))
 
     def calcTargetTheta(self, pose_x, pose_y):
         x = self.poseToindex(pose_x)
         y = self.poseToindex(pose_y)
         th = TARGET_TH[x][y]
-        print("POSE pose_x: {}, pose_y: {}. INDEX x:{}, y:{}".format(pose_x, pose_y, x, y))
+        #print("POSE pose_x: {}, pose_y: {}. INDEX x:{}, y:{}".format(pose_x, pose_y, x, y))
         return th
 
     def calcDeltaTheta(self, th_diff):
@@ -211,12 +212,12 @@ class TeriyakiBurger():
         R1_idx = self.radToidx(th_diff - PI/4)
         L0_idx = self.radToidx(th_diff + PI/8)
         L1_idx = self.radToidx(th_diff + PI/4)
-        R0_range = inf if self.scan[R0_idx] < 0.1 else self.scan[R0_idx]
-        R1_range = inf if self.scan[R1_idx] < 0.1 else self.scan[R1_idx]
-        L0_range = inf if self.scan[L0_idx] < 0.1 else self.scan[L0_idx]
-        L1_range = inf if self.scan[L1_idx] < 0.1 else self.scan[L1_idx]
+        R0_range = 99. if self.scan[R0_idx] < 0.1 else self.scan[R0_idx]
+        R1_range = 99. if self.scan[R1_idx] < 0.1 else self.scan[R1_idx]
+        L0_range = 99. if self.scan[L0_idx] < 0.1 else self.scan[L0_idx]
+        L1_range = 99. if self.scan[L1_idx] < 0.1 else self.scan[L1_idx]
 
-        print("Ranges R0: {}, R1: {}, L0: {}, L1: {}".format(R0_range, R1_range, L0_range, L1_range))
+        #print("Ranges R0: {}, R1: {}, L0: {}, L1: {}".format(R0_range, R1_range, L0_range, L1_range))
         if R0_range < 0.3 and L0_range > 0.3:
             return PI/4
         elif R0_range > 0.3 and L0_range < 0.3:
@@ -253,7 +254,7 @@ class TeriyakiBurger():
         
         # enemy detection
         if self.is_initialized_pose:
-            self.is_near_enemy, self.enemy_direction, self.enemy_dist = self.enemy_detector.findEnemy(data.ranges, self.pose_x, self.pose_y, self.th)
+            self.is_near_enemy, self.enemy_direction, self.enemy_dist = self.enemy_detector.findEnemy(scan, self.pose_x, self.pose_y, self.th)
         
         if self.is_near_enemy:
             self.updateNearEnemyTwist()
@@ -266,13 +267,13 @@ class TeriyakiBurger():
                 th_diff -= 2*PI
             elif th_diff < 0:
                 th_diff += 2*PI
-        new_twist_ang_z = th_diff * self.k
+        new_twist_ang_z = max(-0.3, min((th_diff) * self.k , 0.3))
 
         if self.enemy_dist > 0.36:
             speed = self.speed
         else:
             speed = -self.speed
-        print("enemy_dist {}".format(self.enemy_dist))
+        #print("enemy_dist {}".format(self.enemy_dist))
         
         self.near_enemy_twist.angular.z = new_twist_ang_z
         self.near_enemy_twist.linear.x = speed
@@ -309,9 +310,9 @@ class TeriyakiBurger():
                 twist.linear.x = -self.speed / 2 
             self.vel_pub.publish(twist)
             # for debug
-            # print("POSE TWIST: {}, {}".format(self.pose_twist.linear.x, self.pose_twist.angular.z))
-            # print("ENEMY TWIST: {}, {}".format(self.near_enemy_twist.linear.x, self.near_enemy_twist.angular.z))
-            # print("wall: {}, Enemy: {}, X: {}, Z: {}".format(self.is_near_wall, self.is_near_enemy, twist.linear.x, twist.angular.z))
+            print("POSE TWIST: {}, {}".format(self.pose_twist.linear.x, self.pose_twist.angular.z))
+            print("ENEMY TWIST: {}, {}".format(self.near_enemy_twist.linear.x, self.near_enemy_twist.angular.z))
+            print("wall: {}, Enemy: {}, X: {}, Z: {}".format(self.is_near_wall, self.is_near_enemy, twist.linear.x, twist.angular.z))
 
             r.sleep()
 
