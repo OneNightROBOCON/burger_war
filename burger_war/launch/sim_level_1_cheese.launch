@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
 <launch>
+    <!-- Arguments -->
+    <arg name="name_space" default=""/>
+
     <node pkg="burger_war" type="level_1_cheese.py" name="cheeseRun" output="screen"/>
 </launch>
 

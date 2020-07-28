@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <launch>
+  <arg name="enemy_level" default="1"/>
 
 <!-- Your robot control node run  red side-->
   <include file="$(find burger_war)/launch/your_burger.launch">
@@ -8,7 +9,26 @@
 
 <!-- enemy bot run  blue side-->
   <group ns="enemy_bot">
-    <node pkg="burger_war" type="enemy.py" name="enemyRun" output="screen"/>
+    <!-- level 1 (default) -->
+    <group if="$(eval enemy_level==1)"> 
+      <include file="$(find burger_war)/launch/sim_level_1_cheese.launch">
+        <arg name="name_space" value="enemy_bot" />
+      </include>  
+    </group>
+
+    <!-- level 2 (if you want to run , set launch arg enemy_level=2 --> 
+    <group if="$(eval enemy_level==2)"> 
+      <include file="$(find burger_war)/launch/sim_level_2_teriyaki.launch">
+        <arg name="name_space" value="enemy_bot" />
+      </include>  
+    </group>
+
+    <!-- level 3 (if you want to run , set launch arg enemy_level=3 --> 
+    <group if="$(eval enemy_level==3)"> 
+      <include file="$(find burger_war)/launch/sim_level_3_clubhouse.launch">
+        <arg name="name_space" value="enemy_bot" />
+      </include>  
+    </group>
   </group>
 
 </launch>
