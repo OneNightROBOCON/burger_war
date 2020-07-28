@@ -9,6 +9,7 @@
     <arg name="initial_pose_y" default="0.0"/>
     <arg name="initial_pose_a" default="0.0"/>
     <arg name="name_space" default=""/>
+    <arg name="output" default="log"/>
 
     <!-- Map server -->
     <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)">
@@ -61,7 +62,7 @@
     </group>
     
     <!-- clubhouse -->
-    <node pkg="burger_war" type="level_3_clubhouse.py" name="clubhouseRun" output="screen"/>
+    <node pkg="burger_war" type="level_3_clubhouse.py" name="clubhouseRun" output="$(arg output)"/>
 
 </launch>
 
