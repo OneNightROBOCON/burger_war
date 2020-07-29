@@ -1,13 +1,5 @@
 <?xml version="1.0"?>
 <launch>
-
-<!-- Your robot control node run  red side-->
-  <include file="$(find burger_war)/launch/your_burger.launch">
-    <arg name="side" value="r" />
-  </include>
-
-<!-- enemy bot run  blue side-->
-  <group ns="enemy_bot">
     <!-- Arguments -->
     <arg name="map_file" default="$(find burger_navigation)/maps/map.yaml"/>
     <arg name="open_rviz" default="false"/>
@@ -16,14 +8,8 @@
     <arg name="initial_pose_x" default="-1.3"/>
     <arg name="initial_pose_y" default="0.0"/>
     <arg name="initial_pose_a" default="0.0"/>
-    <arg name="name_space" default="enemy_bot"/>
-
-    <!-- Turtlebot3 -->
-    <include file="$(find turtlebot3_bringup)/launch/turtlebot3_remote.launch">
-      <arg name="model" value="burger" />
-      <arg name="multi_robot_name" value="$(arg name_space)" />
-    </include>
-
+    <arg name="name_space" default=""/>
+    <arg name="output" default="log"/>
 
     <!-- Map server -->
     <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)">
@@ -76,10 +62,7 @@
     </group>
     
     <!-- clubhouse -->
-    <node pkg="burger_war" type="level_3_clubhouse.py" name="clubhouseRun" output="screen"/>
-
-
-  </group>
+    <node pkg="burger_war" type="level_3_clubhouse.py" name="clubhouseRun" output="$(arg output)"/>
 
 </launch>
 

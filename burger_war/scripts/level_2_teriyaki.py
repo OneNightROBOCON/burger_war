@@ -44,8 +44,13 @@ class TeriyakiBurger():
 
         self.k = 0.5
 
+        self.near_wall_range = 0.2  # [m]
+
         # speed [m/s]
         self.speed = 0.07
+
+        # lidar scan
+        self.scan = []
 
         # publisher
         self.vel_pub = rospy.Publisher('cmd_vel', Twist,queue_size=1)
@@ -57,8 +62,6 @@ class TeriyakiBurger():
         self.twist.linear.x = self.speed; self.twist.linear.y = 0.; self.twist.linear.z = 0.
         self.twist.angular.x = 0.; self.twist.angular.y = 0.; self.twist.angular.z = 0.
  
-
-
     def poseCallback(self, data):
         '''
         pose topic from amcl localizer
@@ -78,10 +81,12 @@ class TeriyakiBurger():
                 th_diff -= 2*PI
             elif th_diff < 0:
                 th_diff += 2*PI
-        new_twist_ang_z = th_diff * self.k
+
+        delta_th = self.calcDeltaTheta(th_diff)
+        new_twist_ang_z = max(-0.3, min((th_diff + delta_th) * self.k , 0.3))
         
         self.twist.angular.z = new_twist_ang_z
-        print(pose_x, pose_y, th, th_xy, new_twist_ang_z)
+        print("th: {}, th_xy: {}, delta_th: {}, new_twist_ang_z: {}".format(th, th_xy, delta_th, new_twist_ang_z))
 
 
     def calcTargetTheta(self, pose_x, pose_y):
@@ -90,6 +95,39 @@ class TeriyakiBurger():
         th = TARGET_TH[x][y]
         print("POSE pose_x: {}, pose_y: {}. INDEX x:{}, y:{}".format(pose_x, pose_y, x, y))
         return th
+
+    def calcDeltaTheta(self, th_diff):
+        if not self.scan:
+            return 0.
+        R0_idx = self.radToidx(th_diff - PI/8)
+        R1_idx = self.radToidx(th_diff - PI/4)
+        L0_idx = self.radToidx(th_diff + PI/8)
+        L1_idx = self.radToidx(th_diff + PI/4)
+        R0_range = 99. if self.scan[R0_idx] < 0.1 else self.scan[R0_idx]
+        R1_range = 99. if self.scan[R1_idx] < 0.1 else self.scan[R1_idx]
+        L0_range = 99. if self.scan[L0_idx] < 0.1 else self.scan[L0_idx]
+        L1_range = 99. if self.scan[L1_idx] < 0.1 else self.scan[L1_idx]
+
+        print("Ranges R0: {}, R1: {}, L0: {}, L1: {}".format(R0_range, R1_range, L0_range, L1_range))
+        if R0_range < 0.3 and L0_range > 0.3:
+            return PI/4
+        elif R0_range > 0.3 and L0_range < 0.3:
+            return -PI/4
+        elif R1_range < 0.2 and L1_range > 0.2:
+            return PI/8
+        elif R1_range > 0.2 and L1_range < 0.2:
+            return -PI/8
+        else:
+            return 0.
+    
+    def radToidx(self, rad):
+        deg = int(rad / (2*PI) * 360)
+        while not 360 > deg >= 0:
+            if deg > 0:
+                deg -= 360
+            elif deg < 0:
+                deg += 360
+        return deg
 
     def poseToindex(self, pose):
         i = 7 - int((pose + WIDTH) / (2 * WIDTH) * 8)
@@ -101,16 +139,18 @@ class TeriyakiBurger():
         lidar scan use for bumper
         controll speed.x
         '''
-        is_near_wall = self.isNearWall(data.ranges)
+        scan = data.ranges
+        self.scan = scan
+        is_near_wall = self.isNearWall(scan)
         if is_near_wall:
-            self.twist.linear.x = -self.speed
+            self.twist.linear.x = -self.speed / 2
         else:
             self.twist.linear.x = self.speed
 
     def isNearWall(self, scan):
         if not len(scan) == 360:
             return False
-        forword_scan = scan[:10] + scan[-10:]
+        forword_scan = scan[:15] + scan[-15:]
         # drop too small value ex) 0.0
         forword_scan = [x for x in forword_scan if x > 0.1]
         if min(forword_scan) < 0.2:

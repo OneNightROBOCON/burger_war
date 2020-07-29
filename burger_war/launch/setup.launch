@@ -11,6 +11,13 @@
    <arg name="set_lidar_frame_id" value="$(arg robot_name)/base_scan" />
 </include>
 
+<!-- burgerbot TF publisher -->
+<param name="robot_description" command="$(find xacro)/xacro --inorder $(find burger_war)/models/red_bot.urdf.xacro" />
+<node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+    <param name="publish_frequency" type="double" value="50.0" />
+    <param name="tf_prefix" value=""/>
+</node>
+
 <!-- usb camera -->
 <node pkg="uvc_camera" type="uvc_camera_node" name="uvc_camera_node"/>
 

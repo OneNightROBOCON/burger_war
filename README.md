@@ -106,14 +106,10 @@ cd ~/catkin_ws/src/burger_war
 ```
 gazebo
 ```
+gazeboの初回立ち上げには数分かかることもあります。gazeboが空のフィールドで立ち上がったら一度gazeboを終了し、
 次にシミュレーションを起動
 ```
 bash scripts/sim_with_judge.sh
-```
-フィールドとロボットが立ち上がったら
-別のターミナルで下記ロボット動作スクリプトを実行
-```
-bash scripts/start.sh
 ```
 
 ![screenshot](https://user-images.githubusercontent.com/17049327/61606479-7ed49680-ac85-11e9-8c77-5cad3a5db4ed.png)
@@ -121,8 +117,26 @@ bash scripts/start.sh
 ↑このようなフィールドが現れロボットが2台出現します。
 審判画面も表示されます。
 
+フィールドとロボットが立ち上がったら
+別のターミナルで下記ロボット動作スクリプトを実行
+```
+bash scripts/start.sh
+```
+敵プログラムはレベル１−３まで３種類用意しています.（デフォルトではレベル１）
+下記のように `-l` 引数によって変更できます。
 
-審判サーバーを立ち上げずにシミュレータとロボットのみ立ち上げる場合
+level 2
+```
+bash scripts/start.sh -l 2
+```
+
+level 3
+```
+bash scripts/start.sh -l 3
+```
+
+
+**審判サーバーを立ち上げずにシミュレータとロボットのみ立ち上げる場合**
 ```
 roslaunch burger_war setup_sim.launch
 ```
@@ -131,14 +145,17 @@ roslaunch burger_war setup_sim.launch
 ```
 bash scripts/start.sh
 ```
-審判サーバー以外は上記と同じです。
 
+審判サーバーが必要ない場合は直接launch ファイルを実行しても走行可能です。
+上記と同様にレベル設定も可能です。(defaunt 1)
+```
+roslaunch burger_war sim_robot_run.launch enemy_level:=1
+```
 
 ### 実機
 センサなどが立ち上がりロボットを動かす準備 `burger_war setup.launch`
 引数
-- `side`: (default: 'b') ロボットが赤サイドか青サイドか表す引数。赤サイドと青サイドによって戦略やパラメータを切り替えるためなどに使用する。赤サイドなら `r` 青サイドなら `b`
-- `robot_name`: (default: '' ) ロボットのネームスペースを分けるときに使用する。　赤サイドなら`red_bot`, 青サイドなら`blue_bot`
+- `side`: (default: 'b') ロボットが赤サイドか青サイドか表す引数。審判サーバーに提出する際にどちらサイドか表すために使用する。赤サイドなら `r` 青サイドなら `b`
 - `ip`: (default:'http://localhost:5000') 審判サーバーのアドレス。
 
 ```
@@ -154,7 +171,6 @@ roslaunch burger_war setup.launch
 
 引数
 - `side`: (default: 'b') ロボットが赤サイドか青サイドか表す引数。赤サイドと青サイドによって戦略やパラメータを切り替えるためなどに使用する。赤サイドなら `r` 青サイドなら `b`
-- `robot_name`: (default: "" ) ロボットのネームスペースを分けるときに使用する。　赤サイドなら`red_bot`, 青サイドなら`blue_bot`
 
 赤サイドの場合
 ```
@@ -164,17 +180,6 @@ roslaunch burger_war your_burger.launch side:=r
 ```
 roslaunch burger_war your_burger.launch side:=b
 ```
-
-### サンプルについて補足
-`your_burger.launch`の引数`robot_name` `side`についてその経緯を補足する。
-シミュレーターでは1つのGAZEBOシミュレーター内で2台のロボット動かしている。しかしGAZEBOサーバーとROSMASTERは1:1に対応していて1つのGAZEBOサーバーに2つ以上のROSMASTERを接続することができなかった。(方法知っている人いたら教えて下さい。)そのため、1つのROSMASTERで、別々のネームスペースを使って2台のロボットを動かしている。
-赤サイドのロボットを`red_bot`, 青サイドのロボットを`blue_bot`としている。これらネームスペースはやり取りされるトピック及び、座標系を表すTFにも反映する必要がある。ロボットのネームスペースは`robot_name`という名前の引数でlaunchファイルに渡される。 
-
-実機の場合は上記のような制約はないためネームスペースは使用しない。`robot_name:=''`というようにネームスペースを表す引数は空で実行される。
-
- `side`は審判サーバーに対して、どちらサイドのロボットか宣言するため、および、赤サイドと青サイドによって戦略やパラメータを変更する用途を想定したパラメータである。
- 以前はyour_burger.launchの引数に`side`はなく、`robot_name`がred_botかblue_botかによって自分のサイドを判断するようにしていたが、このあたりの引数の役割を整理した結果`robot_name` `side`に分割をした。
-赤サイドと青サイドによって戦略やパラメータを変更する用途には`side`を使うようにしてもらいたい。実機での動作の場合`robot_name`は空で実行されるためである。
 
 ## 審判サーバー
 審判サーバーは`judge/`以下にあります

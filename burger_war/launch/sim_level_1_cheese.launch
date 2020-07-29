@@ -1,15 +1,9 @@
 <?xml version="1.0"?>
 <launch>
+    <!-- Arguments -->
+    <arg name="name_space" default=""/>
+    <arg name="output" default="log"/>
 
-<!-- Your robot control node run  red side-->
-  <include file="$(find burger_war)/launch/your_burger.launch">
-    <arg name="side" value="r" />
-  </include>
-
-<!-- enemy bot run  blue side-->
-  <group ns="enemy_bot">
-    <node pkg="burger_war" type="level_1_cheese.py" name="cheeseRun" output="screen"/>
-  </group>
-
+    <node pkg="burger_war" type="level_1_cheese.py" name="cheeseRun" output="$(arg output)"/>
 </launch>
 
